@@ -64,5 +64,10 @@ Une annotation de type suit directement le nom, sans espace autour de `:` :
 Si une déclaration typée n'a pas de valeur après `=`, consultez
 [les valeurs initiales choisies par Silex](Default-values.md).
 
+Pour passer explicitement d'un type numérique à un autre, consultez
+[les conversions numériques](Numeric-conversions.md). Pour employer un nom
+plus parlant sans créer un nouveau type, consultez
+[les alias de types](Type-aliases.md).
+
 [Revenir aux concepts du langage](README.md) ·
 [Comprendre les variables](Variables.md)
