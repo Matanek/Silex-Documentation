@@ -61,5 +61,8 @@ le calcul demande davantage de précision.
 Une annotation de type suit directement le nom, sans espace autour de `:` :
 `channel:uint8`.
 
+Si une déclaration typée n'a pas de valeur après `=`, consultez
+[les valeurs initiales choisies par Silex](Default-values.md).
+
 [Revenir aux concepts du langage](README.md) ·
 [Reprendre le parcours avec les variables](../Learn/Variables.md)
