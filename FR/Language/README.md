@@ -4,4 +4,6 @@ Découvrez les concepts qui structurent les programmes Silex : valeurs, flux
 de contrôle, fonctions, types de données, possession, modules et autres
 comportements implémentés du langage.
 
+- [Choisir un type intégré](Built-in-types.md)
+
 [Accueil de la documentation](../README.md) · [Read in English](../../EN/Language/README.md)
