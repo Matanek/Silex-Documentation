@@ -31,7 +31,7 @@ compatibility:
   },
   "authors": ["Matanek"],
   "requires": {
-    "silex": ">=0.42.0 <0.43.0"
+    "silex": ">=0.42.0"
   }
 }
 ```
@@ -40,9 +40,16 @@ compatibility:
 has the same name. `version` uses `MAJOR.MINOR.PATCH` and must match the tag of
 a published release.
 
-`requires.silex` begins with an inclusive minimum. The exclusive maximum is
-optional. An installed package must declare this compatibility; a local
-package under development may still omit it.
+`requires.silex` begins with an inclusive minimum. Prefer an open range such
+as `">=0.42.0"`: it allows the package to be used with later Silex releases
+for as long as no incompatibility is known. In particular, it avoids blocking
+each new minor release as a precaution.
+
+An exclusive maximum is also supported, for example
+`">=0.42.0 <0.43.0"`. This bounded range is less common: reserve it for a
+known incompatibility or a contract that must actually stop before that
+release. An installed package must declare its compatibility; a local package
+under development may still omit `requires.silex`.
 
 ### Describe the package in one or more languages
 

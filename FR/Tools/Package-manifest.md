@@ -31,7 +31,7 @@ compatibilité avec Silex :
   },
   "authors": ["Matanek"],
   "requires": {
-    "silex": ">=0.42.0 <0.43.0"
+    "silex": ">=0.42.0"
   }
 }
 ```
@@ -40,10 +40,17 @@ compatibilité avec Silex :
 d'un package local porte le même nom. `version` suit la forme
 `MAJOR.MINOR.PATCH` et doit correspondre au tag d'une version publiée.
 
-`requires.silex` commence par une borne minimale inclusive. La borne maximale
-exclusive est facultative. Un package installé doit déclarer cette
-compatibilité ; un package local en cours de développement peut encore
-l'omettre.
+`requires.silex` commence par une borne minimale inclusive. Privilégiez une
+plage ouverte telle que `">=0.42.0"` : elle autorise l'utilisation du package
+avec les versions suivantes de Silex tant qu'aucune incompatibilité n'est
+connue. Elle évite notamment de bloquer chaque nouvelle version mineure par
+précaution.
+
+Une borne maximale exclusive existe, par exemple
+`">=0.42.0 <0.43.0"`. Cette plage bornée est moins courante : réservez-la à une
+incompatibilité connue ou à un contrat qui doit réellement s'arrêter avant
+cette version. Un package installé doit déclarer sa compatibilité ; un package
+local en cours de développement peut encore omettre `requires.silex`.
 
 ### Décrire le package dans une ou plusieurs langues
 
