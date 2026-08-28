@@ -3,9 +3,9 @@
 Un programme donne un nom aux valeurs qu'il utilise. Certaines ne changeront
 pas ; d'autres doivent évoluer.
 
-## Déclarer les valeurs
+## Choisir entre `let` et `var`
 
-Créez un fichier `Variables.sx` :
+Ce programme conserve le nom du langage et met à jour un compteur de leçons :
 
 ```sx
 func main() {
@@ -21,23 +21,6 @@ func main() {
 
 `language` conserve la même valeur. `lessons` commence à `1`, puis reçoit la
 valeur `2`.
-
-## Exécuter le programme
-
-Indiquez le chemin de la source à `silex run` :
-
-```sh
-silex run Variables.sx
-```
-
-Le programme affiche :
-
-```text
-Silex
-2
-```
-
-## Choisir entre `let` et `var`
 
 Utilisez `let` lorsque le nom gardera la valeur reçue à sa déclaration. Une
 nouvelle affectation à ce nom sera refusée par le compilateur.
