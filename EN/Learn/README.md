@@ -6,4 +6,4 @@ documentation instead of repeating it.
 
 - [Write and run a first program](First-program.md)
 
-[Documentation home](../README.md) · [Lire en français](../../FR/Learn/README.md)
+[Documentation home](../README.md)

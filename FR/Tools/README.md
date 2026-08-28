@@ -26,4 +26,4 @@ pris en charge par la chaîne d'outils active.
 
 - [Consulter la référence de la CLI](CLI-reference.md)
 
-[Accueil de la documentation](../README.md) · [Read in English](../../EN/Tools/README.md)
+[Accueil de la documentation](../README.md)

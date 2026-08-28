@@ -25,4 +25,4 @@ package workflows, and editor integrations supported by the active toolchain.
 
 - [Read the CLI reference](CLI-reference.md)
 
-[Documentation home](../README.md) · [Lire en français](../../FR/Tools/README.md)
+[Documentation home](../README.md)

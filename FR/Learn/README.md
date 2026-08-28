@@ -6,4 +6,4 @@ résultat concret. Chaque tutoriel s'appuie sur la documentation canonique du
 
 - [Écrire et exécuter un premier programme](First-program.md)
 
-[Accueil de la documentation](../README.md) · [Read in English](../../EN/Learn/README.md)
+[Accueil de la documentation](../README.md)

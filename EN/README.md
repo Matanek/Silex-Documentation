@@ -11,5 +11,3 @@ Choose the path that matches what you need.
 To explore complete, visual, executable applications, visit the
 [Silex-Examples](https://github.com/Matanek/Silex-Examples) repository. Its
 README lists the required packages and the command used to run each demo.
-
-[Lire en français](../FR/README.md)

@@ -6,4 +6,4 @@ progressive explanation.
 - [Find a syntax form](Syntax.md)
 - [Know the limits of Silex 0.42](Current-limits.md)
 
-[Documentation home](../README.md) · [Lire en français](../../FR/Reference/README.md)
+[Documentation home](../README.md)

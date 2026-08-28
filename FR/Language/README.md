@@ -18,4 +18,4 @@ pages de référence restent réservées aux formes exactes et aux limites.
 Pour retrouver immédiatement une syntaxe ou une limite, consultez la
 [référence du langage](../Reference/README.md).
 
-[Accueil de la documentation](../README.md) · [Read in English](../../EN/Language/README.md)
+[Accueil de la documentation](../README.md)

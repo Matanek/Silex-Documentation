@@ -18,4 +18,4 @@ remain reserved for exact forms and limits.
 To find a syntax form or a limit immediately, see the
 [language reference](../Reference/README.md).
 
-[Documentation home](../README.md) · [Lire en français](../../FR/Language/README.md)
+[Documentation home](../README.md)
