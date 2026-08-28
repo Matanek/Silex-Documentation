@@ -41,8 +41,24 @@ class Position {
     var y:int
 }
 
-var position = Position(x:2, y:3)
+func main() {
+    var position = Position(x:2, y:3)
+    var target = Position()
+        ..x = position.x
+        ..y = position.y
+
+    position.x = 4
+
+    print(position.x)
+    print(target.x)
+    print(target.y)
+}
 ```
+
+La [cascade](../Values/Operators.md#appliquer-plusieurs-opérations-au-même-objet)
+configure ici une nouvelle instance à partir de `position`. Le programme
+affiche `4`, `2`, puis `3` : modifier ensuite `position` ne modifie pas
+`target`, car chaque appel à `Position()` crée une identité distincte.
 
 Déclarez `init` lorsque la construction doit établir un invariant. Dès qu'un
 constructeur existe, l'initialiseur automatique par champs nommés disparaît.

@@ -12,16 +12,25 @@ struct Position {
 func main() {
     let origin = Position()
     var cursor = Position(x:2, y:3)
+    var target = Position()
+        ..x = 10
+        ..y = 5
+
     cursor.x = 4
 
     print(origin.y)
     print(cursor.x)
+    print(target.x)
+    print(target.y)
 }
 ```
 
 Sans constructeur personnalisé, les champs sont nommés et peuvent apparaître
 dans n'importe quel ordre. Un champ omis reçoit d'abord sa valeur déclarée,
 puis à défaut la [valeur intrinsèque de son type](../Values/Default-values.md).
+Ici, la [cascade](../Values/Operators.md#appliquer-plusieurs-opérations-au-même-objet)
+configure `target` juste après sa création. Le programme affiche successivement
+`10`, `4`, `10` et `5`.
 
 ## Copier une structure
 
