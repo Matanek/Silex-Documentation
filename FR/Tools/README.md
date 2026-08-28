@@ -13,6 +13,7 @@ pris en charge par la chaîne d'outils active.
 
 ## Utiliser des packages
 
+- [Définir un package avec `Package.json`](Package-manifest.md)
 - [Installer et choisir des packages](Install-packages.md)
 - [Développer avec des packages locaux](Develop-packages.md)
 - [Publier un package dans le registre](Publish-package.md)

@@ -25,6 +25,10 @@ Un manifeste minimal possède notamment cette identité :
 }
 ```
 
+Les métadonnées, dépendances, permissions, frontières et artefacts disponibles
+sont regroupés dans
+[Définir un package avec `Package.json`](Package-manifest.md).
+
 ## Vérifier la version sans rien modifier
 
 Depuis le dossier qui contient le package, lancez :

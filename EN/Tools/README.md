@@ -12,6 +12,7 @@ package workflows, and editor integrations supported by the active toolchain.
 
 ## Use packages
 
+- [Define a package with `Package.json`](Package-manifest.md)
 - [Install and select packages](Install-packages.md)
 - [Develop with local packages](Develop-packages.md)
 - [Publish a package in the registry](Publish-package.md)

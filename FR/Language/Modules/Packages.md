@@ -1,21 +1,17 @@
 # Comprendre les frontières d'un package
 
+Une frontière de package détermine l'identité de ses modules, les packages
+qu'ils peuvent voir et la façon dont un espace de noms peut être partagé. La
+forme complète du fichier de projet est documentée dans
+[Définir un package avec `Package.json`](../../Tools/Package-manifest.md).
+
+## Faire correspondre sources et identité de module
+
 Un manifeste choisit une racine physique de sources, `Module/` par défaut,
 sans ajouter ce nom physique aux modules logiques. Avec
 `"sources": "Sources"`, `Sources/Geometry/Vec3.sx` fournit
 `Geometry.Vec3` dans une application sans nom et `Math.Geometry.Vec3` dans le
 package `Math`.
-
-Voici le manifeste minimal d'un package local `Math` qui range ses sources
-dans `Sources/` :
-
-```json
-{
-  "name": "Math",
-  "version": "1.4.1",
-  "sources": "Sources"
-}
-```
 
 Le chemin `sources` est relatif à `Package.json`. La valeur `"."` sélectionne
 la racine du package. Un seul dossier est accepté : aucun chemin absolu, barre
@@ -69,19 +65,9 @@ dépendance transitive n'est jamais automatiquement accessible. Un dossier
 nommé `Packages/` n'a aucune signification spéciale et ne rend pas ses voisins
 visibles.
 
-Une application qui importe le package `Math` le déclare dans son propre
-`Package.json` :
-
-```json
-{
-  "dependencies": {
-    "Math": "^1.4.0"
-  }
-}
-```
-
-La plage `^1.4.0` accepte les versions compatibles. Utilisez `=1.4.0` lorsque
-le projet doit sélectionner exactement cette version.
+Le manifeste déclare cette relation dans `dependencies`. Sa forme et la
+distinction avec `devDependencies` sont décrites dans la
+[documentation de `Package.json`](../../Tools/Package-manifest.md#déclarer-les-dépendances).
 
 Pour une entrée explicite, Silex cherche le `Package.json` le plus proche dans
 son dossier puis dans ses parents. La résolution ne dépend donc pas du dossier
@@ -98,30 +84,6 @@ Un nom qualifié étend l'espace de noms de chacun de ses préfixes. Le parent d
 autoriser explicitement un package enfant distribué séparément. `GFX.*`
 autorise seulement les enfants directs tels que `GFX.UI`, jamais
 `GFX.UI.Controls`.
-
-Le manifeste actuel de GFX distingue par exemple un enfant ami, un membre de
-sa suite et un enfant qui cumule ces deux permissions :
-
-```json
-{
-  "extensions": {
-    "GFX.Physics": {
-      "friend": true
-    },
-    "GFX.UI": {
-      "suite": true
-    },
-    "GFX.GPU": {
-      "friend": true,
-      "suite": true
-    }
-  }
-}
-```
-
-Cet extrait omet les autres champs et enfants du véritable `Package.json` de
-GFX. Une valeur vide, comme `"GFX.UI": {}`, autorise seulement le nom sans
-accorder de permission supplémentaire.
 
 Chaque autorisation exacte peut accorder trois permissions indépendantes :
 
@@ -150,10 +112,10 @@ aux consommateurs ordinaires. Une suite ne crée aucune dépendance du parent
 vers l'enfant.
 
 Les catalogues de façade ouverts aux contributions sont expliqués dans
-[les réexportations](Reexports.md). L'installation, les liens de développement,
-les versions, les artefacts et les frontières natives relèvent des
-[outils Silex](../../Tools/README.md), pas de la sémantique des
-modules.
+[les réexportations](Reexports.md). La déclaration JSON des autorisations et
+catalogues reste regroupée dans la
+[documentation du manifeste](../../Tools/Package-manifest.md#autoriser-la-composition-entre-packages).
 
 [Revenir aux modules](README.md) ·
-[Composer des fragments ciblés](Fragments.md)
+[Composer des fragments ciblés](Fragments.md) ·
+[Définir `Package.json`](../../Tools/Package-manifest.md)

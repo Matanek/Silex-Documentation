@@ -15,6 +15,9 @@ de la cible actuelle puis enregistre un lien pour l'utilisateur. Le nom utilisé
 ensuite par les manifestes et les imports reste celui déclaré par le package,
 pas le chemin du dossier.
 
+La forme complète du manifeste est détaillée dans
+[Définir un package avec `Package.json`](Package-manifest.md).
+
 ## Limiter le lien à un workspace
 
 Un lien utilisateur influence tous les projets compatibles. Pour tester un

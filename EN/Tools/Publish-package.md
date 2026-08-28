@@ -26,6 +26,9 @@ A minimal manifest includes this identity:
 }
 ```
 
+Available metadata, dependencies, permissions, boundaries, and artifacts are
+grouped in [Define a package with `Package.json`](Package-manifest.md).
+
 ## Check the version without modifying anything
 
 From the folder containing the package, run:

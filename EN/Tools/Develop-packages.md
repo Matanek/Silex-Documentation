@@ -15,6 +15,9 @@ the current target, then records a user link. The name subsequently used by
 manifests and imports remains the one declared by the package, not the folder
 path.
 
+The complete manifest format is documented in
+[Define a package with `Package.json`](Package-manifest.md).
+
 ## Limit the link to one workspace
 
 A user link affects every compatible project. To test a checkout in only one

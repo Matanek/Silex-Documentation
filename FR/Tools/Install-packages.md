@@ -36,8 +36,10 @@ franchir la prochaine version majeure. Utilisez `=0.19.0` lorsque le projet
 demande exactement cette version.
 
 Une dépendance transitive n'est pas visible automatiquement dans votre code.
-La page [Comprendre les frontières d'un package](../Language/Modules/Packages.md)
-explique le manifeste, les dépendances directes et les racines de sources.
+La page [Définir un package avec `Package.json`](Package-manifest.md) explique
+le manifeste et les contraintes de version. Les effets sur la visibilité et
+l'identité des modules sont décrits dans
+[les frontières de package](../Language/Modules/Packages.md).
 
 ## Installer une copie locale
 

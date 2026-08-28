@@ -33,8 +33,9 @@ crossing the next major version. Use `=0.19.0` when the project requires that
 exact version.
 
 A transitive dependency is not automatically visible in your code. The
-[Understand package boundaries](../Language/Modules/Packages.md) page explains
-the manifest, direct dependencies, and source roots.
+[Define a package with `Package.json`](Package-manifest.md) page explains the
+manifest and version constraints. Their effects on module visibility and
+identity are described in [package boundaries](../Language/Modules/Packages.md).
 
 ## Install a local copy
 
