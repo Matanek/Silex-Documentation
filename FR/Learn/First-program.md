@@ -44,5 +44,22 @@ Bonjour, Silex !
 sortie au terminal. Pour ce premier programme, aucune configuration de projet
 n'est nécessaire.
 
+## Comprendre le dossier `.silex`
+
+Silex crée un dossier `.silex` dans le dossier depuis lequel vous lancez la
+commande. Il y conserve notamment son cache de compilation et l'exécutable
+privé utilisé par `silex run`.
+
+Pour ne pas disperser plusieurs dossiers `.silex`, lancez vos commandes depuis
+une racine de projet stable et transmettez le chemin de la source, comme dans
+`silex run Project/Main.sx` ci-dessus.
+
+Si votre projet utilise Git, ignorez les fichiers générés par Silex en ajoutant
+cette ligne à son fichier `.gitignore` :
+
+```text
+.silex/
+```
+
 [Revenir au parcours d'apprentissage](README.md) ·
 [Leçon suivante : conserver et modifier des valeurs](Variables.md)
