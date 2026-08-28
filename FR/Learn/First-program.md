@@ -20,10 +20,18 @@ terminal.
 
 ## Exécuter le programme
 
-Placez-vous dans le dossier qui contient `Main.sx`, puis lancez :
+Indiquez à `silex run` le chemin du fichier source. Si le terminal se trouve
+dans le dossier qui contient `Main.sx`, lancez :
 
 ```sh
 silex run Main.sx
+```
+
+Le terminal peut aussi se trouver dans un autre dossier. Par exemple, depuis
+le dossier parent de `Project/` :
+
+```sh
+silex run Project/Main.sx
 ```
 
 Le programme affiche :
