@@ -22,8 +22,40 @@ curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.42.0/install.sh \
 Le script sélectionne la distribution adaptée, vérifie sa somme SHA-256 et
 installe `silex` dans `~/.local/bin`.
 
-Si le terminal ne trouve pas ensuite la commande, ajoutez ce dossier à votre
-variable `PATH` en suivant la méthode de votre shell.
+### Rendre la commande accessible
+
+Le script d'installation ne modifie pas la configuration de votre shell. Si
+le terminal ne trouve pas immédiatement `silex`, ajoutez le dossier
+d'installation au `PATH` de la session courante :
+
+```sh
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+Si vous avez défini `SILEX_INSTALL_DIR`, remplacez `~/.local/bin` par le
+dossier choisi.
+
+Pour conserver ce réglage dans les prochains terminaux, ajoutez cette même
+ligne au fichier de configuration de votre shell :
+
+- `~/.zshrc` avec Zsh, notamment sur macOS ;
+- `~/.bashrc` avec Bash, courant sur Linux.
+
+Avec Zsh, rechargez ensuite le fichier sans fermer le terminal :
+
+```sh
+source ~/.zshrc
+```
+
+Avec Bash :
+
+```sh
+source ~/.bashrc
+```
+
+Sur certaines distributions Linux, `~/.profile` ajoute déjà
+`~/.local/bin` au `PATH`. Dans ce cas, `source ~/.profile` suffit après la
+première installation.
 
 ## Installer sur Windows
 
@@ -39,9 +71,21 @@ Le script vérifie la somme SHA-256 et installe `silex.exe` dans
 Windows peut donc afficher un avertissement de réputation lors de sa première
 utilisation.
 
+Le script ne modifie pas non plus le `PATH` sous Windows. Si PowerShell ne
+trouve pas `silex`, rendez la commande accessible dans la session courante :
+
+```powershell
+$env:PATH = "$env:LOCALAPPDATA\Silex\bin;$env:PATH"
+```
+
+Pour conserver ce réglage, ajoutez `%LOCALAPPDATA%\Silex\bin` au `Path` de
+votre compte dans les variables d'environnement Windows, puis ouvrez un
+nouveau terminal.
+
 ## Vérifier l'installation
 
-Ouvrez un nouveau terminal si vous venez de modifier `PATH`, puis lancez :
+Dans le terminal dont vous venez de recharger la configuration, ou dans un
+nouveau terminal, lancez :
 
 ```sh
 silex --version
