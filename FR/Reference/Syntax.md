@@ -21,7 +21,7 @@ comportement et ses contraintes.
 | Contrat fourni par le compilateur | `intrinsic class Name { ... }` |
 | Protocole | `protocol Name { ... }` |
 | Extension | `extend Name { ... }` |
-| Contribution à un catalogue | `contribute GFX.Catalog { public use GFX.Child.Type }` |
+| Contribution à un catalogue | `contribute GFX.Components { public use GFX.Physics.RigidBody2D.RigidBody2D }` |
 | Variante d'enum | `caseName(Type)` dans un `enum` |
 | Variante sans contenu | `Enum.caseName` |
 | Variante avec contenu | `Enum.caseName(value)` |

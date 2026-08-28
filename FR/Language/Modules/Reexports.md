@@ -23,13 +23,24 @@ public use Rendering.Renderer
 Cette forme équivaut à `public use Rendering.Renderer.Renderer` et ne
 réexporte pas l'arbre `Rendering.Renderer`.
 
-## Contribuer à un catalogue parent
+## Contribuer aux catalogues de GFX
 
-Un package enfant qualifié peut ajouter ses propres déclarations publiques à
-un catalogue explicitement ouvert par son parent. Les blocs vivent dans un
-atome portable du module principal de l'enfant. Pour un nouveau package,
-préférez un nom explicite tel que `Module/@Catalogs.sx` ; l'emplacement
-historique `Module/@Module.sx` reste accepté :
+À ce jour, GFX est le seul package qui utilise des catalogues. Il ouvre
+explicitement trois modules dans son `Package.json` :
+
+```json
+{
+  "catalogs": ["GFX.Components", "GFX.Plugins", "GFX.Resources"]
+}
+```
+
+C'est cette propriété `catalogs`, et elle seule, qui ouvre ces modules aux
+blocs `contribute`. Une entrée dans `extensions` règle séparément l'autorisation
+d'un package enfant et ses permissions `friend`, `suite` ou `merge` ; elle
+n'ouvre aucun catalogue.
+
+Un package enfant direct de GFX peut alors réexporter les déclarations qu'il
+possède vers l'un des trois modules déclarés. `GFX.Physics` le fait ainsi :
 
 ```sx
 contribute GFX.Components {
@@ -41,15 +52,19 @@ contribute GFX.Resources {
 }
 ```
 
+Les blocs se trouvent dans un atome portable du module principal du package
+enfant. Ils sont actuellement placés dans `GFX.Physics/Module/@Module.sx` ; le
+nom de cet atome n'ouvre pas le catalogue.
+
 Le bloc accepte seulement des `public use` qui nomment des déclarations
 possédées par le package contributeur. Il ne peut contenir ni fonction, ni
 type, ni champ, ni extension, ni instruction exécutable, ni alias de type. La
 composition ajoute donc des noms de façade sans injecter d'implémentation dans
 le parent.
 
-Le manifeste parent doit lister exactement chaque catalogue et autoriser déjà
-le package enfant avec `extensions`. Seuls les packages présents dans le graphe
-résolu contribuent. Une collision avec une déclaration du catalogue, une autre
+La cible doit être un module existant possédé par GFX et correspondre exactement
+à une entrée de `catalogs`. Seuls les packages présents dans le graphe résolu
+contribuent. Une collision avec une déclaration du catalogue, une autre
 contribution ou un espace enfant produit une erreur au lieu de choisir un ordre
 ou un remplacement.
 
