@@ -67,7 +67,7 @@ Si une déclaration typée n'a pas de valeur après `=`, consultez
 Pour passer explicitement d'un type numérique à un autre, consultez
 [les conversions numériques](Numeric-conversions.md). Pour employer un nom
 plus parlant sans créer un nouveau type, consultez
-[les alias de types](Type-aliases.md).
+[les alias de types](../Data-types/Type-aliases.md).
 
-[Revenir aux concepts du langage](README.md) ·
+[Revenir aux valeurs](README.md) ·
 [Comprendre les variables](Variables.md)

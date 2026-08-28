@@ -42,5 +42,5 @@ Choisissez un alias lorsque le nouveau nom exprime mieux le rôle du type ou
 incompatibles malgré une représentation identique, un alias ne suffit pas :
 il faut déclarer un véritable type.
 
-[Revenir aux concepts du langage](README.md) ·
-[Choisir un type intégré](Built-in-types.md)
+[Revenir aux types de données](README.md) ·
+[Choisir un type intégré](../Values/Built-in-types.md)

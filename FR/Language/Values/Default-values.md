@@ -48,5 +48,5 @@ donc recevoir une instance, comme dans `var player = Player()`. Si l'absence
 d'instance est valide, déclarez plutôt un optionnel avec
 `var selected:Player?` ; sa valeur initiale sera `null`.
 
-[Revenir aux concepts du langage](README.md) ·
+[Revenir aux valeurs](README.md) ·
 [Choisir un type intégré](Built-in-types.md)

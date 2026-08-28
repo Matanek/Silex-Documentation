@@ -45,5 +45,5 @@ aussi l'écrire lorsqu'une conversion implicite gagnerait à rester visible.
 `as` ne convertit que des valeurs numériques. Il ne sert pas à transformer un
 nombre en texte ni à changer le type d'une autre valeur.
 
-[Revenir aux concepts du langage](README.md) ·
+[Revenir aux valeurs](README.md) ·
 [Choisir un type intégré](Built-in-types.md)

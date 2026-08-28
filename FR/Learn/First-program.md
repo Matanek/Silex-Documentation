@@ -62,4 +62,4 @@ cette ligne à son fichier `.gitignore` :
 ```
 
 [Revenir au parcours d'apprentissage](README.md) ·
-[Comprendre les variables](../Language/Variables.md)
+[Comprendre les variables](../Language/Values/Variables.md)

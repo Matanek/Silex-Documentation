@@ -42,5 +42,46 @@ Dans l'exemple, il déduit que `lessons` est un `int` à partir de `1`.
 Pour comparer les types disponibles et choisir une largeur précise, consultez
 [les types intégrés de Silex](Built-in-types.md).
 
-[Revenir aux concepts du langage](README.md) ·
+## Modifier un champ
+
+La racine et chaque champ traversé doivent être modifiables :
+
+```sx
+struct Position {
+    var x:int
+    var y:int
+}
+
+func main() {
+    var position = Position(x:1, y:2)
+    position.x = 10
+    print(position.x)
+}
+```
+
+Un champ déclaré avec `let`, ou un `let` rencontré avant lui sur le chemin,
+rend la suite du chemin accessible en lecture seule.
+
+## Signaler un état partagé
+
+Une liaison capable d'atteindre une instance de classe se déclare avec `var`
+lorsque cette instance peut changer :
+
+```sx
+var player = Player()
+player.damage(10)
+```
+
+Même si `player` continue de désigner la même instance, `var` indique ici que
+l'état partagé qu'il permet d'atteindre peut être modifié. Le fonctionnement
+des instances est détaillé avec [les classes](../Data-types/Classes.md).
+
+## Respecter la portée lexicale
+
+Un nom existe seulement dans le bloc où il est déclaré et dans ses blocs
+enfants. Un paramètre ou une variable locale visible ne peut pas être redéclaré
+avec le même nom. Deux branches sœurs peuvent en revanche employer chacune un
+nom local identique, car leurs portées ne se chevauchent pas.
+
+[Revenir aux valeurs](README.md) ·
 [Choisir un type intégré](Built-in-types.md)
