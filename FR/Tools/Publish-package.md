@@ -87,4 +87,5 @@ inchangée.
 Le [contrat du registre](https://github.com/Matanek/Silex-Registry/blob/main/CONTRIBUTING.md)
 détaille les règles d'identité, de transfert et de révocation.
 
-[Revenir aux outils](README.md)
+[Revenir aux outils](README.md) ·
+[Développer avec des packages locaux](Develop-packages.md)

@@ -21,10 +21,13 @@ parseur vers l'analyse typée.
 
 ## Distinguer émission et exécution des cibles
 
-Le backend natif entièrement exécuté sur son hôte cible Apple Silicon macOS.
-Linux X64, Windows X64 et Windows ARM64 émettent aussi des exécutables natifs ;
-leurs résultats sont liés et validés structurellement depuis macOS, mais cette
-version attend encore leur validation d'exécution sur ces systèmes.
+Silex 0.42 distribue et vérifie nativement `macos-arm64`, `linux-x64` et
+`windows-x64`. La chaîne de publication construit une distribution autonome et
+exécute son smoke test sur chaque système correspondant.
+
+La cible `windows-arm64` est reconnue et possède un émetteur, mais elle reste
+expérimentale : aucun artefact 0.42 n'est distribué et son exécution attend
+encore une validation sur une machine Windows ARM64 réelle.
 
 L'interpréteur reste le comportement de référence lorsque les deux chemins
 couvrent la même opération.

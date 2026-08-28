@@ -117,30 +117,5 @@ $env:SILEX_INSTALL_DIR = "$HOME\bin"
 irm https://raw.githubusercontent.com/Matanek/Silex/v0.42.0/install.ps1 | iex
 ```
 
-## Mettre Silex à jour
-
-Une installation existante peut être remplacée par la dernière version
-publiée :
-
-```sh
-silex update
-```
-
-La commande conserve le dossier du binaire actuel et vérifie la somme SHA-256
-avant de le remplacer.
-
-## Préparer les outils complémentaires
-
-Les programmes Silex ordinaires fonctionnent immédiatement. Avant de compiler
-des shaders HLSL ou d'utiliser une frontière native qui le demande, installez
-une fois les outils vérifiés de la chaîne Silex :
-
-```sh
-silex setup
-```
-
-Ces outils sont installés dans le dossier utilisateur `.silex`. Ils restent
-des détails de la chaîne de compilation et ne deviennent pas des dépendances de
-votre application.
-
-[Revenir aux outils Silex](README.md)
+[Revenir aux outils Silex](README.md) ·
+[Mettre à jour et entretenir Silex](Maintain-Silex.md)
