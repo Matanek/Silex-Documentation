@@ -5,5 +5,6 @@ complètes. Chaque leçon introduit une idée utile, l'illustre dans un programm
 complet et prépare la leçon suivante.
 
 - [Écrire et exécuter un premier programme](First-program.md)
+- [Conserver et modifier des valeurs](Variables.md)
 
 [Accueil de la documentation](../README.md) · [Read in English](../../EN/Learn/README.md)

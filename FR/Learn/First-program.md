@@ -44,4 +44,5 @@ Bonjour, Silex !
 sortie au terminal. Pour ce premier programme, aucune configuration de projet
 n'est nécessaire.
 
-[Revenir au parcours d'apprentissage](README.md)
+[Revenir au parcours d'apprentissage](README.md) ·
+[Leçon suivante : conserver et modifier des valeurs](Variables.md)
