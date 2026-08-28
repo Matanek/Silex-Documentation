@@ -1,6 +1,7 @@
 # Documentation de Silex
 
-Choisissez le parcours qui correspond à votre besoin.
+La documentation française est la source éditoriale de Silex. Choisissez le
+parcours qui correspond à votre besoin.
 
 - [Apprendre Silex](Learn/README.md) avec une progression structurée.
 - [Comprendre le langage](Language/README.md), ses concepts et son

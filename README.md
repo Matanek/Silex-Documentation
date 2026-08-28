@@ -2,11 +2,13 @@
 
 [English documentation](EN/README.md) · [Documentation française](FR/README.md)
 
-This repository is the canonical source for the public Silex language and
-tool documentation in English and French.
-
 Ce dépôt est la source canonique de la documentation publique du langage et
-des outils Silex en anglais et en français.
+des outils Silex. Les pages sont rédigées et validées en français, puis
+traduites en anglais.
+
+This repository contains the public Silex language and tool documentation.
+French is the editorial source; English pages are translated from approved
+French pages.
 
 ## Versions
 
