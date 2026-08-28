@@ -1,13 +1,15 @@
 # Silex documentation
 
-English pages are translated after their French source has been reviewed and
-approved. The section map is available now; content will appear as each French
-page becomes stable.
+Choose the path that matches what you need.
 
 - [Learn Silex](Learn/README.md) through guided tutorials.
 - [Understand the language](Language/README.md) through its concepts and
   behavior.
 - [Use the tools](Tools/README.md) to build, run, test, and maintain projects.
 - [Find an exact contract](Reference/README.md) in the implemented reference.
+
+To explore complete, visual, executable applications, visit the
+[Silex-Examples](https://github.com/Matanek/Silex-Examples) repository. Its
+README lists the required packages and the command used to run each demo.
 
 [Lire en français](../FR/README.md)

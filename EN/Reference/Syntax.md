@@ -1,0 +1,149 @@
+# Find a syntax form
+
+Use this page as a quick index. Follow a concept link to understand its behavior
+and constraints.
+
+| Intention | Form |
+| --- | --- |
+| Immutable variable | `let name:type = value` |
+| Mutable variable | `var name:type = value` |
+| Line comment | `// comment` |
+| String | `"text"` |
+| Block string | `"` followed by indented lines and a `"` alone on its line |
+| Interpolation | `"value: $(expression)"` |
+| Function | `func name(value:type) ReturnType { ... }` |
+| Named call | `name(value:expression)` |
+| Mixed call | `name(expression, other:expression)` |
+| Structure | `struct Name { ... }` |
+| Class | `class Name { ... }` |
+| Compiler-provided contract | `intrinsic class Name { ... }` |
+| Protocol | `protocol Name { ... }` |
+| Extension | `extend Name { ... }` |
+| Catalog contribution | `contribute GFX.Catalog { public use GFX.Child.Type }` |
+| Enum variant | `caseName(Type)` inside an `enum` |
+| Variant without content | `Enum.caseName` |
+| Variant with content | `Enum.caseName(value)` |
+| Ignored `match` content | `caseName(_)` |
+| Guarded branch | `caseName(value) if condition => result` |
+| Safe optional assignment | `optional?.field = value` |
+| Forced optional extraction | `optional!` |
+| Optional fallback | `optional ?? fallback` |
+| Constructor | `init(value:type) { ... }` |
+| Global package import | `use STD.UUID` |
+| Package-anchored import | `use Package.UUID` |
+| Current-directory import | `use Module.UUID` |
+| Package-qualified path | `Package.UUID.Value` |
+| Directory-qualified path | `Module.UUID.Value` |
+| C function binding | `let name = C.function<func(...) Return>(...)` |
+| C address call | `C.call<func(...) Return>(address, ...)` |
+| Alias | `use Existing.Type as LocalName` |
+| Public declaration | `public ...` |
+| Package declaration | `package ...` |
+| Module declaration | `module ...` |
+| File declaration | `local ...` |
+| Optional | `Type?` |
+| Nested optional | `Type??` |
+| Named tuple | `(width:int, height:int)` |
+| Positional tuple | `(int, int)` |
+| Borrowed tuple pattern | `(@Velocity, &Transform)` |
+| Tuple destructuring | `let (first, second) = value` |
+| Fixed array | `Type[3]` |
+| Dynamic list | `Type[]` |
+| Shared view | `@Type[..]` |
+| Mutable view | `&Type[..]` |
+| Read parameter | `value:@Type` |
+| Mutable parameter | `value:&Type` |
+| Detached copy | `copy value` |
+| Transfer | `move value` |
+| Checked conversion | `value as Type` |
+| Success propagation | `try operation()` |
+| Critical section | `mutex { ... }` |
+| Method cascade | `value..update()` |
+| Bound instance method | `receiver.method` |
+| Reflection | `reflect(value)` |
+| Cascade assignment | `value..field = replacement` |
+
+`match` is a control word in expression position, but remains contextual after
+`func`, `.`, `?.`, or `..`. A method may therefore naturally be named `match`:
+`func match(...)` and `pattern.match(text)`.
+
+`in` remains the iteration word, but becomes contextual as a variant name, in
+a `match` branch, and after `.` or `?.`: `Easing.in` is valid.
+
+The `?`, `[]`, and `[N]` suffixes apply from left to right. `Type?[]` and
+`Type[]?` are therefore different types.
+
+## Statements and scopes
+
+```sx
+if condition {
+} elif other {
+} else {
+}
+
+while condition {
+    break
+    continue
+}
+
+for value in collection {
+}
+
+for index, value in collection.indexed() {
+}
+
+for value in start...end {
+}
+
+mutex {
+    update_shared_state()
+}
+
+{
+    let temporary = prepare()
+    consume(temporary)
+}
+
+return value
+print(value)
+assert(condition)
+assert(condition, "message")
+panic("message")
+```
+
+A bare block is an anonymous lexical scope, not an expression. It runs once,
+has no trailing semicolon, hides its variables after `}`, and cleans them up
+before any normal or transferred exit. `break` and `continue` always target the
+nearest enclosing loop.
+
+## Operator precedence
+
+From strongest to weakest binding:
+
+```text
+as
+-  !  try  copy  move
+*  /  %
++  -
+<<  >>
+&
+^
+<  <=  >  >=
+==  !=
+&&
+||
+..method(...)  ..field = value
+```
+
+The `..` cascade binds less strongly than ordinary operators. A single dot
+after a method segment resumes ordinary access on that method's result. The
+`...` range remains a different token from `..`.
+
+A statement ends at a line break, before `}`, or with `;`. Two statements on
+the same line require a semicolon.
+
+A `C.function` binding is the only module-level `let` accepted in Silex 0.42.
+See [interoperability](../Language/Interop/README.md) for its exact signature
+and lifetime.
+
+[Back to the reference](README.md)

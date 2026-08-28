@@ -1,7 +1,9 @@
 # Learn Silex
 
-Build complete Silex programs through guided tutorials. These tutorials
-combine concepts documented in the [language section](../Language/README.md)
-instead of duplicating their definitions and rules.
+Follow guided tutorials that combine several concepts into a concrete result.
+Each tutorial builds on the canonical [Silex language](../Language/README.md)
+documentation instead of repeating it.
+
+- [Write and run a first program](First-program.md)
 
 [Documentation home](../README.md) · [Lire en français](../../FR/Learn/README.md)

@@ -1,0 +1,87 @@
+# Read the CLI reference
+
+This page gathers the commands and options accepted by Silex 0.42. Linked
+guides explain when to use them and what they produce.
+
+## Programs and tests
+
+```text
+silex run <source.sx> [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
+silex interpret <source.sx> [-n|--nocache] [--emit-ir]
+silex test <source.sx|directory> [-n|--nocache] [--emit-ir]
+silex compile <source.sx> [--target <target>]
+    [-d|--debug|-r|--release] [-n|--nocache]
+    -o|--output <executable>
+```
+
+| Option | Commands | Effect |
+| --- | --- | --- |
+| `-d`, `--debug` | `run`, `compile` | disables Release optimizations for native diagnostics |
+| `-r`, `--release` | `run`, `compile` | explicitly selects the default mode |
+| `-n`, `--nocache` | `run`, `interpret`, `test`, `compile` | ignores the cache for this command |
+| `--emit-ir` | `run`, `interpret`, `test` | prints textual IR before the result |
+| `-o`, `--output` | `compile` | selects the required executable path |
+| `--target` | `compile` | selects a recognized target instead of the host |
+
+See [Run, interpret, or compile a program](Run-and-compile.md) and
+[Write and run tests](Tests.md).
+
+## Installation and packages
+
+```text
+silex install <package|package-directory> [--suite] [--dev]
+    [--target <target>]
+silex check <package-directory>
+silex register <package-directory>
+silex link <package-directory> [--workspace <directory>]
+    [--target <target>]
+silex unlink <package-name> [--workspace <directory>]
+silex packages
+silex packages resolve [source.sx|project-directory]
+```
+
+| Option | Commands | Effect |
+| --- | --- | --- |
+| `--suite` | `install` | installs compatible suite extensions of a registered package |
+| `--dev` | `install` | adds development dependencies of the requested package |
+| `--target` | `install`, `link` | selects the target used to prepare the package |
+| `--workspace` | `link`, `unlink` | limits the link to the given working folder |
+
+`packages` lists installed versions and user links. `packages resolve` prints
+the graph actually selected for the given path; without a path, it analyzes
+the current folder.
+
+See [Install and select packages](Install-packages.md),
+[Develop with local packages](Develop-packages.md), and
+[Publish a package](Publish-package.md).
+
+## Compiler and editors
+
+```text
+silex setup
+silex update
+silex targets
+silex version
+silex lsp
+```
+
+`setup`, `update`, `targets`, `version`, and `lsp` accept no argument.
+`silex lsp` speaks LSP over standard streams; it is normally launched by an
+editor extension, not directly in an interactive terminal.
+
+The following general forms are also available:
+
+```text
+silex
+silex --help
+silex --version
+silex -V
+```
+
+Without a command, Silex displays the same help as `--help`.
+
+See [Update and maintain Silex](Maintain-Silex.md) and the installation pages
+for [Zed](Install-Zed-extension.md) or
+[VS Code](Install-VSCode-extension.md).
+
+[Back to the tools](README.md)
