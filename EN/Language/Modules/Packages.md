@@ -5,6 +5,17 @@ that physical name to logical modules. With `"sources": "Sources"`,
 `Sources/Geometry/Vec3.sx` provides `Geometry.Vec3` in an unnamed application
 and `Math.Geometry.Vec3` in the `Math` package.
 
+This is the minimal manifest for a local `Math` package that stores its sources
+in `Sources/`:
+
+```json
+{
+  "name": "Math",
+  "version": "1.4.1",
+  "sources": "Sources"
+}
+```
+
 The `sources` path is relative to `Package.json`. The value `"."` selects the
 package root. Exactly one folder is accepted: absolute paths, backslashes,
 empty segments, `.` or `..`, repeated separators, a trailing separator, globs,
@@ -56,6 +67,20 @@ An application sees only packages it declares directly. A transitive
 dependency is never automatically accessible. A folder named `Packages/` has
 no special meaning and does not make its neighbors visible.
 
+An application that imports the `Math` package declares it in its own
+`Package.json`:
+
+```json
+{
+  "dependencies": {
+    "Math": "^1.4.0"
+  }
+}
+```
+
+The `^1.4.0` range accepts compatible versions. Use `=1.4.0` when the project
+must select that exact version.
+
 For an explicit entry, Silex finds the nearest `Package.json` in its folder or
 parents. Resolution therefore does not depend on the folder from which the
 command is run. With a manifest, declared dependencies replace the implicit
@@ -69,6 +94,30 @@ cannot be exactly one of these names or begin with `Package.` or `Module.`.
 A qualified name extends the namespace of each of its prefixes. The parent
 must explicitly authorize a separately distributed child package. `GFX.*`
 authorizes only direct children such as `GFX.UI`, never `GFX.UI.Controls`.
+
+The current GFX manifest, for example, distinguishes a friend child, a suite
+member, and a child that combines both permissions:
+
+```json
+{
+  "extensions": {
+    "GFX.Physics": {
+      "friend": true
+    },
+    "GFX.UI": {
+      "suite": true
+    },
+    "GFX.GPU": {
+      "friend": true,
+      "suite": true
+    }
+  }
+}
+```
+
+This excerpt omits the other fields and children from GFX's actual
+`Package.json`. An empty value such as `"GFX.UI": {}` authorizes only the name
+without granting any additional permission.
 
 Every exact authorization can grant three independent permissions:
 

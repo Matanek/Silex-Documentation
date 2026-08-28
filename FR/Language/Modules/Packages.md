@@ -6,6 +6,17 @@ sans ajouter ce nom physique aux modules logiques. Avec
 `Geometry.Vec3` dans une application sans nom et `Math.Geometry.Vec3` dans le
 package `Math`.
 
+Voici le manifeste minimal d'un package local `Math` qui range ses sources
+dans `Sources/` :
+
+```json
+{
+  "name": "Math",
+  "version": "1.4.1",
+  "sources": "Sources"
+}
+```
+
 Le chemin `sources` est relatif à `Package.json`. La valeur `"."` sélectionne
 la racine du package. Un seul dossier est accepté : aucun chemin absolu, barre
 oblique inverse, segment vide, `.` ou `..`, séparateur répété, séparateur final,
@@ -58,6 +69,20 @@ dépendance transitive n'est jamais automatiquement accessible. Un dossier
 nommé `Packages/` n'a aucune signification spéciale et ne rend pas ses voisins
 visibles.
 
+Une application qui importe le package `Math` le déclare dans son propre
+`Package.json` :
+
+```json
+{
+  "dependencies": {
+    "Math": "^1.4.0"
+  }
+}
+```
+
+La plage `^1.4.0` accepte les versions compatibles. Utilisez `=1.4.0` lorsque
+le projet doit sélectionner exactement cette version.
+
 Pour une entrée explicite, Silex cherche le `Package.json` le plus proche dans
 son dossier puis dans ses parents. La résolution ne dépend donc pas du dossier
 depuis lequel la commande est lancée. Avec un manifeste, les dépendances
@@ -73,6 +98,30 @@ Un nom qualifié étend l'espace de noms de chacun de ses préfixes. Le parent d
 autoriser explicitement un package enfant distribué séparément. `GFX.*`
 autorise seulement les enfants directs tels que `GFX.UI`, jamais
 `GFX.UI.Controls`.
+
+Le manifeste actuel de GFX distingue par exemple un enfant ami, un membre de
+sa suite et un enfant qui cumule ces deux permissions :
+
+```json
+{
+  "extensions": {
+    "GFX.Physics": {
+      "friend": true
+    },
+    "GFX.UI": {
+      "suite": true
+    },
+    "GFX.GPU": {
+      "friend": true,
+      "suite": true
+    }
+  }
+}
+```
+
+Cet extrait omet les autres champs et enfants du véritable `Package.json` de
+GFX. Une valeur vide, comme `"GFX.UI": {}`, autorise seulement le nom sans
+accorder de permission supplémentaire.
 
 Chaque autorisation exacte peut accorder trois permissions indépendantes :
 
