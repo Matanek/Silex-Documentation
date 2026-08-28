@@ -7,7 +7,9 @@ and constraints.
 | --- | --- |
 | Immutable variable | `let name:type = value` |
 | Mutable variable | `var name:type = value` |
-| Line comment | `// comment` |
+| Recommended line comment | `// comment` |
+| Alternate line comment | `# comment` |
+| Block comment | `/* comment */` |
 | String | `"text"` |
 | Block string | `"` followed by indented lines and a `"` alone on its line |
 | Interpolation | `"value: $(expression)"` |

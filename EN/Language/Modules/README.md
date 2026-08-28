@@ -4,7 +4,7 @@ Choose how a file receives its identity, how code loads it, and which
 declarations it exposes.
 
 - [Import and qualify a declaration](Imports.md)
-- [Map folders to modules](Layout.md)
+- [Map files to modules](Layout.md)
 - [Compose portable and targeted fragments](Fragments.md)
 - [Re-export and contribute to a facade](Reexports.md)
 - [Expose or hide a declaration](Visibility.md)

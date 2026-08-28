@@ -1,64 +1,101 @@
-# Faire correspondre dossiers et modules
+# Faire correspondre fichiers et modules
 
-Un fichier `@module.sx` ou `@Module.sx` contribue directement au module logique
-représenté par son dossier. Les deux graphies ont exactement le même sens et
-leur nom structurel n'apparaît jamais dans un chemin source.
-
-```text
-GFX/Module/@module.sx                 → GFX
-GFX/Module/GPU/@module.sx             → GFX.GPU
-GFX/Module/GPU/@Module.sx             → GFX.GPU
-GFX/Module/GPU/Device.sx              → GFX.GPU.Device
-Sandbox/MonModule/@Module.sx          → MonModule
-```
-
-## Définir la frontière principale d'un module
-
-Le module principal possède aussi les modules d'implémentation placés sous son
-dossier pour les règles de visibilité. Une déclaration sans qualification dans
-`GFX/Module/GPU/Device.sx` est donc disponible aux autres fichiers sous
-`GFX.GPU`, mais pas à `GFX.Scene` ni aux consommateurs du package.
-
-Les chemins enfants restent des imports distincts : cette propriété ne fusionne
-pas les fichiers et ne change pas leur nom de module.
-
-Sans `Package.json`, compiler ou éditer directement un module principal prend
-le parent de son dossier comme racine implicite. `Sandbox/Test/@Module.sx`
-conserve ainsi l'identité `Test` : `Package.` voit les enfants directs de
-`Sandbox`, tandis que `Package.Test.` atteint les enfants de `Test`.
-
-Le fichier principal suit les règles ordinaires. Il peut définir une façade
-avec des réexportations publiques, des aides privées et ses propres `use`.
-Importer ou qualifier son module logique le charge.
-
-Un fichier plat et un fichier principal ne peuvent pas fournir le même module
-dans une même racine. `GPU.sx` et `GPU/@module.sx` sont donc incompatibles, tout
-comme `@module.sx` et `@Module.sx` dans un même dossier. Les racines portable,
-plateforme et cible exacte peuvent toutefois fournir leurs fragments
-correspondants d'un même module.
-
-## Combiner un module et son espace enfant
-
-Un module et les modules placés sous le même chemin forment un espace qualifié :
+Un fichier ordinaire crée un module à partir de son chemin. Un fichier dont le
+nom commence par `@` suit une autre intention : il contribue au module logique
+représenté par son dossier.
 
 ```text
-STD/Module/Math.sx       → STD.Math
-STD/Module/Math.Vec3.sx  → STD.Math.Vec3
+GFX/Module/GPU/Device.sx     → GFX.GPU.Device
+GFX/Module/GPU/@Device.sx    → GFX.GPU
 ```
 
-Le chemin physique `Math/Vec3.sx` fournit le même module enfant. Un seul import
-peut ensuite exposer les deux parties à la demande :
+Le préfixe `@` appartient seulement au nom physique du fichier. Il ne devient
+jamais un segment d'import, un espace de noms ou une déclaration Silex.
+
+## Répartir un module entre plusieurs fichiers
+
+Un dossier peut contenir plusieurs fichiers `@Nom.sx`. Silex les compose avant
+d'analyser le module. `STD.Math` utilise cette organisation pour séparer les
+opérations scalaires, les vecteurs et les matrices sans créer de sous-modules :
+
+```text
+STD/Module/Math/@Scalar.sx    → STD.Math
+STD/Module/Math/@Vec2.sx      → STD.Math
+STD/Module/Math/@Vec3.sx      → STD.Math
+STD/Module/Math/@Mat3.sx      → STD.Math
+```
+
+Un seul import donne accès aux déclarations publiques de tous ces atomes :
 
 ```sx
 use STD.Math
 
-let angle = Math.cos(0.0)
-let position = Math.Vec3(x:1.0, y:2.0, z:3.0)
+let angle = Math.radians(90.0)
+let direction = Math.Vec3(x:1.0, y:0.0, z:0.0)
 ```
 
-Une déclaration publique ou une réexportation publique explicitement nommée
-`Vec3` dans `Math.sx` l'emporte sur le module enfant du même nom. Une déclaration
-privée ne masque jamais un module enfant public pour les appelants.
+`Math.Vec3` désigne ici la structure publique `Vec3` déclarée dans
+`@Vec3.sx`. Les chemins `STD.Math.@Vec3` et `Math.@Vec3` n'existent pas, et les
+éditeurs ne proposent pas les noms physiques des atomes comme modules.
+
+## Nommer un atome selon son rôle
+
+Préférez un nom descriptif pour les nouveaux fichiers : `@Scalar.sx`,
+`@Vectors.sx` ou `@Serialization.sx` indiquent immédiatement ce qu'ils
+contiennent.
+
+`@Module.sx`, historiquement utilisé comme fichier principal ou façade, reste
+accepté pour la rétrocompatibilité. Il n'a plus de privilège particulier :
+Silex le compose exactement comme n'importe quel autre `@Nom.sx`. Les sources
+existantes peuvent donc le conserver, tandis que le nouveau code peut choisir
+des noms plus précis.
+
+## Partager le module sans fusionner les fichiers
+
+Les déclarations de visibilité `module` — la visibilité par défaut au niveau
+supérieur — sont accessibles entre les atomes. Une fonction, un type ou une
+enum déclarés dans un atome peuvent donc être utilisés directement dans un
+autre. Importer le module active aussi les extensions fournies par tous ses
+atomes.
+
+Chaque fichier conserve cependant ses propres `use` et déclarations `local`.
+Les diagnostics, les tests, la navigation vers une définition et les chemins
+d'assets continuent de désigner le fichier physique exact.
+
+Le module composé possède aussi les modules d'implémentation placés sous son
+dossier pour les règles de visibilité. Une déclaration de `GFX.GPU.Device`
+peut ainsi être visible par `GFX.GPU` sans rendre `Device.sx` invisible ni
+changer son chemin d'import.
+
+## Éviter les représentations concurrentes
+
+Un dossier peut contenir autant d'atomes `@Nom.sx` distincts que nécessaire.
+Deux déclarations de même nom restent une erreur : l'ordre des fichiers ne
+choisit jamais de gagnant et aucun atome n'en remplace un autre.
+
+Un fichier plat et des atomes ne peuvent pas représenter le même module dans
+une même racine. `GPU.sx` et `GPU/@Device.sx` sont donc incompatibles. Les
+racines portable, plateforme et cible exacte peuvent néanmoins fournir leurs
+fragments correspondants selon les règles de
+[composition ciblée](Fragments.md).
+
+## Créer un module enfant
+
+Sans préfixe `@`, le nom du fichier reste un segment de module :
+
+```text
+STD/Module/Math/@Scalar.sx         → STD.Math
+STD/Module/Math/Geometry.sx        → STD.Math.Geometry
+STD/Module/Math/Geometry/@Shape.sx → STD.Math.Geometry
+```
+
+Un module et ses enfants forment un espace qualifié. Une déclaration publique
+explicitement nommée comme un enfant l'emporte sur ce module enfant ; une
+déclaration privée ne le masque pas pour les appelants.
+
+Sans `Package.json`, compiler ou éditer directement un atome utilise le parent
+de son dossier comme racine implicite. `Sandbox/Test/@Display.sx` conserve
+ainsi l'identité de module `Test`, et non `Test.@Display`.
 
 [Revenir aux modules](README.md) ·
-[Composer des fragments ciblés](Fragments.md)
+[Exposer ou masquer une déclaration](Visibility.md)

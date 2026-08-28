@@ -10,6 +10,13 @@ package root. Exactly one folder is accepted: absolute paths, backslashes,
 empty segments, `.` or `..`, repeated separators, a trailing separator, globs,
 and arrays are forbidden.
 
+Inside that root, every `@Name.sx` file contributes to the module represented
+by its directory. At the `Module/` root of a `Math` package,
+`@Operations.sx` and `@Vectors.sx` therefore both belong to `Math`. Their
+physical names can never be imported. `@Module.sx` remains accepted as the old
+conventional name, with no special semantics. See the complete
+[file-to-module mapping](Layout.md) for the full organization contract.
+
 ## Select sources for the target
 
 A package may add roots for the platform and exact target:

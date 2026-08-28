@@ -1,63 +1,96 @@
-# Map folders to modules
+# Map files to modules
 
-An `@module.sx` or `@Module.sx` file contributes directly to the logical module
-represented by its folder. Both spellings have exactly the same meaning, and
-their structural name never appears in a source path.
-
-```text
-GFX/Module/@module.sx                 → GFX
-GFX/Module/GPU/@module.sx             → GFX.GPU
-GFX/Module/GPU/@Module.sx             → GFX.GPU
-GFX/Module/GPU/Device.sx              → GFX.GPU.Device
-Sandbox/MyModule/@Module.sx           → MyModule
-```
-
-## Define a module's primary boundary
-
-For visibility rules, the primary module also owns implementation modules
-under its folder. An unqualified declaration in `GFX/Module/GPU/Device.sx` is
-therefore available to other files under `GFX.GPU`, but not to `GFX.Scene` or
-package consumers.
-
-Child paths remain distinct imports: this ownership neither merges files nor
-changes their module names.
-
-Without `Package.json`, directly compiling or editing a primary module uses
-the parent of its folder as the implicit root. `Sandbox/Test/@Module.sx` thus
-retains the identity `Test`: `Package.` sees direct children of `Sandbox`,
-while `Package.Test.` reaches children of `Test`.
-
-The primary file follows ordinary rules. It may define a facade with public
-re-exports, private helpers, and its own `use` declarations. Importing or
-qualifying its logical module loads it.
-
-A flat file and a primary file cannot provide the same module in one root.
-`GPU.sx` and `GPU/@module.sx` are therefore incompatible, as are `@module.sx`
-and `@Module.sx` in the same folder. Portable, platform, and exact-target roots
-may still provide corresponding fragments of the same module.
-
-## Combine a module and its child namespace
-
-A module and modules under the same path form a qualified namespace:
+An ordinary file creates a module from its path. A file whose name starts with
+`@` expresses a different intention: it contributes to the logical module
+represented by its directory.
 
 ```text
-STD/Module/Math.sx       → STD.Math
-STD/Module/Math.Vec3.sx  → STD.Math.Vec3
+GFX/Module/GPU/Device.sx     → GFX.GPU.Device
+GFX/Module/GPU/@Device.sx    → GFX.GPU
 ```
 
-The physical path `Math/Vec3.sx` provides the same child module. One import can
-then expose both parts on demand:
+The `@` prefix belongs only to the physical filename. It never becomes an
+import segment, namespace, or Silex declaration.
+
+## Split one module across files
+
+A directory may contain several `@Name.sx` files. Silex composes them before
+analyzing the module. `STD.Math` uses this organization to separate scalar
+operations, vectors, and matrices without creating submodules:
+
+```text
+STD/Module/Math/@Scalar.sx    → STD.Math
+STD/Module/Math/@Vec2.sx      → STD.Math
+STD/Module/Math/@Vec3.sx      → STD.Math
+STD/Module/Math/@Mat3.sx      → STD.Math
+```
+
+One import exposes the public declarations from all these atoms:
 
 ```sx
 use STD.Math
 
-let angle = Math.cos(0.0)
-let position = Math.Vec3(x:1.0, y:2.0, z:3.0)
+let angle = Math.radians(90.0)
+let direction = Math.Vec3(x:1.0, y:0.0, z:0.0)
 ```
 
-A public declaration or public re-export explicitly named `Vec3` in `Math.sx`
-takes precedence over the child module of the same name. A private declaration
-never hides a public child module from callers.
+`Math.Vec3` here names the public `Vec3` structure declared in `@Vec3.sx`.
+The `STD.Math.@Vec3` and `Math.@Vec3` paths do not exist, and editors do not
+offer physical atom names as modules.
+
+## Name an atom after its role
+
+Prefer a descriptive name for new files: `@Scalar.sx`, `@Vectors.sx`, or
+`@Serialization.sx` immediately says what each file contains.
+
+`@Module.sx`, historically used as a primary file or facade, remains accepted
+for backward compatibility. It has no special privilege: Silex composes it
+exactly like any other `@Name.sx`. Existing sources may therefore keep it,
+while new code can choose more precise names.
+
+## Share the module without merging files
+
+Declarations with `module` visibility—the top-level default—are available
+across atoms. A function, type, or enum declared in one atom can therefore be
+used directly in another. Importing the module also activates extensions from
+all of its atoms.
+
+Each file still retains its own `use` declarations and `local` declarations.
+Diagnostics, tests, definition navigation, and asset paths continue to name
+the exact physical file.
+
+For visibility purposes, the composed module also owns implementation modules
+under its directory. A declaration from `GFX.GPU.Device` can therefore be
+visible to `GFX.GPU` without hiding `Device.sx` or changing its import path.
+
+## Avoid competing representations
+
+A directory may contain as many distinct `@Name.sx` atoms as needed. Two
+declarations with the same name remain an error: file order never selects a
+winner, and one atom never overrides another.
+
+A flat file and source atoms cannot represent the same module in one root.
+`GPU.sx` and `GPU/@Device.sx` are therefore incompatible. Portable, platform,
+and exact-target roots may still provide their corresponding fragments under
+the [targeted composition rules](Fragments.md).
+
+## Create a child module
+
+Without an `@` prefix, the filename remains a module segment:
+
+```text
+STD/Module/Math/@Scalar.sx         → STD.Math
+STD/Module/Math/Geometry.sx        → STD.Math.Geometry
+STD/Module/Math/Geometry/@Shape.sx → STD.Math.Geometry
+```
+
+A module and its children form a qualified namespace. A public declaration
+explicitly named after a child takes precedence over that child module; a
+private declaration does not hide it from callers.
+
+Without `Package.json`, compiling or editing an atom directly uses the parent
+of its directory as the implicit root. `Sandbox/Test/@Display.sx` therefore
+keeps the `Test` module identity, not `Test.@Display`.
 
 [Back to modules](README.md) ·
-[Compose targeted fragments](Fragments.md)
+[Expose or hide a declaration](Visibility.md)

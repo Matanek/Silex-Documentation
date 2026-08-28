@@ -7,7 +7,9 @@ comportement et ses contraintes.
 | --- | --- |
 | Variable immuable | `let name:type = value` |
 | Variable modifiable | `var name:type = value` |
-| Commentaire de ligne | `// commentaire` |
+| Commentaire de ligne recommandé | `// commentaire` |
+| Commentaire de ligne alternatif | `# commentaire` |
+| Commentaire de bloc | `/* commentaire */` |
 | Chaîne | `"texte"` |
 | Chaîne en bloc | `"` puis des lignes indentées et un `"` seul sur sa ligne |
 | Interpolation | `"valeur : $(expression)"` |

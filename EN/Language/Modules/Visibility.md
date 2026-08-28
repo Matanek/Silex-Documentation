@@ -1,8 +1,9 @@
 # Expose or hide a declaration
 
 At module level, a declaration without a modifier has `module` visibility. All
-files owned by the same primary module can use it, including its implementation
-modules and selected portable, `Platform`, and `Target` fragments.
+files owned by the same composed logical module can use it: its `@Name.sx`
+atoms, implementation modules, and selected portable, `Platform`, and `Target`
+fragments.
 
 ```sx
 func helper() {}
@@ -21,7 +22,7 @@ func main() {
 - `public` exposes the declaration to package consumers.
 - `package` exposes it to modules in the package and child packages authorized
   with `friend: true`.
-- `module` exposes it to the primary logical module; this is the default.
+- `module` exposes it to the composed logical module; this is the default.
 - `local` limits it to the exact source file.
 
 ```sx
@@ -34,10 +35,10 @@ The explicit `module` modifier remains accepted when a boundary needs
 emphasis, but omitting it is the usual style.
 
 Two packages sharing a prefix do not share `package` access without `friend`
-permission. A `local` declaration never crosses its file. Files owned by one
-primary module share `module` access without merging their lexical scopes or
-imports. Without a primary module, two sibling paths remain distinct
-boundaries.
+permission. A `local` declaration never crosses its file. Atoms from one
+module share `module` access without merging their lexical scopes or imports;
+their physical `@Name` never enters a source path. Without an atom, two sibling
+paths remain distinct boundaries.
 
 `private` and `protected` are relative to a type and are therefore rejected at
 module level. `private` belongs to the declaring type family; `protected` is

@@ -26,8 +26,10 @@ not re-export the `Rendering.Renderer` tree.
 ## Contribute to a parent catalog
 
 A qualified child package may add its own public declarations to a catalog
-explicitly opened by its parent. Blocks live in the child's portable primary
-module, `Module/@Module.sx`:
+explicitly opened by its parent. Blocks live in a portable atom of the child's
+primary module. For a new package, prefer an explicit name such as
+`Module/@Catalogs.sx`; the historical `Module/@Module.sx` location remains
+accepted:
 
 ```sx
 contribute GFX.Components {

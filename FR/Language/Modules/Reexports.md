@@ -26,8 +26,10 @@ réexporte pas l'arbre `Rendering.Renderer`.
 ## Contribuer à un catalogue parent
 
 Un package enfant qualifié peut ajouter ses propres déclarations publiques à
-un catalogue explicitement ouvert par son parent. Les blocs vivent dans le
-module principal portable `Module/@Module.sx` de l'enfant :
+un catalogue explicitement ouvert par son parent. Les blocs vivent dans un
+atome portable du module principal de l'enfant. Pour un nouveau package,
+préférez un nom explicite tel que `Module/@Catalogs.sx` ; l'emplacement
+historique `Module/@Module.sx` reste accepté :
 
 ```sx
 contribute GFX.Components {

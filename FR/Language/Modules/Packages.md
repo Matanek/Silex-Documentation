@@ -11,6 +11,13 @@ la racine du package. Un seul dossier est accepté : aucun chemin absolu, barre
 oblique inverse, segment vide, `.` ou `..`, séparateur répété, séparateur final,
 glob ou tableau n'est autorisé.
 
+Dans cette racine, chaque fichier `@Nom.sx` contribue au module représenté par
+son dossier. À la racine `Module/` d'un package `Math`, `@Operations.sx` et
+`@Vectors.sx` appartiennent donc tous deux à `Math`. Leurs noms physiques ne
+s'importent jamais. `@Module.sx` reste accepté comme ancien nom conventionnel,
+sans sémantique particulière. Consultez la
+[correspondance entre fichiers et modules](Layout.md) pour le découpage complet.
+
 ## Sélectionner les sources de la cible
 
 Un package peut ajouter des racines pour la plateforme et la cible exacte :

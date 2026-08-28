@@ -4,7 +4,7 @@ Choisissez comment un fichier reçoit son identité, comment le code le charge e
 quelles déclarations il expose.
 
 - [Importer et qualifier une déclaration](Imports.md)
-- [Faire correspondre dossiers et modules](Layout.md)
+- [Faire correspondre fichiers et modules](Layout.md)
 - [Composer des fragments portables et ciblés](Fragments.md)
 - [Réexporter et contribuer à une façade](Reexports.md)
 - [Exposer ou masquer une déclaration](Visibility.md)

@@ -1,9 +1,9 @@
 # Exposer ou masquer une déclaration
 
 Au niveau d'un module, une déclaration sans modificateur possède la visibilité
-`module`. Tous les fichiers possédés par le même module principal peuvent
-l'utiliser, y compris ses modules d'implémentation et ses fragments portable,
-`Platform` et `Target` sélectionnés.
+`module`. Tous les fichiers possédés par le même module logique composé peuvent
+l'utiliser : ses atomes `@Nom.sx`, ses modules d'implémentation et ses fragments
+portable, `Platform` et `Target` sélectionnés.
 
 ```sx
 func helper() {}
@@ -22,7 +22,7 @@ func main() {
 - `public` expose la déclaration aux consommateurs du package.
 - `package` l'expose aux modules du package et aux packages enfants autorisés
   avec `friend: true`.
-- `module` l'expose au module logique principal ; c'est la valeur par défaut.
+- `module` l'expose au module logique composé ; c'est la valeur par défaut.
 - `local` la limite au fichier source exact.
 
 ```sx
@@ -35,10 +35,10 @@ Le modificateur `module` explicite reste accepté lorsqu'une frontière demande
 à être soulignée, mais son omission est le style courant.
 
 Deux packages partageant un préfixe ne partagent pas `package` sans permission
-`friend`. Une déclaration `local` ne franchit jamais son fichier. Les fichiers
-possédés par un module principal partagent `module` sans fusionner leurs
-portées lexicales ni leurs imports. Sans module principal, deux chemins frères
-restent deux frontières distinctes.
+`friend`. Une déclaration `local` ne franchit jamais son fichier. Les atomes
+d'un même module partagent `module` sans fusionner leurs portées lexicales ni
+leurs imports ; leur nom physique `@Nom` n'entre jamais dans un chemin source.
+Sans atome, deux chemins frères restent deux frontières distinctes.
 
 `private` et `protected` sont relatifs à un type et sont donc refusés au niveau
 du module. `private` appartient à la famille du type déclarant ; `protected`
