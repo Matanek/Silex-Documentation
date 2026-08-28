@@ -29,7 +29,7 @@ comportement et ses contraintes.
 | Extraction optionnelle forcée | `optional!` |
 | Remplacement optionnel | `optional ?? fallback` |
 | Constructeur | `init(value:type) { ... }` |
-| Import canonique | `use STD.UUID` |
+| Import d'un package global | `use STD.UUID` |
 | Import ancré au package | `use Package.UUID` |
 | Import ancré au dossier courant | `use Module.UUID` |
 | Chemin qualifié du package | `Package.UUID.Value` |
