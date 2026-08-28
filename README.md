@@ -20,3 +20,9 @@ Internal compiler and maintenance documentation remains in the
 
 La documentation interne et de maintenance du compilateur reste dans le
 [dépôt Silex](https://github.com/Matanek/Silex/tree/main/Docs).
+
+## Examples · Exemples
+
+The [Silex-Examples](https://github.com/Matanek/Silex-Examples) repository
+contains complete visual and interactive applications. Le dépôt rassemble des
+applications Silex complètes, visuelles et directement exécutables.

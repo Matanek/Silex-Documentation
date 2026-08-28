@@ -11,4 +11,9 @@ parcours qui correspond à votre besoin.
 - [Trouver un contrat exact](Reference/README.md) dans la référence du langage
   implémenté.
 
+Pour explorer des applications complètes, visuelles et exécutables, consultez
+le dépôt [Silex-Examples](https://github.com/Matanek/Silex-Examples). Son
+README indique les packages nécessaires et la commande de lancement de chaque
+démonstration.
+
 [Read in English](../EN/README.md)
