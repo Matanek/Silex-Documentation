@@ -41,4 +41,4 @@ compilation, dépendance de cache et limite de 16 Mio.
 peuvent pas être redéclarées, utilisées comme liaisons ni importées sous alias.
 
 [Revenir aux modules](README.md) ·
-[Comprendre les déclarations intrinsèques](../../Reference/Intrinsic-declarations.md)
+[Comprendre les classes intrinsèques](../Data-types/Intrinsic-classes.md)

@@ -1,4 +1,4 @@
-# Reconnaître une déclaration fournie par le compilateur
+# Comprendre une classe intrinsèque
 
 Une `intrinsic class` publie une API source dont le stockage et le comportement
 sont fournis par le compilateur Silex.
@@ -25,5 +25,5 @@ héritage, ni conformance de protocole. Ces détails appartiennent à
 l'implémentation fournie. Un consommateur construit et appelle une classe
 intrinsèque comme toute classe publique ordinaire.
 
-[Revenir à la référence](README.md) ·
-[Observer les métadonnées d'une valeur](../Language/Data-types/Reflection.md)
+[Revenir aux types de données](README.md) ·
+[Observer les métadonnées d'une valeur](Reflection.md)

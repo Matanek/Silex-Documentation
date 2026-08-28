@@ -5,6 +5,7 @@ variations de vos données.
 
 - [Créer une valeur nominale avec une structure](Structures.md)
 - [Partager une identité avec une classe](Classes.md)
+- [Comprendre une classe intrinsèque](Intrinsic-classes.md)
 - [Spécialiser une classe par héritage](Inheritance.md)
 - [Définir des membres et des conteneurs statiques](Static-members.md)
 - [Adapter un type à plusieurs types concrets](Generics.md)

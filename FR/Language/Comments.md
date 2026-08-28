@@ -17,5 +17,5 @@ let address = "https://silex-lang.org/"
 Utilisez `//` dans les exemples et le code officiel. Les commentaires `#` et
 les blocs `/* ... */` ne font pas partie du langage Silex 0.42.
 
-[Revenir à la référence](README.md) ·
-[Retrouver une forme syntaxique](Syntax.md)
+[Revenir aux concepts du langage](README.md) ·
+[Retrouver une forme syntaxique](../Reference/Syntax.md)

@@ -5,6 +5,7 @@ par Silex 0.42. Choisissez la question qui correspond à votre intention ; les
 pages de référence restent réservées aux formes exactes et aux limites.
 
 - [Conserver, transformer et comparer des valeurs](Values/README.md)
+- [Écrire un commentaire](Comments.md)
 - [Choisir une branche ou répéter une action](Control-flow/README.md)
 - [Définir, appeler et composer des fonctions](Functions/README.md)
 - [Modéliser des données](Data-types/README.md)

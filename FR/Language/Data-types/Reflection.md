@@ -77,4 +77,4 @@ seulement les chaînes et listes ordinaires demandées par la catégorie ; aucun
 adresse mémoire, position de champ, symbole machine ou ABI stable n'est exposé.
 
 [Revenir aux types de données](README.md) ·
-[Comprendre les déclarations intrinsèques](../../Reference/Intrinsic-declarations.md)
+[Comprendre les classes intrinsèques](Intrinsic-classes.md)

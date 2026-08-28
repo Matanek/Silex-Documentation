@@ -1,6 +1,7 @@
 # Écrire une valeur littérale
 
-Cette page rassemble les formes littérales reconnues par Silex 0.42.
+Un littéral inscrit directement une valeur dans le code source. Silex 0.42
+reconnaît les formes suivantes.
 
 ## Nombres
 
@@ -28,8 +29,8 @@ let missing:Item? = null
 
 Les chaînes ordinaires, leurs échappements, les chaînes en bloc et
 l'interpolation sont détaillés dans
-[la documentation du texte](../Language/Values/Strings.md). `null` possède un
+[la documentation du texte](Strings.md). `null` possède un
 type optionnel déterminé par son contexte.
 
-[Revenir à la référence](README.md) ·
-[Choisir un type intégré](../Language/Values/Built-in-types.md)
+[Revenir aux valeurs](README.md) ·
+[Choisir un type intégré](Built-in-types.md)
