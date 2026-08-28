@@ -40,7 +40,7 @@ Sans annotation, le compilateur déduit le type depuis la première valeur.
 Dans l'exemple, il déduit que `lessons` est un `int` à partir de `1`.
 
 Pour comparer les types disponibles et choisir une largeur précise, consultez
-[les types intégrés de Silex](../Language/Built-in-types.md).
+[les types intégrés de Silex](Built-in-types.md).
 
-[Leçon précédente : écrire un premier programme](First-program.md) ·
-[Revenir au parcours d'apprentissage](README.md)
+[Revenir aux concepts du langage](README.md) ·
+[Choisir un type intégré](Built-in-types.md)

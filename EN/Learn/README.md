@@ -1,7 +1,7 @@
 # Learn Silex
 
-Follow a deliberate path from the first program to complete Silex
-applications. Each lesson introduces one useful idea, demonstrates it in a
-complete program, and prepares the next lesson.
+Build complete Silex programs through guided tutorials. These tutorials
+combine concepts documented in the [language section](../Language/README.md)
+instead of duplicating their definitions and rules.
 
 [Documentation home](../README.md) · [Lire en français](../../FR/Learn/README.md)
