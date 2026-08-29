@@ -102,6 +102,10 @@ struct Counter {
 A method receives `self` implicitly. Silex infers whether it modifies `self`;
 a modifying call requires a receiver declared with `var`.
 
+A member that computes or controls its access is declared as a
+[property](Properties.md). It does not thereby become a parameter of the
+automatic named-field initializer.
+
 ## Nest a type
 
 ```sx

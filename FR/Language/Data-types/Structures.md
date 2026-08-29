@@ -103,6 +103,10 @@ struct Counter {
 Une méthode reçoit `self` implicitement. Silex déduit si elle le modifie ; un
 appel modifiable exige un récepteur déclaré avec `var`.
 
+Un membre qui calcule ou contrôle son accès se déclare comme une
+[propriété](Properties.md). Il ne devient pas pour autant un paramètre de
+l'initialiseur automatique par champs nommés.
+
 ## Imbriquer un type
 
 ```sx

@@ -7,6 +7,7 @@ data.
 - [Share an identity with a class](Classes.md)
 - [Understand an intrinsic class](Intrinsic-classes.md)
 - [Specialize a class through inheritance](Inheritance.md)
+- [Control access with a property](Properties.md)
 - [Define static members and containers](Static-members.md)
 - [Adapt a type to several concrete types](Generics.md)
 - [Run deterministic cleanup](Cleanup.md)

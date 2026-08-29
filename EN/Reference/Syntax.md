@@ -20,6 +20,9 @@ and constraints.
 | Class | `class Name { ... }` |
 | Compiler-provided contract | `intrinsic class Name { ... }` |
 | Protocol | `protocol Name { ... }` |
+| Read-only property | `let name:type { get { ... } }` |
+| Read-write property | `var name:type { get { ... } set(value) { ... } }` |
+| Property requirement | `name:type { get }` or `name:type { get set }` |
 | Extension | `extend Name { ... }` |
 | Catalog contribution | `contribute GFX.Components { public use GFX.Physics.RigidBody2D.RigidBody2D }` |
 | Enum variant | `caseName(Type)` inside an `enum` |

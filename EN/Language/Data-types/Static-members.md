@@ -22,6 +22,10 @@ func main() {
 A class accepts the same static members. They are neither inherited nor
 dynamically dispatched.
 
+A [static property](Properties.md#lazily-initialize-a-static-member) may
+initialize its own storage on the first read, notably to express a singleton
+without a second cache field.
+
 ## Create a container without instances
 
 Declare `static struct` or `static class` when a type exists only to qualify

@@ -50,8 +50,10 @@ assert(metadata.variants[1] == "text")
 
 ## Inspect a structure or class
 
-`fields` and `methods` contain the instance fields and methods visible at the
-call site, in declaration order. The `private`, `protected`, `package`,
+`fields`, `properties`, and `methods` respectively contain the instance
+fields, properties, and methods visible at the call site, in declaration
+order. A property's generated accessors are never repeated in `methods`. The
+`private`, `protected`, `package`,
 `module`, and `local` scopes still apply: reflection reveals nothing that
 ordinary code could not already reach at the same location. Static members are
 not part of instance reflection.

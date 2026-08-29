@@ -7,6 +7,7 @@ variations de vos données.
 - [Partager une identité avec une classe](Classes.md)
 - [Comprendre une classe intrinsèque](Intrinsic-classes.md)
 - [Spécialiser une classe par héritage](Inheritance.md)
+- [Contrôler un accès avec une propriété](Properties.md)
 - [Définir des membres et des conteneurs statiques](Static-members.md)
 - [Adapter un type à plusieurs types concrets](Generics.md)
 - [Exécuter un nettoyage déterministe](Cleanup.md)

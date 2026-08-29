@@ -22,6 +22,10 @@ func main() {
 Une classe accepte les mêmes membres statiques. Ils ne sont ni hérités ni
 distribués dynamiquement.
 
+Une [propriété statique](Properties.md#initialiser-paresseusement-un-membre-statique)
+peut initialiser son propre stockage à la première lecture, notamment pour
+exprimer un singleton sans second champ de cache.
+
 ## Créer un conteneur sans instance
 
 Déclarez `static struct` ou `static class` lorsqu'un type sert uniquement à

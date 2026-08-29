@@ -22,6 +22,26 @@ func main() {
 Conformance is nominal: the type must name the protocol. A method with the
 right form is not sufficient by itself.
 
+## Require a property
+
+A protocol may require reading, or both reading and writing, without imposing
+storage:
+
+```sx
+protocol Named {
+    name:str { get }
+}
+
+protocol Renamable {
+    name:str { get set }
+}
+```
+
+A compatible `let` or `var` field satisfies `{ get }`. Only a `var` field, or
+a computed property with both getter and setter, satisfies `{ get set }`.
+`let` and `var` are not allowed in the protocol itself. See the
+[complete property contract](Properties.md).
+
 ## Store a conforming value
 
 ```sx

@@ -52,8 +52,10 @@ assert(metadata.variants[1] == "text")
 
 ## Inspecter une structure ou une classe
 
-`fields` et `methods` contiennent les champs et méthodes d'instance visibles
-au site d'appel, dans leur ordre de déclaration. Les portées `private`,
+`fields`, `properties` et `methods` contiennent respectivement les champs, les
+propriétés et les méthodes d'instance visibles au site d'appel, dans leur ordre
+de déclaration. Les accesseurs générés d'une propriété ne sont jamais répétés
+dans `methods`. Les portées `private`,
 `protected`, `package`, `module` et `local` continuent de s'appliquer : la
 réflexion ne révèle rien que le code ordinaire ne puisse déjà atteindre au
 même endroit. Les membres statiques ne font pas partie de la réflexion d'une

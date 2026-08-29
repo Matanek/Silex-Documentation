@@ -22,6 +22,26 @@ func main() {
 La conformance est nominale : le type doit citer le protocole. Une méthode de
 la bonne forme ne suffit pas à elle seule.
 
+## Exiger une propriété
+
+Un protocole peut demander une lecture, ou une lecture et une écriture, sans
+imposer de stockage :
+
+```sx
+protocol Named {
+    name:str { get }
+}
+
+protocol Renamable {
+    name:str { get set }
+}
+```
+
+Un champ `let` ou `var` compatible satisfait `{ get }`. Seul un champ `var`,
+ou une propriété calculée avec getter et setter, satisfait `{ get set }`.
+`let` et `var` ne sont pas admis dans le protocole lui-même. Consultez le
+[contrat complet des propriétés](Properties.md).
+
 ## Conserver une valeur conforme
 
 ```sx
