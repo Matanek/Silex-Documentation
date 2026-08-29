@@ -21,7 +21,9 @@ and constraints.
 | Compiler-provided contract | `intrinsic class Name { ... }` |
 | Protocol | `protocol Name { ... }` |
 | Read-only property | `let name:type { get { ... } }` |
-| Read-write property | `var name:type { get { ... } set(value) { ... } }` |
+| Initialized property | `var name:type = value { get { ... } }` |
+| Property with implicit setter | `var name:type { get { ... } }` |
+| Property with explicit setter | `var name:type { get { ... } set(value) { ... } }` |
 | Property requirement | `name:type { get }` or `name:type { get set }` |
 | Extension | `extend Name { ... }` |
 | Catalog contribution | `contribute GFX.Components { public use GFX.Physics.RigidBody2D.RigidBody2D }` |

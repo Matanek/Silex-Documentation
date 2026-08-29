@@ -21,7 +21,9 @@ comportement et ses contraintes.
 | Contrat fourni par le compilateur | `intrinsic class Name { ... }` |
 | Protocole | `protocol Name { ... }` |
 | Propriété en lecture | `let name:type { get { ... } }` |
-| Propriété en lecture et écriture | `var name:type { get { ... } set(value) { ... } }` |
+| Propriété initialisée | `var name:type = value { get { ... } }` |
+| Propriété avec setter implicite | `var name:type { get { ... } }` |
+| Propriété avec setter explicite | `var name:type { get { ... } set(value) { ... } }` |
 | Exigence de propriété | `name:type { get }` ou `name:type { get set }` |
 | Extension | `extend Name { ... }` |
 | Contribution à un catalogue | `contribute GFX.Components { public use GFX.Physics.RigidBody2D.RigidBody2D }` |

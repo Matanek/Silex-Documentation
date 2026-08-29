@@ -37,10 +37,10 @@ protocol Renamable {
 }
 ```
 
-A compatible `let` or `var` field satisfies `{ get }`. Only a `var` field, or
-a computed property with both getter and setter, satisfies `{ get set }`.
-`let` and `var` are not allowed in the protocol itself. See the
-[complete property contract](Properties.md).
+A compatible `let` or `var` field satisfies `{ get }`. A `var` field or `var`
+property satisfies `{ get set }`; its setter may be implicit or explicit.
+`let` and `var` are not allowed in the protocol itself. See the [complete
+property contract](Properties.md).
 
 ## Store a conforming value
 

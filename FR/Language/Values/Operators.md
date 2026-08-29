@@ -36,6 +36,10 @@ tous leurs champs le sont ; leur comparaison est récursive. Les enums
 comparent leur variante active puis leurs valeurs associées. Les classes
 comparent leur identité partagée, pas le contenu de leurs champs.
 
+Comparer `T?` avec une valeur `T` promeut cette dernière en optionnel. Ainsi,
+`maybe_name == "Silex"` vérifie à la fois la présence de la chaîne et son
+contenu ; une absence produit `false`.
+
 ## Combiner des conditions
 
 ```sx

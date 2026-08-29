@@ -32,6 +32,10 @@ exact UTF-8 bytes. Two structures are comparable when all their fields are;
 their comparison is recursive. Enums compare their active variant and then
 their associated values. Classes compare shared identity, not field contents.
 
+Comparing `T?` with a `T` value promotes the latter to an optional. Thus,
+`maybe_name == "Silex"` checks both the string's presence and its contents; an
+absent value produces `false`.
+
 ## Combine conditions
 
 ```sx

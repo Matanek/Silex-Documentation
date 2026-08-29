@@ -37,10 +37,10 @@ protocol Renamable {
 }
 ```
 
-Un champ `let` ou `var` compatible satisfait `{ get }`. Seul un champ `var`,
-ou une propriété calculée avec getter et setter, satisfait `{ get set }`.
-`let` et `var` ne sont pas admis dans le protocole lui-même. Consultez le
-[contrat complet des propriétés](Properties.md).
+Un champ `let` ou `var` compatible satisfait `{ get }`. Un champ `var` ou une
+propriété `var` satisfait `{ get set }` ; son setter peut être implicite ou
+explicite. `let` et `var` ne sont pas admis dans le protocole lui-même.
+Consultez le [contrat complet des propriétés](Properties.md).
 
 ## Conserver une valeur conforme
 

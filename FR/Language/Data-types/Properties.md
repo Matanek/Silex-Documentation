@@ -1,8 +1,8 @@
 # Contrôler un accès avec une propriété
 
 Une propriété conserve la déclaration familière d'un champ, puis place ses
-accesseurs dans un bloc. `let` expose une lecture seule ; `var` peut aussi
-exposer une écriture.
+accesseurs dans un bloc. `let` expose une lecture seule. `var` expose une
+lecture et une écriture, même lorsque seul son getter est écrit.
 
 ```sx
 struct Rectangle {
@@ -33,16 +33,54 @@ doit rester une méthode explicite.
 `get` et `set` sont contextuels. Ils restent disponibles comme identifiants
 ordinaires hors du bloc d'une propriété.
 
+## Initialiser le stockage une seule fois
+
+Une propriété accepte une valeur déclarée avant son bloc d'accesseurs. Cette
+expression initialise son stockage une fois pour chaque construction, sans
+créer un second champ :
+
+```sx
+struct Graph {
+    var name:str = "" {
+        get {
+            if self.name == "" { return "Tata" }
+            return self.name
+        }
+    }
+}
+
+func main() {
+    var graph = Graph()
+    print(graph.name) // Tata
+    graph.name = "toto"
+    print(graph.name) // toto
+}
+```
+
+Comme `name` est déclaré avec `var`, le compilateur fournit ici le setter
+ordinaire qui range sa valeur dans le stockage de `name`. Déclarer
+`set(value) { ... }` remplace ce comportement lorsque l'écriture doit être
+contrôlée. Une propriété `let` ne reçoit jamais de setter implicite.
+
+Dans ses propres accesseurs, le nom de la propriété désigne son stockage caché
+optionnel. Une comparaison entre `T?` et `T`, telle que `self.name == ""`,
+promeut la valeur en optionnel avant de comparer. Le retour du getter extrait
+le stockage vers le type public ; sans valeur déclarée, il faut donc garantir
+son initialisation avant de le retourner.
+
 ## Distinguer la mutabilité du calcul
 
-Un getter ne peut pas modifier `self`. Cette règle rend toute lecture valide
+Un getter d'instance ne peut pas modifier `self`, y compris pour initialiser
+paresseusement son stockage. Utilisez la valeur déclarée ci-dessus pour une
+initialisation propre à chaque instance. Cette règle rend toute lecture valide
 indépendamment du fait que le récepteur ait été lié avec `let` ou `var` : le
 lecteur n'a pas à connaître l'implémentation de la propriété pour savoir si
 `value.property` est autorisé. Un compteur d'accès ou un cache attaché à
 l'instance doit donc passer par une méthode explicite.
 
-Un setter peut modifier `self`. Il appartient en conséquence à une propriété
-`var` ; une propriété `let` ne peut déclarer que `get`.
+Un setter peut modifier `self`. Un `var` possède son setter standard par
+défaut ; un bloc `set` explicite le remplace. Une propriété `let` ne peut
+déclarer que `get`.
 
 Une affectation composée lit puis écrit la propriété exactement une fois de
 chaque côté :
@@ -125,9 +163,10 @@ protocol Renamable {
 ```
 
 Un champ `let` ou `var` satisfait une exigence `{ get }` du même nom et du même
-type. Seul un champ `var`, ou une propriété possédant les deux accesseurs,
-satisfait `{ get set }`. Les mots `let` et `var` restent interdits dans un
-protocole : celui-ci décrit un accès, jamais la représentation qui le fournit.
+type. Un champ `var` ou une propriété `var` satisfait `{ get set }`, que son
+setter soit implicite ou explicite. Les mots `let` et `var` restent interdits
+dans un protocole : celui-ci décrit un accès, jamais la représentation qui le
+fournit.
 
 [Revenir aux types de données](README.md) ·
 [Définir un contrat avec un protocole](Protocols.md)

@@ -1,8 +1,8 @@
 # Control access with a property
 
 A property keeps the familiar shape of a field declaration, then places its
-accessors in a block. `let` exposes read-only access; `var` may also expose
-write access.
+accessors in a block. `let` exposes read-only access. `var` exposes both read
+and write access, even when only its getter is written.
 
 ```sx
 struct Rectangle {
@@ -32,16 +32,52 @@ or `Result`: a write that may fail must remain an explicit method.
 `get` and `set` are contextual. They remain available as ordinary identifiers
 outside a property block.
 
+## Initialize storage once
+
+A property accepts a declared value before its accessor block. This expression
+initializes its storage once for every construction without creating a second
+field:
+
+```sx
+struct Graph {
+    var name:str = "" {
+        get {
+            if self.name == "" { return "Tata" }
+            return self.name
+        }
+    }
+}
+
+func main() {
+    var graph = Graph()
+    print(graph.name) // Tata
+    graph.name = "toto"
+    print(graph.name) // toto
+}
+```
+
+Because `name` is declared with `var`, the compiler provides the ordinary
+setter that stores its value in `name`'s storage. Declaring
+`set(value) { ... }` replaces this behavior when writes need control. A `let`
+property never receives an implicit setter.
+
+Inside its own accessors, the property name denotes its hidden optional
+storage. Comparing `T?` with `T`, as in `self.name == ""`, promotes the value
+to an optional before comparison. Returning the storage from the getter
+extracts it to the public type; without a declared value, the getter must
+therefore ensure initialization before returning it.
+
 ## Separate mutability from computation
 
-A getter cannot modify `self`. This rule makes every read valid regardless of
-whether the receiver was bound with `let` or `var`: readers do not need to
-know a property's implementation to determine whether `value.property` is
-allowed. An instance access counter or cache must therefore use an explicit
-method.
+A getter cannot modify instance `self`, including to initialize its storage
+lazily. Use the declared value above for per-instance initialization. This
+rule makes every read valid regardless of whether the receiver was bound with
+`let` or `var`: readers do not need to know a property's implementation to
+determine whether `value.property` is allowed. An instance access counter or
+cache must therefore use an explicit method.
 
-A setter may modify `self`. It consequently belongs to a `var` property; a
-`let` property may declare only `get`.
+A setter may modify `self`. A `var` has its standard setter by default; an
+explicit `set` block replaces it. A `let` property may declare only `get`.
 
 A compound assignment reads and then writes the property exactly once on each
 side:
@@ -120,9 +156,10 @@ protocol Renamable {
 ```
 
 A `let` or `var` field satisfies a `{ get }` requirement with the same name
-and type. Only a `var` field, or a property with both accessors, satisfies
-`{ get set }`. The `let` and `var` words remain forbidden in a protocol: a
-protocol describes access, never the representation that provides it.
+and type. A `var` field or `var` property satisfies `{ get set }`, whether its
+setter is implicit or explicit. The `let` and `var` words remain forbidden in
+a protocol: a protocol describes access, never the representation that
+provides it.
 
 [Back to data types](README.md) ·
 [Define a contract with a protocol](Protocols.md)
