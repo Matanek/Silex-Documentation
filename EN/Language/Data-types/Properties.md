@@ -65,7 +65,9 @@ Inside its own accessors, the property name denotes its hidden optional
 storage. Comparing `T?` with `T`, as in `self.name == ""`, promotes the value
 to an optional before comparison. Returning the storage from the getter
 extracts it to the public type; without a declared value, the getter must
-therefore ensure initialization before returning it.
+therefore ensure initialization before returning it. Returning storage that
+is still absent stops the program cleanly with the diagnostic
+`property 'name' returned before its storage was initialized`.
 
 ## Separate mutability from computation
 
@@ -132,8 +134,9 @@ class Data {
 Outside the getter, `Data.instance` has type `Data` and calls the getter.
 Inside it, the same name can test and initialize the storage. Returning it
 extracts it to the public type, so leaving the getter before initialization
-causes a forced optional extraction failure. Static getters are serialized:
-two concurrent reads cannot initialize this storage simultaneously.
+produces the same controlled runtime diagnostic. Static getters are
+serialized: two concurrent reads cannot initialize this storage
+simultaneously.
 
 ## Initialization, reflection, and protocols
 

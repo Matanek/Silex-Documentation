@@ -66,7 +66,9 @@ Dans ses propres accesseurs, le nom de la propriété désigne son stockage cach
 optionnel. Une comparaison entre `T?` et `T`, telle que `self.name == ""`,
 promeut la valeur en optionnel avant de comparer. Le retour du getter extrait
 le stockage vers le type public ; sans valeur déclarée, il faut donc garantir
-son initialisation avant de le retourner.
+son initialisation avant de le retourner. Retourner un stockage encore absent
+interrompt proprement le programme avec le diagnostic
+`property 'name' returned before its storage was initialized`.
 
 ## Distinguer la mutabilité du calcul
 
@@ -138,7 +140,7 @@ class Data {
 À l'extérieur du getter, `Data.instance` a le type `Data` et appelle le getter.
 À l'intérieur, le même nom permet de tester puis d'initialiser le stockage. Le
 retour l'extrait vers le type public ; quitter le getter avant son
-initialisation provoque donc l'échec d'une extraction optionnelle forcée. Les
+initialisation produit donc le même diagnostic d'exécution contrôlé. Les
 getters statiques sont sérialisés : deux accès concurrents ne peuvent pas
 initialiser ce stockage simultanément.
 
