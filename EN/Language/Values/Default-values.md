@@ -47,4 +47,9 @@ A class has no intrinsic instance. A class variable must receive an instance,
 as in `var player = Player()`. If the absence of an instance is valid, declare
 an optional instead with `var selected:Player?`; its initial value is `null`.
 
+Inside a constructor, this rule does not force a field without an intrinsic
+value to become optional. The field may remain pending and receive its first
+value through `self.field = value`, provided every normal path initializes it
+before any read or use of `self`.
+
 [Back to values](README.md) · [Choose a built-in type](Built-in-types.md)

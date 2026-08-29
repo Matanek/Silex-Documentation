@@ -48,5 +48,10 @@ donc recevoir une instance, comme dans `var player = Player()`. Si l'absence
 d'instance est valide, déclarez plutôt un optionnel avec
 `var selected:Player?` ; sa valeur initiale sera `null`.
 
+Dans un constructeur, cette règle ne force pas un champ sans valeur
+intrinsèque à devenir optionnel. Le champ peut rester en attente puis recevoir
+sa première valeur par `self.field = value`, à condition que chaque chemin
+normal l'initialise avant toute lecture ou utilisation de `self`.
+
 [Revenir aux valeurs](README.md) ·
 [Choisir un type intégré](Built-in-types.md)

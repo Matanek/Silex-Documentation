@@ -31,6 +31,36 @@ func main() {
 Utilisez `var` pour une liaison qui permet d'atteindre l'état modifiable d'une
 classe, même lorsque cette liaison ne change jamais d'instance.
 
+## Initialiser un champ à sa déclaration
+
+La valeur écrite après `=` peut être une expression ordinaire : appel de
+fonction, construction, calcul ou cascade. Elle est évaluée dans l'ordre des
+champs pour chaque nouvelle instance, avant le corps de son constructeur.
+Deux instances ne partagent donc pas accidentellement la collection créée par
+une même expression.
+
+```sx
+func initial_values() int[] { return [1] }
+
+class Recorder {
+    var values:int[] = initial_values()
+}
+
+func main() {
+    var first = Recorder()
+    var second = Recorder()
+    first.values.append(2)
+
+    print(first.values.count())  // 2
+    print(second.values.count()) // 1
+}
+```
+
+Cette forme convient lorsque la valeur ne dépend ni de `self` ni d'un argument
+du constructeur : ces noms ne sont pas disponibles dans l'expression. Elle
+peut notamment préparer un objet par cascade sans imposer un optionnel
+temporaire.
+
 ## Construire une instance
 
 Sans constructeur personnalisé, initialisez les champs visibles par leur nom :
@@ -62,8 +92,38 @@ affiche `4`, `2`, puis `3` : modifier ensuite `position` ne modifie pas
 
 Déclarez `init` lorsque la construction doit établir un invariant. Dès qu'un
 constructeur existe, l'initialiseur automatique par champs nommés disparaît.
-Chaque champ immuable doit être initialisé sur chaque chemin normal avant que
-`self` puisse s'échapper.
+Un champ `let` sans valeur déclarée et un champ `var` dont le type ne fournit
+ni valeur intrinsèque ni construction sans argument restent alors en attente.
+Le constructeur doit les affecter sur chaque chemin normal. Un champ déjà
+initialisé peut être lu ; `self` dans son ensemble ne peut être utilisé qu'une
+fois tous les champs initialisés.
+
+```sx
+struct Range {
+    let minimum:float
+    let maximum:float
+
+    init(minimum:float, maximum:float) {
+        self.minimum = minimum
+        self.maximum = maximum
+    }
+}
+
+class Gauge {
+    var limits:Range
+
+    init(minimum:float, maximum:float) {
+        self.limits = Range(minimum, maximum)
+    }
+}
+```
+
+Les trois formes se complètent : placez une expression sur le champ pour une
+valeur propre à chaque instance, utilisez `init` lorsque la valeur dépend de
+ses arguments, et conservez l'initialiseur automatique par champs nommés
+lorsque l'appelant doit fournir librement la configuration. Déclarez `T?`
+uniquement lorsque l'absence de valeur appartient réellement au modèle ; ce
+n'est pas un état intermédiaire requis par la construction.
 
 ## Ajouter des méthodes
 

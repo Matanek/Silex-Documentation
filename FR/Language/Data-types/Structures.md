@@ -32,6 +32,12 @@ Ici, la [cascade](../Values/Operators.md#appliquer-plusieurs-opérations-au-mêm
 configure `target` juste après sa création. Le programme affiche successivement
 `10`, `4`, `10` et `5`.
 
+La valeur déclarée après `=` accepte une expression ordinaire, y compris un
+appel de fonction ou une cascade. Silex l'évalue dans l'ordre des champs pour
+chaque nouvelle valeur : une liste ou une autre ressource ainsi créée
+n'est pas partagée accidentellement entre deux constructions. Cette expression
+n'a accès ni à `self` ni aux paramètres d'un constructeur.
+
 ## Copier une structure
 
 ```sx
@@ -65,8 +71,18 @@ let point = Position(5)
 ```
 
 Déclarer un seul `init` ferme l'initialiseur automatique par champs nommés.
-Chaque champ `let` sans valeur par défaut doit alors être initialisé exactement
-une fois sur chaque chemin normal du constructeur.
+Chaque champ `let` sans valeur déclarée doit alors être initialisé exactement
+une fois sur chaque chemin normal du constructeur. Il en va de même pour un
+champ `var` dont le type ne fournit ni valeur intrinsèque ni construction sans
+argument. Les champs déjà initialisés peuvent être lus pour calculer les
+suivants, mais `self` ne peut être utilisé dans son ensemble qu'après leur
+initialisation complète.
+
+Une expression de champ convient aux valeurs indépendantes des arguments,
+`init` aux invariants qui en dépendent, et l'initialiseur automatique par
+champs nommés aux valeurs que l'appelant doit choisir. Un type optionnel reste
+réservé à une absence valide dans le modèle, pas au stockage provisoire d'un
+champ en cours de construction.
 
 ## Ajouter des méthodes
 

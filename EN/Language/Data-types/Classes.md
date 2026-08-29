@@ -31,6 +31,34 @@ func main() {
 Use `var` for a binding that allows access to a class's mutable state, even
 when that binding never changes instance.
 
+## Initialize a field at its declaration
+
+The value after `=` may be an ordinary expression: a function call,
+construction, calculation, or cascade. Silex evaluates it in field order for
+each new instance, before the constructor body. Two instances therefore do not
+accidentally share a collection created by the same expression.
+
+```sx
+func initial_values() int[] { return [1] }
+
+class Recorder {
+    var values:int[] = initial_values()
+}
+
+func main() {
+    var first = Recorder()
+    var second = Recorder()
+    first.values.append(2)
+
+    print(first.values.count())  // 2
+    print(second.values.count()) // 1
+}
+```
+
+Use this form when the value depends on neither `self` nor a constructor
+argument: those names are not available in the expression. It can also prepare
+an object through a cascade without requiring a temporary optional.
+
 ## Construct an instance
 
 Without a custom constructor, initialize visible fields by name:
@@ -63,8 +91,38 @@ call to `Position()` creates a distinct identity.
 
 Declare `init` when construction must establish an invariant. As soon as one
 constructor exists, the automatic named-field initializer disappears. Every
-immutable field must be initialized on every normal path before `self` can
-escape.
+`let` field without a declared value and every `var` field whose type provides
+neither an intrinsic value nor construction without arguments then remains
+pending. The constructor must assign them on every normal path. An initialized
+field may be read; `self` as a whole cannot be used until every field is
+initialized.
+
+```sx
+struct Range {
+    let minimum:float
+    let maximum:float
+
+    init(minimum:float, maximum:float) {
+        self.minimum = minimum
+        self.maximum = maximum
+    }
+}
+
+class Gauge {
+    var limits:Range
+
+    init(minimum:float, maximum:float) {
+        self.limits = Range(minimum, maximum)
+    }
+}
+```
+
+The three forms complement one another: place an expression on the field for
+a value owned by each instance, use `init` when the value depends on its
+arguments, and retain the automatic named-field initializer when callers
+should freely provide the configuration. Declare `T?` only when absence is a
+real part of the model; it is not an intermediate state required by
+construction.
 
 ## Add methods
 

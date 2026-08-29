@@ -32,6 +32,12 @@ omitted field first receives its declared value, or otherwise the
 configures `target` immediately after its creation. The program successively
 prints `10`, `4`, `10`, and `5`.
 
+The declared value after `=` may be an ordinary expression, including a
+function call or cascade. Silex evaluates it in field order for each new
+value: a list or another resource created this way is not accidentally shared
+between two constructions. This expression has access to neither `self` nor a
+constructor's parameters.
+
 ## Copy a structure
 
 ```sx
@@ -65,8 +71,17 @@ let point = Position(5)
 ```
 
 Declaring one `init` closes the automatic named-field initializer. Every `let`
-field without a default value must then be initialized exactly once on every
-normal constructor path.
+field without a declared value must then be initialized exactly once on every
+normal constructor path. The same applies to a `var` field whose type provides
+neither an intrinsic value nor construction without arguments. Initialized
+fields may be read to compute later fields, but `self` as a whole cannot be
+used until initialization is complete.
+
+A field expression suits values independent from constructor arguments,
+`init` suits invariants that depend on them, and the automatic named-field
+initializer suits values callers should choose. An optional type remains
+reserved for a valid absence in the model, not temporary storage for a field
+under construction.
 
 ## Add methods
 
