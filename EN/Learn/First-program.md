@@ -18,19 +18,32 @@ entry point. Here, it calls `print` to write one line to the terminal.
 
 ## Run the program
 
-Pass the source path to `silex run`. If the terminal is in the directory that
-contains `Main.sx`, run:
+If the terminal is in the directory that contains `Main.sx`, run:
 
 ```sh
-silex run Main.sx
+silex run
 ```
 
 The terminal may also be in another directory. For example, from the parent of
 `Project/`:
 
 ```sh
+silex run Project
+```
+
+`silex run` searches the given directory—or the current directory when you
+omit the path—for the only `.sx` file that declares a top-level `main`
+function. The file may have a name other than `Main.sx`. The search remains
+limited to the direct directory and does not descend into subdirectories.
+
+You can also provide the file explicitly:
+
+```sh
 silex run Project/Main.sx
 ```
+
+This form is required when several files in the same directory declare
+`main`.
 
 The program prints:
 
@@ -48,7 +61,8 @@ command. It stores the compilation cache and the private executable used by
 `silex run`, among other artifacts.
 
 To avoid scattering several `.silex` directories, run commands from a stable
-project root and pass the source path, as in `silex run Project/Main.sx` above.
+project root and pass the application or source path, as in
+`silex run Project` above.
 
 If the project uses Git, ignore Silex-generated files by adding this line to
 its `.gitignore`:

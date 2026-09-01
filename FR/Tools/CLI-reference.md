@@ -6,7 +6,7 @@ guides liés expliquent quand les employer et ce qu'elles produisent.
 ## Programmes et tests
 
 ```text
-silex run <source.sx> [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
+silex run [source.sx|directory] [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
 silex interpret <source.sx> [-n|--nocache] [--emit-ir]
 silex test <source.sx|directory> [-n|--nocache] [--emit-ir]
 silex compile <source.sx> [--target <target>]
@@ -22,6 +22,13 @@ silex compile <source.sx> [--target <target>]
 | `--emit-ir` | `run`, `interpret`, `test` | écrit l'IR textuelle avant le résultat |
 | `-o`, `--output` | `compile` | choisit le chemin obligatoire de l'exécutable |
 | `--target` | `compile` | choisit une cible reconnue au lieu de l'hôte |
+
+`run` conserve un fichier `.sx` explicite comme point d'entrée. Avec un
+dossier, ou sans chemin pour le dossier courant, il choisit l'unique fichier
+`.sx` directement contenu dans ce dossier qui déclare une fonction `main` de
+premier niveau. Il ne parcourt pas les sous-dossiers. Si aucun fichier ou
+plusieurs fichiers conviennent, la commande échoue et demande un chemin de
+source explicite.
 
 Consultez [Exécuter, interpréter ou compiler un programme](Run-and-compile.md)
 et [Écrire et lancer des tests](Tests.md).

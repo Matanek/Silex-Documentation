@@ -6,7 +6,7 @@ guides explain when to use them and what they produce.
 ## Programs and tests
 
 ```text
-silex run <source.sx> [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
+silex run [source.sx|directory] [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
 silex interpret <source.sx> [-n|--nocache] [--emit-ir]
 silex test <source.sx|directory> [-n|--nocache] [--emit-ir]
 silex compile <source.sx> [--target <target>]
@@ -22,6 +22,12 @@ silex compile <source.sx> [--target <target>]
 | `--emit-ir` | `run`, `interpret`, `test` | prints textual IR before the result |
 | `-o`, `--output` | `compile` | selects the required executable path |
 | `--target` | `compile` | selects a recognized target instead of the host |
+
+`run` keeps an explicit `.sx` file as the entry point. With a directory, or
+without a path for the current directory, it selects the only directly
+contained `.sx` file that declares a top-level `main` function. It does not
+search subdirectories. If no file or several files match, the command fails
+and asks for an explicit source path.
 
 See [Run, interpret, or compile a program](Run-and-compile.md) and
 [Write and run tests](Tests.md).

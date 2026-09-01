@@ -5,17 +5,35 @@ source pour la machine hôte, lance l'exécutable obtenu et transmet son code de
 sortie au terminal.
 
 ```sh
+silex run Project
+```
+
+Le dossier doit contenir directement un seul fichier `.sx` qui déclare une
+fonction `main` de premier niveau. Le nom du fichier est libre : `Main.sx`
+n'est qu'une convention. Depuis le dossier de l'application, omettez le
+chemin :
+
+```sh
+cd Project
+silex run
+```
+
+Vous pouvez toujours sélectionner explicitement n'importe quel fichier `.sx` :
+
+```sh
 silex run Project/Main.sx
 ```
 
-Le chemin peut désigner n'importe quel fichier `.sx` depuis le dossier courant.
-Il n'est pas nécessaire de déplacer le terminal à côté de la source.
+Cette forme explicite reste disponible lorsque plusieurs fichiers du même
+dossier déclarent `main`. La découverte par dossier ne parcourt pas les
+sous-dossiers et échoue plutôt que de choisir arbitrairement entre plusieurs
+entrées.
 
 ## Choisir entre les trois commandes
 
 | Intention | Commande |
 | --- | --- |
-| Compiler puis lancer sur la machine actuelle | `silex run Source.sx` |
+| Compiler puis lancer sur la machine actuelle | `silex run [Source.sx\|Directory]` |
 | Exécuter avec l'interpréteur de référence | `silex interpret Source.sx` |
 | Produire un exécutable à un emplacement choisi | `silex compile Source.sx -o Application` |
 

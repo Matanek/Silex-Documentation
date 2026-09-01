@@ -5,17 +5,33 @@ for the host machine, launches the resulting executable, and forwards its exit
 code to the terminal.
 
 ```sh
+silex run Project
+```
+
+The directory must directly contain one `.sx` file that declares a top-level
+`main` function. The filename is free: `Main.sx` is only a convention. From
+inside the application directory, omit the path:
+
+```sh
+cd Project
+silex run
+```
+
+You can still select any `.sx` file explicitly:
+
+```sh
 silex run Project/Main.sx
 ```
 
-The path may designate any `.sx` file from the current folder. The terminal
-does not need to be moved next to the source.
+This explicit form remains available when several files in the same directory
+declare `main`. Directory discovery does not search subdirectories and fails
+rather than choosing arbitrarily between multiple entries.
 
 ## Choose between the three commands
 
 | Intent | Command |
 | --- | --- |
-| Compile, then run on the current machine | `silex run Source.sx` |
+| Compile, then run on the current machine | `silex run [Source.sx\|Directory]` |
 | Execute with the reference interpreter | `silex interpret Source.sx` |
 | Produce an executable at a chosen location | `silex compile Source.sx -o Application` |
 
