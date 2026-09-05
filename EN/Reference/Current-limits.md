@@ -1,4 +1,4 @@
-# Know the limits of Silex 0.42
+# Know the limits of Silex 0.43
 
 The compiler deliberately keeps a focused surface. The following features are
 not implemented:
@@ -21,13 +21,15 @@ the parser to typed analysis.
 
 ## Distinguish target emission from execution
 
-Silex 0.42 distributes and natively verifies `macos-arm64`, `linux-x64`, and
-`windows-x64`. The release pipeline builds a standalone distribution and runs
-its smoke test on each corresponding system.
+Silex 0.43 distributes and natively verifies `macos-arm64`, `macos-x64`,
+`linux-arm64`, `linux-x64`, `windows-arm64`, and `windows-x64`. The release
+pipeline builds one standalone archive per target, checks its architecture,
+reinstalls it through the public script in a clean environment, then executes
+`setup`, `compile`, `run`, and `test` on the exact native host.
 
-The `windows-arm64` target is recognized and has an emitter, but remains
-experimental: no 0.42 artifact is distributed, and execution still awaits
-validation on actual Windows ARM64 hardware.
+This distributed-host matrix does not promise complete cross-compilation
+between systems. In particular, producing a macOS application from Linux or
+Windows would still require Apple's SDKs and distribution terms.
 
 The interpreter remains the reference behavior where both paths cover the same
 operation.

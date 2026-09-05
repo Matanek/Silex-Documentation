@@ -23,9 +23,10 @@ silex update
 ```
 
 Silex preserves the folder of the currently running binary. It downloads the
-new distribution, verifies its SHA-256 checksum, then replaces the executable.
-On Windows, replacement finishes in the background after the command stops so
-the file can be released.
+new distribution for the same system and architecture, verifies its SHA-256
+checksum, then replaces the executable. An ARM64 Silex installation is
+therefore not replaced by an x64 archive. On Windows, replacement finishes in
+the background after the command stops so the file can be released.
 
 The `update` command always targets the latest published version. A
 `SILEX_VERSION` variable left in the terminal does not block this explicit

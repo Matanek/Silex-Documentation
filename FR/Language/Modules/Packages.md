@@ -34,9 +34,11 @@ Platform/MacOS/Module/
 Platform/Linux/Module/
 Platform/Windows/Module/
 Target/macos-arm64/Module/
+Target/macos-x64/Module/
+Target/linux-arm64/Module/
 Target/linux-x64/Module/
-Target/windows-x64/Module/
 Target/windows-arm64/Module/
+Target/windows-x64/Module/
 ```
 
 Les segments physiques n'apparaissent jamais dans les noms de modules. Une

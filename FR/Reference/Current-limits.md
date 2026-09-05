@@ -1,4 +1,4 @@
-# Connaître les limites de Silex 0.42
+# Connaître les limites de Silex 0.43
 
 Le compilateur garde volontairement une surface réduite. Les fonctionnalités
 suivantes ne sont pas implémentées :
@@ -21,13 +21,15 @@ parseur vers l'analyse typée.
 
 ## Distinguer émission et exécution des cibles
 
-Silex 0.42 distribue et vérifie nativement `macos-arm64`, `linux-x64` et
-`windows-x64`. La chaîne de publication construit une distribution autonome et
-exécute son smoke test sur chaque système correspondant.
+Silex 0.43 distribue et vérifie nativement `macos-arm64`, `macos-x64`,
+`linux-arm64`, `linux-x64`, `windows-arm64` et `windows-x64`. La chaîne de
+publication construit une archive autonome pour chaque cible, contrôle son
+architecture, la réinstalle par le script public dans un environnement vierge,
+puis exécute `setup`, `compile`, `run` et `test` sur l'hôte natif exact.
 
-La cible `windows-arm64` est reconnue et possède un émetteur, mais elle reste
-expérimentale : aucun artefact 0.42 n'est distribué et son exécution attend
-encore une validation sur une machine Windows ARM64 réelle.
+Cette matrice d'hôtes distribués ne promet pas une cross-compilation complète
+entre systèmes. En particulier, produire une application macOS depuis Linux
+ou Windows demanderait encore les SDK et conditions de diffusion d'Apple.
 
 L'interpréteur reste le comportement de référence lorsque les deux chemins
 couvrent la même opération.

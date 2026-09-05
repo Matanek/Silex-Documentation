@@ -1,15 +1,15 @@
 # Connaître la frontière d'interopérabilité actuelle
 
-La surface Silex 0.42 est volontairement limitée aux adaptateurs privés de
+La surface Silex 0.43 est volontairement limitée aux adaptateurs privés de
 packages.
 
 ## Cibles et fournisseurs
 
-Les tranches STD implémentées composent `macos-arm64`, `linux-x64`,
-`windows-x64` et `windows-arm64`. Un fournisseur `Boundary.<Provider>` est
-sélectionné par cible et peut réunir archive, bibliothèques système nommées et
-frameworks Apple. Les fournisseurs historiques de la toolchain restent admis
-pour compatibilité.
+Les tranches STD implémentées composent `macos-arm64`, `macos-x64`,
+`linux-arm64`, `linux-x64`, `windows-arm64` et `windows-x64`. Un fournisseur
+`Boundary.<Provider>` est sélectionné par cible et peut réunir archive,
+bibliothèques système nommées et frameworks Apple. Les fournisseurs historiques
+de la toolchain restent admis pour compatibilité.
 
 Les capacités implémentées couvrent les appels C nommés ou par adresse, les
 graines aléatoires, horloges monotones et civiles locales, entrées-sorties
@@ -19,8 +19,8 @@ typés nécessaires au WebView système de macOS.
 
 Sous Windows, les bindings de console couvrent les octets UCRT, modes de
 console, pages d'entrée UTF-8, attentes de handles et dimensions du tampon
-d'écran. Leurs imports PE sont vérifiés sur X64 et ARM64, mais leur exécution
-attend encore la matrice CI Windows de cette version.
+d'écran. Leurs imports PE et leur comportement sont vérifiés nativement sur
+X64 et ARM64.
 
 macOS utilise les façades fixes `__open` et `__ioctl` lorsque les fonctions C
 publiques sont variadiques sous l'ABI Apple ARM64.
@@ -44,10 +44,9 @@ rang, appels variadiques, chemins arbitraires de bibliothèques et fournisseurs
 de classe opaque existent pour les adaptateurs de threads.
 
 Une structure C brute reste un stockage scalaire fixe et contigu, privé à un
-module de plateforme et accompagné de sa disposition explicite. Le backend
-Linux X64 refuse encore les opérations portables hors de ses tranches
-verticales ; l'exécution Windows reste non vérifiée tant que sa matrice n'a pas
-tourné.
+module de plateforme et accompagné de sa disposition explicite. La matrice de
+distribution vérifie les adaptateurs système sur les six hôtes, sans rendre
+leurs ABI ou dispositions accessibles aux applications.
 
 ## Masquer la plateforme derrière une API Silex
 

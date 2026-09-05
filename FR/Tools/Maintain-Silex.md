@@ -23,9 +23,11 @@ silex update
 ```
 
 Silex conserve le dossier du binaire en cours d'exécution. Il télécharge la
-nouvelle distribution, vérifie sa somme SHA-256, puis remplace l'exécutable.
-Sous Windows, le remplacement se termine en arrière-plan après l'arrêt de la
-commande afin que le fichier puisse être libéré.
+nouvelle distribution du même système et de la même architecture, vérifie sa
+somme SHA-256, puis remplace l'exécutable. Un Silex ARM64 n'est donc pas
+remplacé par une archive x64. Sous Windows, le remplacement se termine en
+arrière-plan après l'arrêt de la commande afin que le fichier puisse être
+libéré.
 
 La commande `update` vise toujours la dernière version publiée. Une variable
 `SILEX_VERSION` laissée dans le terminal ne bloque pas cette mise à jour

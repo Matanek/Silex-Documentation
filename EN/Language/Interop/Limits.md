@@ -1,13 +1,14 @@
 # Know the current interoperability boundary
 
-The Silex 0.42 surface is deliberately limited to private package adapters.
+The Silex 0.43 surface is deliberately limited to private package adapters.
 
 ## Targets and providers
 
-Implemented STD slices compose `macos-arm64`, `linux-x64`, `windows-x64`, and
-`windows-arm64`. A `Boundary.<Provider>` is selected by target and may combine
-an archive, named system libraries, and Apple frameworks. Historical toolchain
-providers remain accepted for compatibility.
+Implemented STD slices compose `macos-arm64`, `macos-x64`, `linux-arm64`,
+`linux-x64`, `windows-arm64`, and `windows-x64`. A `Boundary.<Provider>` is
+selected by target and may combine an archive, named system libraries, and
+Apple frameworks. Historical toolchain providers remain accepted for
+compatibility.
 
 Implemented capabilities cover named or addressed C calls; random seeds;
 monotonic and local civil clocks; byte I/O; terminals; files, metadata, and
@@ -15,9 +16,8 @@ subprocesses; file systems; sockets; name resolution; system threads; and the
 typed Objective-C messages needed by the macOS system WebView.
 
 On Windows, console bindings cover UCRT bytes, console modes, UTF-8 input code
-pages, handle waits, and screen-buffer dimensions. Their PE imports are
-verified on X64 and ARM64, but execution still awaits this version's Windows CI
-matrix.
+pages, handle waits, and screen-buffer dimensions. Their PE imports and
+behavior are verified natively on X64 and ARM64.
 
 macOS uses the fixed `__open` and `__ioctl` facades where public C functions
 are variadic under the Apple ARM64 ABI.
@@ -40,9 +40,9 @@ implemented. Named callbacks with opaque class context exist for thread
 adapters.
 
 A raw C structure remains fixed contiguous scalar storage, private to a
-platform module and accompanied by its explicit layout. The Linux X64 backend
-still rejects portable operations outside its vertical slices; Windows
-execution remains unverified until its matrix has run.
+platform module and accompanied by its explicit layout. The distribution
+matrix verifies system adapters on all six hosts without exposing their ABIs
+or layouts to applications.
 
 ## Hide the platform behind a Silex API
 
