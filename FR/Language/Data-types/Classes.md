@@ -28,8 +28,28 @@ func main() {
 }
 ```
 
-Utilisez `var` pour une liaison qui permet d'atteindre l'état modifiable d'une
-classe, même lorsque cette liaison ne change jamais d'instance.
+Utilisez `var` pour une liaison directe de classe ou une collection de classes,
+même lorsque cette liaison ne change jamais d'instance. Une valeur composée,
+comme une structure qui conserve une classe dans son stockage privé, peut en
+revanche rester dans un `let` : la valeur extérieure reste immuable et
+l'identité interne demeure partagée.
+
+## Interdire la copie profonde d'une identité
+
+Ajoutez `noncopyable` lorsqu'une classe encapsule une ressource native ou
+externe qui ne peut pas être clonée sûrement :
+
+```sx
+public noncopyable class DeviceHandle {
+    private let native:uint
+}
+```
+
+Passer, retourner ou affecter ordinairement cette classe continue de partager
+son identité et sa durée de vie automatique. En revanche, `copy` est refusé
+sur la classe comme sur toute structure, enum, optionnel ou collection qui
+l'atteint. Consultez [copier ou transférer une valeur](../Ownership/Copy-and-move.md)
+pour distinguer partage, copie profonde et transfert.
 
 ## Initialiser un champ à sa déclaration
 

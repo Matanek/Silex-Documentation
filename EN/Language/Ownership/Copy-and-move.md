@@ -43,6 +43,22 @@ print(foo1.instance.value) // 8
 remain repeated in the clone, and cycles remain cycles. No constructor runs
 again.
 
+A class declared `noncopyable` represents a native or external identity that
+has no safe duplication operation: a device, buffer, system file, or similar
+resource. Ordinary assignment still shares that identity, directly or through
+a structure. However, `copy` is rejected statically as soon as the value can
+reach such a class: it never silently duplicates a handle and its cleanup.
+
+```sx
+noncopyable class DeviceHandle {}
+struct Owner { var handle:DeviceHandle }
+
+var handle = DeviceHandle()
+let owner = Owner(handle:handle)
+let shared = owner       // shares the same identity
+// let detached = copy owner // error: reaches a non-clonable class
+```
+
 The compiler captures one consistent logical snapshot of the graph. A
 concurrent Silex mutation is ordered before or after that snapshot; the
 detached copy cannot mix two states of the source.

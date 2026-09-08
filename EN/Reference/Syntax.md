@@ -18,6 +18,7 @@ and constraints.
 | Mixed call | `name(expression, other:expression)` |
 | Structure | `struct Name { ... }` |
 | Class | `class Name { ... }` |
+| Non-clonable class | `noncopyable class Name { ... }` |
 | Compiler-provided contract | `intrinsic class Name { ... }` |
 | Protocol | `protocol Name { ... }` |
 | Read-only property | `let name:type { get { ... } }` |
@@ -73,6 +74,10 @@ and constraints.
 `match` is a control word in expression position, but remains contextual after
 `func`, `.`, `?.`, or `..`. A method may therefore naturally be named `match`:
 `func match(...)` and `pattern.match(text)`.
+
+Primitive type spellings are likewise contextual as method names. A type API
+can declare `static func float32()` and be called with `DType.float32()`
+without making `float32` available as an ordinary identifier.
 
 `in` remains the iteration word, but becomes contextual as a variant name, in
 a `match` branch, and after `.` or `?.`: `Easing.in` is valid.

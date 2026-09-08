@@ -28,8 +28,27 @@ func main() {
 }
 ```
 
-Use `var` for a binding that allows access to a class's mutable state, even
-when that binding never changes instance.
+Use `var` for a direct class binding or a collection of classes, even when that
+binding never changes instance. A composed value, such as a structure that
+keeps a class in private storage, may instead remain in a `let`: the outer
+value stays immutable while the inner identity remains shared.
+
+## Forbid deep copies of an identity
+
+Add `noncopyable` when a class wraps a native or external resource that cannot
+be cloned safely:
+
+```sx
+public noncopyable class DeviceHandle {
+    private let native:uint
+}
+```
+
+Passing, returning, or ordinarily assigning this class continues to share its
+identity and automatic lifetime. However, `copy` is rejected for the class and
+for any structure, enum, optional, or collection that can reach it. See
+[copy or transfer a value](../Ownership/Copy-and-move.md) to distinguish
+sharing, deep copying, and transfer.
 
 ## Initialize a field at its declaration
 

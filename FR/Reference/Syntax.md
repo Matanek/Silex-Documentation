@@ -18,6 +18,7 @@ comportement et ses contraintes.
 | Appel mixte | `name(expression, other:expression)` |
 | Structure | `struct Name { ... }` |
 | Classe | `class Name { ... }` |
+| Classe non clonable | `noncopyable class Name { ... }` |
 | Contrat fourni par le compilateur | `intrinsic class Name { ... }` |
 | Protocole | `protocol Name { ... }` |
 | Propriété en lecture | `let name:type { get { ... } }` |
@@ -73,6 +74,11 @@ comportement et ses contraintes.
 `match` est un mot de contrôle en position d'expression, mais reste contextuel
 après `func`, `.`, `?.` ou `..`. Une méthode peut donc s'appeler naturellement
 `match` : `func match(...)` et `pattern.match(text)`.
+
+Les noms des types primitifs restent eux aussi contextuels comme noms de
+méthodes. Une API de type peut ainsi déclarer `static func float32()` et
+s'appeler avec `DType.float32()` sans rendre `float32` disponible comme
+identifiant ordinaire.
 
 `in` reste le mot d'itération, mais devient contextuel comme nom de variante,
 dans une branche `match` et après `.` ou `?.` : `Easing.in` est valide.
