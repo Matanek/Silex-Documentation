@@ -118,6 +118,35 @@ class Gauge {
 }
 ```
 
+Dans `init`, une affectation `self.champ = valeur` initialise le champ visé ;
+elle ne constitue pas un usage prématuré de l’objet complet. Un champ déjà
+initialisé peut ensuite être lu ou modifié pendant que d’autres restent en
+attente. Les boucles peuvent donc préparer un stockage dont la taille dépend
+d’un argument :
+
+```sx
+class PreparedList {
+    var values:int[]
+    let requested_count:int
+
+    init(count:int) {
+        self.values = []
+        var index = 0
+        while index < count {
+            self.values.append(index)
+            index++
+        }
+        self.requested_count = count
+    }
+}
+```
+
+Lire un champ encore en attente ou transmettre `self` comme un objet complet
+reste interdit. Une affectation présente uniquement dans une boucle qui peut
+ne jamais s’exécuter ne suffit pas non plus à établir l’initialisation sur tous
+les chemins ; le champ doit recevoir une valeur sur le chemin de sortie de la
+boucle.
+
 Les trois formes se complètent : placez une expression sur le champ pour une
 valeur propre à chaque instance, utilisez `init` lorsque la valeur dépend de
 ses arguments, et conservez l'initialiseur automatique par champs nommés

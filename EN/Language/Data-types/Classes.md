@@ -117,6 +117,34 @@ class Gauge {
 }
 ```
 
+Inside `init`, an assignment such as `self.field = value` initializes the
+target field; it is not premature use of the complete object. A field that is
+already initialized may then be read or mutated while other fields remain
+pending. Loops may therefore prepare storage whose size depends on an
+argument:
+
+```sx
+class PreparedList {
+    var values:int[]
+    let requested_count:int
+
+    init(count:int) {
+        self.values = []
+        var index = 0
+        while index < count {
+            self.values.append(index)
+            index++
+        }
+        self.requested_count = count
+    }
+}
+```
+
+Reading a pending field or passing `self` as a complete object remains
+invalid. An assignment that occurs only inside a loop which may never execute
+also cannot establish initialization on every path; the field must receive a
+value on the loop's exit path.
+
 The three forms complement one another: place an expression on the field for
 a value owned by each instance, use `init` when the value depends on its
 arguments, and retain the automatic named-field initializer when callers
