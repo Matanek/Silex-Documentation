@@ -18,7 +18,7 @@ and constraints.
 | Mixed call | `name(expression, other:expression)` |
 | Structure | `struct Name { ... }` |
 | Class | `class Name { ... }` |
-| Non-clonable class | `noncopyable class Name { ... }` |
+| Non-clonable class | `nocopy class Name { ... }` |
 | Compiler-provided contract | `intrinsic class Name { ... }` |
 | Protocol | `protocol Name { ... }` |
 | Read-only property | `let name:type { get { ... } }` |

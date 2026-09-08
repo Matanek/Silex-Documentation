@@ -35,11 +35,11 @@ value stays immutable while the inner identity remains shared.
 
 ## Forbid deep copies of an identity
 
-Add `noncopyable` when a class wraps a native or external resource that cannot
+Add `nocopy` when a class wraps a native or external resource that cannot
 be cloned safely:
 
 ```sx
-public noncopyable class DeviceHandle {
+public nocopy class DeviceHandle {
     private let native:uint
 }
 ```

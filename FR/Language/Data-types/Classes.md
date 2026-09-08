@@ -36,11 +36,11 @@ l'identité interne demeure partagée.
 
 ## Interdire la copie profonde d'une identité
 
-Ajoutez `noncopyable` lorsqu'une classe encapsule une ressource native ou
+Ajoutez `nocopy` lorsqu'une classe encapsule une ressource native ou
 externe qui ne peut pas être clonée sûrement :
 
 ```sx
-public noncopyable class DeviceHandle {
+public nocopy class DeviceHandle {
     private let native:uint
 }
 ```

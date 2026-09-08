@@ -18,7 +18,7 @@ comportement et ses contraintes.
 | Appel mixte | `name(expression, other:expression)` |
 | Structure | `struct Name { ... }` |
 | Classe | `class Name { ... }` |
-| Classe non clonable | `noncopyable class Name { ... }` |
+| Classe non clonable | `nocopy class Name { ... }` |
 | Contrat fourni par le compilateur | `intrinsic class Name { ... }` |
 | Protocole | `protocol Name { ... }` |
 | Propriété en lecture | `let name:type { get { ... } }` |
