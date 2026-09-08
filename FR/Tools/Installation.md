@@ -1,6 +1,6 @@
 # Installer Silex
 
-Silex 0.43 est distribué sous forme d'un exécutable autonome. Son utilisation
+Silex 0.44 est distribué sous forme d'un exécutable autonome. Son utilisation
 ne demande ni Zig, ni Git, ni copie locale du dépôt.
 
 Les distributions publiées prennent en charge les six hôtes desktop :
@@ -17,12 +17,12 @@ PowerShell x64 exécuté par la couche de compatibilité du système.
 
 ## Installer sur macOS ou Linux
 
-Vous pouvez [examiner le script officiel](https://github.com/Matanek/Silex/blob/v0.43.0/install.sh)
+Vous pouvez [examiner le script officiel](https://github.com/Matanek/Silex/blob/v0.44.0/install.sh)
 avant de l'exécuter :
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.sh \
-    | SILEX_VERSION=0.43.0 sh
+curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.sh \
+    | SILEX_VERSION=0.44.0 sh
 ```
 
 Le script distingue macOS de Linux, puis ARM64 de x64, vérifie la somme
@@ -68,8 +68,8 @@ première installation.
 Exécutez cette commande dans PowerShell :
 
 ```powershell
-$env:SILEX_VERSION = "0.43.0"
-irm https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.ps1 | iex
+$env:SILEX_VERSION = "0.44.0"
+irm https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.ps1 | iex
 ```
 
 Le script vérifie la somme SHA-256 et installe `silex.exe` dans
@@ -100,7 +100,7 @@ silex --version
 Pour cette documentation, la commande doit afficher :
 
 ```text
-silex 0.43.0
+silex 0.44.0
 ```
 
 Vous pouvez maintenant [écrire et exécuter votre premier programme](../Learn/First-program.md).
@@ -111,16 +111,16 @@ Sur macOS ou Linux, placez le binaire dans un autre dossier avec
 `SILEX_INSTALL_DIR` :
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.sh \
-    | SILEX_VERSION=0.43.0 SILEX_INSTALL_DIR="$HOME/bin" sh
+curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.sh \
+    | SILEX_VERSION=0.44.0 SILEX_INSTALL_DIR="$HOME/bin" sh
 ```
 
 Dans PowerShell :
 
 ```powershell
-$env:SILEX_VERSION = "0.43.0"
+$env:SILEX_VERSION = "0.44.0"
 $env:SILEX_INSTALL_DIR = "$HOME\bin"
-irm https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.ps1 | iex
+irm https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.ps1 | iex
 ```
 
 [Revenir aux outils Silex](README.md) ·

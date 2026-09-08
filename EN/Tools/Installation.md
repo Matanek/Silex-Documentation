@@ -1,6 +1,6 @@
 # Install Silex
 
-Silex 0.43 is distributed as a standalone executable. Using it requires
+Silex 0.44 is distributed as a standalone executable. Using it requires
 neither Zig, Git, nor a local copy of the repository.
 
 Published distributions support all six desktop hosts:
@@ -17,12 +17,12 @@ running through the system compatibility layer.
 
 ## Install on macOS or Linux
 
-You can [inspect the official script](https://github.com/Matanek/Silex/blob/v0.43.0/install.sh)
+You can [inspect the official script](https://github.com/Matanek/Silex/blob/v0.44.0/install.sh)
 before running it:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.sh \
-    | SILEX_VERSION=0.43.0 sh
+curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.sh \
+    | SILEX_VERSION=0.44.0 sh
 ```
 
 The script distinguishes macOS from Linux, then ARM64 from x64, verifies the
@@ -68,8 +68,8 @@ installation.
 Run this command in PowerShell:
 
 ```powershell
-$env:SILEX_VERSION = "0.43.0"
-irm https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.ps1 | iex
+$env:SILEX_VERSION = "0.44.0"
+irm https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.ps1 | iex
 ```
 
 The script verifies the SHA-256 checksum and installs `silex.exe` in
@@ -98,7 +98,7 @@ silex --version
 For this documentation, the command must print:
 
 ```text
-silex 0.43.0
+silex 0.44.0
 ```
 
 You can now [write and run your first program](../Learn/First-program.md).
@@ -109,16 +109,16 @@ On macOS or Linux, place the binary in another folder with
 `SILEX_INSTALL_DIR`:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.sh \
-    | SILEX_VERSION=0.43.0 SILEX_INSTALL_DIR="$HOME/bin" sh
+curl -fsSL https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.sh \
+    | SILEX_VERSION=0.44.0 SILEX_INSTALL_DIR="$HOME/bin" sh
 ```
 
 In PowerShell:
 
 ```powershell
-$env:SILEX_VERSION = "0.43.0"
+$env:SILEX_VERSION = "0.44.0"
 $env:SILEX_INSTALL_DIR = "$HOME\bin"
-irm https://raw.githubusercontent.com/Matanek/Silex/v0.43.0/install.ps1 | iex
+irm https://raw.githubusercontent.com/Matanek/Silex/v0.44.0/install.ps1 | iex
 ```
 
 [Back to the Silex tools](README.md) ·

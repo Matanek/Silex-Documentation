@@ -1,6 +1,6 @@
 # Connaître la frontière d'interopérabilité actuelle
 
-La surface Silex 0.43 est volontairement limitée aux adaptateurs privés de
+La surface Silex 0.44 est volontairement limitée aux adaptateurs privés de
 packages.
 
 ## Cibles et fournisseurs

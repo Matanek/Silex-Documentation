@@ -84,7 +84,7 @@ cibles reconnues par la version installée avec :
 silex targets
 ```
 
-Silex 0.43 reconnaît `macos-arm64`, `macos-x64`, `linux-arm64`, `linux-x64`,
+Silex 0.44 reconnaît `macos-arm64`, `macos-x64`, `linux-arm64`, `linux-x64`,
 `windows-arm64` et `windows-x64`. Passez le nom voulu à la compilation
 croisée :
 
@@ -96,7 +96,7 @@ silex compile Project/Main.sx \
 
 Les six noms possèdent une distribution native, mais cela ne garantit pas que
 chaque hôte puisse produire les cinq autres formats. Consultez les
-[limites de Silex 0.43](../Reference/Current-limits.md) avant de distribuer un
+[limites de Silex 0.44](../Reference/Current-limits.md) avant de distribuer un
 exécutable construit pour un autre système.
 
 ## Observer l'IR ou ignorer le cache

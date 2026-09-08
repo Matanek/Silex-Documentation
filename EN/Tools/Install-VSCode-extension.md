@@ -3,7 +3,7 @@
 The Silex extension for Visual Studio Code recognizes `.sx` files and provides
 syntax highlighting, character pairs, indentation, and line comments.
 
-For Silex 0.42, it has not yet been published to the Visual Studio Marketplace.
+For Silex 0.44, it has not yet been published to the Visual Studio Marketplace.
 Build its VSIX package from the official repository, then install that file in
 VS Code.
 

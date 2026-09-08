@@ -110,7 +110,7 @@ links, and project development dependencies.
 
 ## Remove an installed version
 
-Silex 0.42 has no package uninstall command. The output of `silex packages`
+Silex 0.44 has no package uninstall command. The output of `silex packages`
 gives the exact path of every version. Delete only the affected
 `Name@MAJOR.MINOR.PATCH` folder under `~/.silex/packages`, or under
 `%USERPROFILE%\.silex\packages` on Windows.

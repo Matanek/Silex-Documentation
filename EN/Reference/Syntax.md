@@ -154,7 +154,7 @@ after a method segment resumes ordinary access on that method's result. The
 A statement ends at a line break, before `}`, or with `;`. Two statements on
 the same line require a semicolon.
 
-A `C.function` binding is the only module-level `let` accepted in Silex 0.42.
+A `C.function` binding is the only module-level `let` accepted in Silex 0.44.
 See [interoperability](../Language/Interop/README.md) for its exact signature
 and lifetime.
 

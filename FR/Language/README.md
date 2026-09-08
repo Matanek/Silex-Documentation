@@ -1,7 +1,7 @@
 # Comprendre le langage Silex
 
 Cette section décrit les concepts et les comportements du langage implémenté
-par Silex 0.42. Choisissez la question qui correspond à votre intention ; les
+par Silex 0.44. Choisissez la question qui correspond à votre intention ; les
 pages de référence restent réservées aux formes exactes et aux limites.
 
 - [Conserver, transformer et comparer des valeurs](Values/README.md)

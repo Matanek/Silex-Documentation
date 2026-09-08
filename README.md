@@ -13,6 +13,8 @@ French pages.
 ## Versions
 
 - `main`: next Silex version · prochaine version de Silex.
+- `release/0.44`: Silex 0.44.x.
+- `release/0.43`: Silex 0.43.x.
 - `release/0.42`: Silex 0.42.x.
 
 Internal compiler and maintenance documentation remains in the

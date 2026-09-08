@@ -1,6 +1,6 @@
 # Écrire une valeur littérale
 
-Un littéral inscrit directement une valeur dans le code source. Silex 0.42
+Un littéral inscrit directement une valeur dans le code source. Silex 0.44
 reconnaît les formes suivantes.
 
 ## Nombres

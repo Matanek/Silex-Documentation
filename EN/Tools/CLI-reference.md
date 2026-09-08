@@ -1,6 +1,6 @@
 # Read the CLI reference
 
-This page gathers the commands and options accepted by Silex 0.42. Linked
+This page gathers the commands and options accepted by Silex 0.44. Linked
 guides explain when to use them and what they produce.
 
 ## Programs and tests

@@ -1,7 +1,7 @@
 # Understand the Silex language
 
 This section describes the language concepts and behavior implemented by
-Silex 0.42. Choose the question that matches your intention; reference pages
+Silex 0.44. Choose the question that matches your intention; reference pages
 remain reserved for exact forms and limits.
 
 - [Store, transform, and compare values](Values/README.md)

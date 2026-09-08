@@ -1,6 +1,6 @@
 # Consulter la référence de la CLI
 
-Cette page rassemble les commandes et options acceptées par Silex 0.42. Les
+Cette page rassemble les commandes et options acceptées par Silex 0.44. Les
 guides liés expliquent quand les employer et ce qu'elles produisent.
 
 ## Programmes et tests

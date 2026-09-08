@@ -3,7 +3,7 @@
 The Silex extension for Zed provides syntax highlighting, diagnostics,
 completion, and navigation through the server launched by `silex lsp`.
 
-For Silex 0.42, the extension is not yet available in the Zed extension
+For Silex 0.44, the extension is not yet available in the Zed extension
 gallery. Install it as a development extension from its official repository.
 
 ## Prepare the required tools

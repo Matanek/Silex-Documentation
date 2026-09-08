@@ -1,4 +1,4 @@
-# Connaître les limites de Silex 0.43
+# Connaître les limites de Silex 0.44
 
 Le compilateur garde volontairement une surface réduite. Les fonctionnalités
 suivantes ne sont pas implémentées :
@@ -21,7 +21,7 @@ parseur vers l'analyse typée.
 
 ## Distinguer émission et exécution des cibles
 
-Silex 0.43 distribue et vérifie nativement `macos-arm64`, `macos-x64`,
+Silex 0.44 distribue et vérifie nativement `macos-arm64`, `macos-x64`,
 `linux-arm64`, `linux-x64`, `windows-arm64` et `windows-x64`. La chaîne de
 publication construit une archive autonome pour chaque cible, contrôle son
 architecture, la réinstalle par le script public dans un environnement vierge,

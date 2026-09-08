@@ -118,7 +118,7 @@ des liens de développement et des dépendances de développement du projet.
 
 ## Retirer une version installée
 
-Silex 0.42 ne possède pas de commande de désinstallation de package. La sortie
+Silex 0.44 ne possède pas de commande de désinstallation de package. La sortie
 de `silex packages` donne le chemin exact de chaque version. Supprimez seulement
 le dossier `Name@MAJOR.MINOR.PATCH` concerné sous `~/.silex/packages`, ou sous
 `%USERPROFILE%\.silex\packages` avec Windows.

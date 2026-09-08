@@ -1,6 +1,6 @@
 # Write a literal value
 
-A literal writes a value directly in source code. Silex 0.42 recognizes the
+A literal writes a value directly in source code. Silex 0.44 recognizes the
 following forms.
 
 ## Numbers

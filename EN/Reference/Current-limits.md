@@ -1,4 +1,4 @@
-# Know the limits of Silex 0.43
+# Know the limits of Silex 0.44
 
 The compiler deliberately keeps a focused surface. The following features are
 not implemented:
@@ -21,7 +21,7 @@ the parser to typed analysis.
 
 ## Distinguish target emission from execution
 
-Silex 0.43 distributes and natively verifies `macos-arm64`, `macos-x64`,
+Silex 0.44 distributes and natively verifies `macos-arm64`, `macos-x64`,
 `linux-arm64`, `linux-x64`, `windows-arm64`, and `windows-x64`. The release
 pipeline builds one standalone archive per target, checks its architecture,
 reinstalls it through the public script in a clean environment, then executes

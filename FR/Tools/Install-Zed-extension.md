@@ -3,7 +3,7 @@
 L'extension Silex pour Zed fournit la coloration syntaxique, les diagnostics,
 la complétion et la navigation grâce au serveur lancé par `silex lsp`.
 
-Pour Silex 0.42, l'extension n'est pas encore disponible dans la galerie Zed.
+Pour Silex 0.44, l'extension n'est pas encore disponible dans la galerie Zed.
 Installez-la comme extension de développement depuis son dépôt officiel.
 
 ## Préparer les outils nécessaires

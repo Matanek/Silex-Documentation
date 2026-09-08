@@ -156,7 +156,7 @@ Une instruction se termine au retour à la ligne, avant `}` ou avec `;`. Deux
 instructions sur une même ligne demandent un point-virgule.
 
 Une liaison `C.function` est le seul `let` accepté au niveau du module dans
-Silex 0.42. Consultez [l'interopérabilité](../Language/Interop/README.md) pour
+Silex 0.44. Consultez [l'interopérabilité](../Language/Interop/README.md) pour
 sa signature et sa durée de vie exactes.
 
 [Revenir à la référence](README.md)

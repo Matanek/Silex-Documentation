@@ -1,6 +1,6 @@
 # Know the current interoperability boundary
 
-The Silex 0.43 surface is deliberately limited to private package adapters.
+The Silex 0.44 surface is deliberately limited to private package adapters.
 
 ## Targets and providers
 
