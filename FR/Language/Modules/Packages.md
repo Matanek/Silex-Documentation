@@ -114,8 +114,10 @@ aux consommateurs ordinaires. Une suite ne crée aucune dépendance du parent
 vers l'enfant.
 
 Les catalogues de façade ouverts aux contributions sont expliqués dans
-[les réexportations](Reexports.md). La déclaration JSON des autorisations et
-catalogues reste regroupée dans la
+[les réexportations](Reexports.md). Un contributeur de catalogue peut être
+extérieur à l'espace de noms du propriétaire : cette participation ne lui
+accorde aucune permission d'extension. La déclaration JSON des autorisations
+et catalogues reste regroupée dans la
 [documentation du manifeste](../../Tools/Package-manifest.md#autoriser-la-composition-entre-packages).
 
 [Revenir aux modules](README.md) ·

@@ -109,8 +109,9 @@ public to ordinary consumers. A suite creates no dependency from the parent to
 the child.
 
 Facade catalogs open to contributions are explained in
-[re-exports](Reexports.md). The JSON declaration for authorizations and
-catalogs remains grouped in the
+[re-exports](Reexports.md). A catalog contributor may live outside the owner's
+namespace; that participation grants it no extension permission. The JSON
+declaration for authorizations and catalogs remains grouped in the
 [manifest documentation](../../Tools/Package-manifest.md#authorize-composition-between-packages).
 
 [Back to modules](README.md) ·

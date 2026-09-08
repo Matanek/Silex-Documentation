@@ -23,7 +23,7 @@ public use Rendering.Renderer
 This form is equivalent to `public use Rendering.Renderer.Renderer` and does
 not re-export the `Rendering.Renderer` tree.
 
-## Contribute to GFX catalogs
+## Contribute to an open catalog
 
 GFX is currently the only package that uses catalogs. It explicitly opens
 three modules in its `Package.json`:
@@ -36,35 +36,35 @@ three modules in its `Package.json`:
 
 This `catalogs` property, and only this property, opens these modules to
 `contribute` blocks. An `extensions` entry separately controls child-package
-authorization and the `friend`, `suite`, or `merge` permissions; it does not
-open a catalog.
+authorization and the `friend`, `suite`, or `merge` permissions; it neither
+opens a catalog nor is required for an external contribution.
 
-A direct child package of GFX may then re-export declarations it owns into one
-of these three declared modules. `GFX.Physics` does so as follows:
+Any named package may re-export declarations it owns into a catalog opened by
+one of its direct dependencies. Its name does not need to belong to the owner's
+namespace. For example, an `AgentTools` package may contribute its plugin to
+the GFX facade:
 
 ```sx
-contribute GFX.Components {
-    public use GFX.Physics.RigidBody2D.RigidBody2D
-}
-
-contribute GFX.Resources {
-    public use GFX.Physics.World2D.World2D
+contribute GFX.Plugins {
+    public use AgentTools.Plugin as Agents
 }
 ```
 
-The blocks live in a portable atom of the child package's primary module. They
-currently reside in `GFX.Physics/Module/@Module.sx`; the atom's name does not
-open the catalog.
+`AgentTools/Package.json` must declare GFX in `dependencies`. The block lives
+in a portable atom of the `AgentTools` primary module. Neither this dependency
+nor the contribution makes `AgentTools` a child of GFX or grants it a
+`friend`, `suite`, or `merge` permission.
 
 The block accepts only `public use` declarations that name declarations owned
 by the contributing package. It cannot contain a function, type, field,
 extension, executable statement, or type alias. Composition therefore adds
 facade names without injecting implementation into the parent.
 
-The target must be an existing module owned by GFX and must exactly match a
-`catalogs` entry. Only packages present in the resolved graph contribute. A
-collision with a catalog declaration, another contribution, or a child
-namespace produces an error instead of selecting an order or replacement.
+The target must be an existing module owned by a direct dependency and must
+exactly match one of its `catalogs` entries. Only packages present in the
+resolved graph contribute. A collision with a catalog declaration, another
+contribution, or a child namespace produces an error instead of selecting an
+order or replacement.
 
 [Back to modules](README.md) ·
 [Expose or hide a declaration](Visibility.md)

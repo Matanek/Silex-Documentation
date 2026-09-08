@@ -158,8 +158,12 @@ Le joker `Parent.*` couvre seulement les enfants directs. Il peut porter
 `friend`, mais pas `suite` ni `merge`.
 
 `catalogs` est indépendant de ces permissions : lui seul ouvre les modules
-nommés aux contributions. Les effets sur la visibilité et la composition sont
-détaillés dans [les frontières de package](../Language/Modules/Packages.md) et
+nommés aux contributions. Tout package nommé peut contribuer, qu'il soit enfant
+ou externe, à condition de déclarer le propriétaire du catalogue comme
+dépendance directe. Cette participation n'accorde aucun droit `friend`,
+`suite`, `merge` ni aucune portion de son espace de noms. Les effets sur la
+visibilité et la composition sont détaillés dans
+[les frontières de package](../Language/Modules/Packages.md) et
 [les réexportations](../Language/Modules/Reexports.md).
 
 ## Déclarer une frontière native

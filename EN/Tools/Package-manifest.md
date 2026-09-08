@@ -153,8 +153,11 @@ The `Parent.*` wildcard covers direct children only. It may carry `friend`, but
 not `suite` or `merge`.
 
 `catalogs` is independent from these permissions: only that field opens named
-modules to contributions. The visibility and composition effects are detailed
-in [package boundaries](../Language/Modules/Packages.md) and
+modules to contributions. Any named package may contribute, whether it is a
+child or external package, provided it declares the catalog owner as a direct
+dependency. Participation grants no `friend`, `suite`, or `merge` permission
+and no part of the owner's namespace. The visibility and composition effects
+are detailed in [package boundaries](../Language/Modules/Packages.md) and
 [re-exports](../Language/Modules/Reexports.md).
 
 ## Declare a native boundary
