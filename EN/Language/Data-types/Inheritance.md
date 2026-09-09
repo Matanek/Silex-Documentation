@@ -54,11 +54,17 @@ extension are not virtual.
 
 ## Preserve the mutation contract
 
-The ability to modify the receiver belongs to the inherited method contract.
-An override cannot start modifying `self` if the base method is read-only.
-Conversely, overriding a mutable method preserves that contract even if the new
-body does not itself write to `self`; dynamic calls continue to preserve the
-receiver state expected by the base slot.
+The ability to modify the receiver is inferred across the entire virtual
+family. If an override body modifies `self`, the base method and all its
+overrides share a mutation-capable contract. This rule notably allows a base
+class to declare an empty hook whose specialized implementation alone changes
+state.
+
+A call selected through the base type follows that shared contract: it needs a
+mutation-capable receiver and remains forbidden through a read reference `@`.
+Conversely, a nonmutating body in another override does not narrow the family
+contract, because dynamic dispatch may reach an implementation that modifies
+`self`.
 
 A derived class also inherits its base's valid protocol conformances.
 [Cleanup](Cleanup.md) follows the dynamic class toward its bases.

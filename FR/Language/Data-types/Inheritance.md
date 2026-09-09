@@ -54,12 +54,17 @@ par une extension ne sont pas virtuels.
 
 ## Conserver le contrat de mutation
 
-La capacité à modifier le récepteur appartient au contrat de la méthode
-héritée. Une redéfinition ne peut pas commencer à modifier `self` si la méthode
-de base est en lecture seule. Inversement, redéfinir une méthode modifiable
-conserve ce contrat même si le nouveau corps n'écrit pas lui-même dans `self` ;
-les appels dynamiques continuent de préserver l'état du récepteur attendu par
-l'emplacement de base.
+La capacité à modifier le récepteur est inférée pour toute la famille
+virtuelle. Si le corps d'une redéfinition modifie `self`, la méthode de base et
+toutes ses redéfinitions partagent un contrat modifiable. Cette règle permet
+notamment de déclarer un hook vide dans une classe de base, puis de modifier
+l'état seulement dans une classe spécialisée.
+
+Un appel sélectionné depuis le type de base respecte ce contrat commun : il
+demande un récepteur capable d'être modifié et reste interdit à travers une
+référence en lecture `@`. Inversement, le corps non modifiable d'une autre
+redéfinition ne réduit pas le contrat de la famille, car la distribution
+dynamique peut atteindre une implémentation qui modifie `self`.
 
 Une classe dérivée hérite également des conformances valides aux protocoles de
 sa base. Le [nettoyage](Cleanup.md) suit la classe dynamique vers ses bases.
