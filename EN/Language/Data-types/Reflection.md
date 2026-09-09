@@ -11,10 +11,13 @@ func main() {
 }
 ```
 
-`type` contains the canonical spelling of the static type. `name` contains the
-canonical source declaration represented by the expression: nominal type,
-enum variant, selected member, or named function. A computed unnamed scalar
-exposes only `type`; requesting its `name` produces a compilation diagnostic.
+`type` contains the canonical spelling of the value's type. For a class, this
+is the concrete runtime type even when the expression has a base type. For
+other values, it is the statically known type. `name` contains the canonical
+source declaration represented by the expression: a class's concrete type,
+nominal type, enum variant, selected member, or named function. A computed
+unnamed scalar exposes only `type`; requesting its `name` produces a
+compilation diagnostic.
 
 For an enum, `name` follows its active variant. Names from packages and named
 modules contain their complete canonical path, such as
@@ -50,6 +53,27 @@ assert(metadata.variants[1] == "text")
 
 ## Inspect a structure or class
 
+A class also exposes `types`, its complete inheritance lineage from the root
+to the concrete type. The final element therefore always equals `type`:
+
+```sx
+class Node {}
+class Player : Node {}
+class Captain : Player {}
+
+var node:Node = Captain()
+let metadata = reflect(node)
+
+assert(metadata.type == "Captain")
+assert(metadata.name == "Captain")
+assert(metadata.types[0] == "Node")
+assert(metadata.types[1] == "Player")
+assert(metadata.types[2] == metadata.type)
+```
+
+A structure does not expose `types` because it has no polymorphic runtime
+identity.
+
 `fields`, `properties`, and `methods` respectively contain the instance
 fields, properties, and methods visible at the call site, in declaration
 order. A property's generated accessors are never repeated in `methods`. The
@@ -74,6 +98,8 @@ Borrowed modes remain present in the type spelling. `reflect` evaluates its
 argument exactly once and does not transfer it. The compiler emits only the
 ordinary strings and lists requested by the category; no memory address, field
 offset, machine symbol, or stable ABI is exposed.
+Returned names describe the source program; they are not stable serialization
+identifiers.
 
 [Back to data types](README.md) ·
 [Understand intrinsic classes](Intrinsic-classes.md)

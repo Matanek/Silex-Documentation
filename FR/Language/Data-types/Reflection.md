@@ -11,11 +11,13 @@ func main() {
 }
 ```
 
-`type` contient l'écriture canonique du type statique. `name` contient la
-déclaration source canonique représentée par l'expression : type nominal,
-variante d'enum, membre sélectionné ou fonction nommée. Un scalaire calculé et
-sans nom expose seulement `type` ; demander son `name` produit un diagnostic à
-la compilation.
+`type` contient l'écriture canonique du type de la valeur. Pour une classe, il
+s'agit du type concret à l'exécution, même lorsque l'expression possède un type
+de base. Pour les autres valeurs, il correspond au type connu statiquement.
+`name` contient la déclaration source canonique représentée par l'expression :
+type concret d'une classe, type nominal, variante d'enum, membre sélectionné ou
+fonction nommée. Un scalaire calculé et sans nom expose seulement `type` ;
+demander son `name` produit un diagnostic à la compilation.
 
 Pour un enum, `name` suit sa variante active. Les noms de packages et de
 modules nommés contiennent leur chemin canonique complet, tel que
@@ -52,6 +54,27 @@ assert(metadata.variants[1] == "text")
 
 ## Inspecter une structure ou une classe
 
+Une classe expose aussi `types`, sa lignée d'héritage complète, de la racine au
+type concret. Le dernier élément est donc toujours égal à `type` :
+
+```sx
+class Node {}
+class Player : Node {}
+class Captain : Player {}
+
+var node:Node = Captain()
+let metadata = reflect(node)
+
+assert(metadata.type == "Captain")
+assert(metadata.name == "Captain")
+assert(metadata.types[0] == "Node")
+assert(metadata.types[1] == "Player")
+assert(metadata.types[2] == metadata.type)
+```
+
+Une structure n'expose pas `types`, car elle n'a pas d'identité polymorphe à
+l'exécution.
+
 `fields`, `properties` et `methods` contiennent respectivement les champs, les
 propriétés et les méthodes d'instance visibles au site d'appel, dans leur ordre
 de déclaration. Les accesseurs générés d'une propriété ne sont jamais répétés
@@ -77,6 +100,8 @@ Les modes empruntés restent présents dans l'écriture du type. `reflect` éval
 son argument exactement une fois et ne le transfère pas. Le compilateur émet
 seulement les chaînes et listes ordinaires demandées par la catégorie ; aucune
 adresse mémoire, position de champ, symbole machine ou ABI stable n'est exposé.
+Les noms retournés décrivent le programme source ; ils ne constituent pas des
+identifiants de sérialisation stables.
 
 [Revenir aux types de données](README.md) ·
 [Comprendre les classes intrinsèques](Intrinsic-classes.md)
