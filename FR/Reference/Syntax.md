@@ -155,6 +155,19 @@ La plage `...` reste un token différent de `..`.
 Une instruction se termine au retour à la ligne, avant `}` ou avec `;`. Deux
 instructions sur une même ligne demandent un point-virgule.
 
+## Déclarations d'opérateurs
+
+```text
+[visibilité] func operator + (left:T, right:U) R { ... }
+[visibilité] func operator - (value:T) R { ... }
+```
+
+Les symboles déclarables sont `+`, `-`, `*` et `/`. Une déclaration se place au
+niveau du module, emploie un paramètre valeur pour la négation ou deux pour une
+opération binaire, et retourne une valeur possédée non vide. Les paramètres par
+défaut, les références et les paramètres de types génériques n'y sont pas
+acceptés. Au moins un type d'opérande nominal appartient au package déclarant.
+
 Une liaison `C.function` est le seul `let` accepté au niveau du module dans
 Silex 0.44. Consultez [l'interopérabilité](../Language/Interop/README.md) pour
 sa signature et sa durée de vie exactes.

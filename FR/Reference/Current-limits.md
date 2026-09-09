@@ -4,7 +4,9 @@ Le compilateur garde volontairement une surface réduite. Les fonctionnalités
 suivantes ne sont pas implémentées :
 
 - fichiers de verrouillage des packages ;
-- interopérabilité C++ et interopérabilité C générale et publique.
+- interopérabilité C++ et interopérabilité C générale et publique ;
+- déclarations d'opérateurs génériques ou portant sur `==`, les comparaisons,
+  `%`, les bits et la logique.
 
 ## Annoter certains littéraux de listes
 

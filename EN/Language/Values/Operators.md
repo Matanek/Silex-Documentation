@@ -1,7 +1,7 @@
 # Calculate, compare, and chain operations
 
-Silex operators preserve the type of their values and report impossible
-numeric operations instead of silently producing an incorrect result.
+Silex operators cover numeric calculations and can receive explicit semantics
+for package types. Impossible operations remain compile-time errors.
 
 ## Calculate with numbers
 
@@ -24,6 +24,44 @@ Silex checks overflow, division by zero, and unrepresentable negation.
 
 Compatible integers widen within their signed or unsigned family. The presence
 of a floating-point number selects the common `float32` or `float64` type.
+
+## Define an operator for a type
+
+An `operator` function is declared at module level. Its parameters make both
+operands explicit, and its body remains an ordinary Silex function:
+
+```sx
+struct Vec2 {
+    var x:float
+    var y:float
+}
+
+func operator +(left:Vec2, right:Vec2) Vec2 {
+    return Vec2(left.x + right.x, left.y + right.y)
+}
+
+func operator *(left:Vec2, right:float) Vec2 {
+    return Vec2(left.x * right, left.y * right)
+}
+
+func operator -(value:Vec2) Vec2 {
+    return Vec2(-value.x, -value.y)
+}
+```
+
+`+`, `*`, and `/` require two parameters. `-` accepts either two parameters
+for subtraction or one for negation. Each orientation is explicit: accepting
+`Vec2 * float` does not automatically declare `float * Vec2`.
+
+Parameters are owned values without defaults, and the return type is a non-void
+owned value. At least one operand must be a nominal type declared by the
+function's package, so a package cannot redefine calculations between two
+foreign types. Generic operator functions are not accepted yet.
+
+Visibility follows ordinary function rules. An overload intended for package
+users must be `public` and becomes available through the import that exposes its
+module. Resolution compares operand types and their implicit conversions; the
+return type never selects an overload.
 
 ## Compare values
 
@@ -63,12 +101,14 @@ let shifted = value << 2
 let reduced = value >> 1
 ```
 
-## Change a numeric value
+## Change a value
 
 A mutable variable, field, or indexed element accepts `+=`, `-=`, `*=`, `/=`,
 `%=`, as well as `++` and `--`. Each compound assignment performs the same
 checked operation as its operator, then stores the result back in the original
-place. `%=` remains integer-only.
+place. When a binary operator is overloaded, `+=`, `-=`, `*=`, or `/=` reuses
+that overload automatically; its result must be assignable to the target type.
+`%=` remains integer-only, while `++` and `--` remain numeric-only.
 
 ## Apply several operations to the same object
 

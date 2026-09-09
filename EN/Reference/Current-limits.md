@@ -4,7 +4,9 @@ The compiler deliberately keeps a focused surface. The following features are
 not implemented:
 
 - package lock files;
-- C++ interoperability and general, public C interoperability.
+- C++ interoperability and general, public C interoperability;
+- generic operator declarations, or declarations for `==`, comparisons, `%`,
+  bitwise operators, and logical operators.
 
 ## Annotate some list literals
 

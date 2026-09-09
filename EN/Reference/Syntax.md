@@ -154,6 +154,19 @@ after a method segment resumes ordinary access on that method's result. The
 A statement ends at a line break, before `}`, or with `;`. Two statements on
 the same line require a semicolon.
 
+## Operator declarations
+
+```text
+[visibility] func operator + (left:T, right:U) R { ... }
+[visibility] func operator - (value:T) R { ... }
+```
+
+The declarable symbols are `+`, `-`, `*`, and `/`. A declaration appears at
+module level, uses one value parameter for negation or two for a binary
+operation, and returns a non-void owned value. Defaults, references, and generic
+type parameters are not accepted. At least one nominal operand type belongs to
+the declaring package.
+
 A `C.function` binding is the only module-level `let` accepted in Silex 0.44.
 See [interoperability](../Language/Interop/README.md) for its exact signature
 and lifetime.

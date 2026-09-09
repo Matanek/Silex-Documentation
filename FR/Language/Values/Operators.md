@@ -1,8 +1,8 @@
 # Calculer, comparer et enchaîner des opérations
 
-Les opérateurs Silex conservent le type de leurs valeurs et signalent les
-opérations numériques impossibles au lieu de laisser un résultat
-silencieusement incorrect.
+Les opérateurs Silex couvrent les calculs numériques et peuvent recevoir une
+sémantique explicite pour les types d'un package. Les opérations impossibles
+restent des erreurs de compilation.
 
 ## Calculer avec des nombres
 
@@ -27,6 +27,46 @@ la négation qui ne peut pas être représentée.
 Les entiers compatibles sont élargis dans leur famille signée ou non signée.
 La présence d'un nombre à virgule sélectionne le type commun `float32` ou
 `float64`.
+
+## Définir un opérateur pour un type
+
+Une fonction `operator` se déclare au niveau du module. Ses paramètres rendent
+les deux opérandes visibles et son corps reste une fonction Silex ordinaire :
+
+```sx
+struct Vec2 {
+    var x:float
+    var y:float
+}
+
+func operator +(left:Vec2, right:Vec2) Vec2 {
+    return Vec2(left.x + right.x, left.y + right.y)
+}
+
+func operator *(left:Vec2, right:float) Vec2 {
+    return Vec2(left.x * right, left.y * right)
+}
+
+func operator -(value:Vec2) Vec2 {
+    return Vec2(-value.x, -value.y)
+}
+```
+
+`+`, `*` et `/` demandent deux paramètres. `-` accepte soit deux paramètres
+pour la soustraction, soit un seul pour la négation. Chaque orientation est
+explicite : accepter `Vec2 * float` ne déclare pas automatiquement
+`float * Vec2`.
+
+Les paramètres sont des valeurs possédées, sans valeur par défaut, et le type
+de retour est une valeur possédée non vide. Au moins un opérande doit être un
+type nominal déclaré par le package de la fonction ; un package ne peut donc
+pas redéfinir les calculs entre deux types étrangers. Les opérateurs génériques
+ne sont pas encore acceptés.
+
+La visibilité suit celle des fonctions. Une surcharge destinée aux utilisateurs
+d'un package doit être `public` et devient disponible avec l'import qui expose
+son module. La résolution compare les types des opérandes et leurs conversions
+implicites ; le type de retour ne choisit jamais une surcharge.
 
 ## Comparer des valeurs
 
@@ -67,12 +107,15 @@ let shifted = value << 2
 let reduced = value >> 1
 ```
 
-## Modifier une valeur numérique
+## Modifier une valeur
 
 Une variable, un champ ou un élément indexé modifiable accepte `+=`, `-=`,
 `*=`, `/=`, `%=` ainsi que `++` et `--`. Chaque affectation composée effectue
 la même opération contrôlée que son opérateur, puis range le résultat à
-l'emplacement d'origine. `%=` reste réservé aux entiers.
+l'emplacement d'origine. Lorsqu'un opérateur binaire est surchargé, `+=`, `-=`,
+`*=` ou `/=` réemploie automatiquement cette surcharge ; son résultat doit être
+assignable au type de la cible. `%=` reste réservé aux entiers, et `++` et `--`
+aux nombres.
 
 ## Appliquer plusieurs opérations au même objet
 
