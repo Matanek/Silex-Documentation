@@ -7,7 +7,7 @@ modification partagée.
 - [Limiter explicitement une portée](Scopes.md)
 - [Protéger un état partagé](Mutex.md)
 
-Le branchement selon la variante d'un enum est expliqué avec
-[les enums et `match`](../Data-types/Enums.md).
+Le branchement selon la variante d'un enum ou un littéral scalaire est expliqué
+avec [`match`](../Data-types/Enums.md).
 
 [Revenir aux concepts du langage](../README.md)

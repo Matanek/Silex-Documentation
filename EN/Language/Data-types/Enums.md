@@ -1,4 +1,4 @@
-# Represent a choice with an enum and `match`
+# Select a value with `match`
 
 An enum declares a closed set of variants. A variant may carry associated
 values.
@@ -79,6 +79,31 @@ Block branches and expression branches cannot be mixed. A branch may contain
 another `match`, including a `match` expression whose result becomes the value
 of the enclosing branch. Every level retains its own bindings and
 exhaustiveness rules.
+
+## Select a scalar literal
+
+`match` also accepts a `bool`, integer, or `str` subject. Every pattern is a
+literal with the same type as the subject; an integer literal adopts the
+subject's integer type and must fit its range.
+
+```sx
+func status(code:int) str {
+    return match code {
+        200 => "ok"
+        404 => "not found"
+        else => "other"
+    }
+}
+```
+
+Branches are tried in order, and the first matching branch whose guard
+succeeds is selected. The subject is evaluated once. An unguarded branch makes
+any later identical pattern unreachable; two unguarded branches cannot repeat
+the same literal.
+
+An integer or `str` match requires an `else` branch. A boolean match may omit
+it when `true` and `false` each have an unguarded branch. Branches never fall
+through implicitly: use a block in each branch to execute statements.
 
 ## Associate a raw value
 

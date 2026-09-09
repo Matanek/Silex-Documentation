@@ -1,4 +1,4 @@
-# Représenter un choix avec un enum et `match`
+# Sélectionner une valeur avec `match`
 
 Un enum déclare un ensemble fermé de variantes. Une variante peut transporter
 des valeurs associées.
@@ -81,6 +81,32 @@ Les branches en bloc et les branches expression ne peuvent pas être mélangées
 Une branche peut contenir un autre `match`, y compris une expression `match`
 dont le résultat devient la valeur de la branche englobante. Chaque niveau
 conserve ses propres liaisons et règles d'exhaustivité.
+
+## Sélectionner un littéral scalaire
+
+`match` accepte aussi un sujet `bool`, entier ou `str`. Chaque motif est un
+littéral du même type que le sujet ; un littéral entier reçoit le type entier
+du sujet et doit tenir dans son intervalle.
+
+```sx
+func status(code:int) str {
+    return match code {
+        200 => "ok"
+        404 => "introuvable"
+        else => "autre"
+    }
+}
+```
+
+Les branches sont essayées dans leur ordre et la première correspondance dont
+la garde réussit est sélectionnée. Le sujet est évalué une seule fois. Une
+branche non gardée rend inatteignable tout motif identique placé après elle ;
+deux branches non gardées ne peuvent pas répéter le même littéral.
+
+Un `match` entier ou `str` exige une branche `else`. Un `match` booléen peut
+l'omettre lorsque `true` et `false` possèdent chacun une branche non gardée.
+Les branches ne continuent jamais implicitement dans la suivante : utilisez
+un bloc dans chaque branche pour exécuter des instructions.
 
 ## Associer une valeur brute
 

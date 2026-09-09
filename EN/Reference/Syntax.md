@@ -33,6 +33,7 @@ and constraints.
 | Variant with content | `Enum.caseName(value)` |
 | Ignored `match` content | `caseName(_)` |
 | Guarded branch | `caseName(value) if condition => result` |
+| Literal pattern | `200 => result`, `"stop" => result`, or `true => result` |
 | Safe optional assignment | `optional?.field = value` |
 | Forced optional extraction | `optional!` |
 | Optional fallback | `optional ?? fallback` |

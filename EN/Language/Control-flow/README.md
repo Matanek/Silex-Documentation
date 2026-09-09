@@ -7,7 +7,7 @@ shared modification.
 - [Explicitly limit a scope](Scopes.md)
 - [Protect shared state](Mutex.md)
 
-Branching on an enum variant is explained with
-[enums and `match`](../Data-types/Enums.md).
+Branching on an enum variant or scalar literal is explained with
+[`match`](../Data-types/Enums.md).
 
 [Back to language concepts](../README.md)

@@ -33,6 +33,7 @@ comportement et ses contraintes.
 | Variante avec contenu | `Enum.caseName(value)` |
 | Contenu ignoré dans `match` | `caseName(_)` |
 | Branche gardée | `caseName(value) if condition => result` |
+| Motif littéral | `200 => result`, `"stop" => result` ou `true => result` |
 | Affectation optionnelle sûre | `optional?.field = value` |
 | Extraction optionnelle forcée | `optional!` |
 | Remplacement optionnel | `optional ?? fallback` |
