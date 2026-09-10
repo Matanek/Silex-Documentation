@@ -34,6 +34,8 @@ and constraints.
 | Ignored `match` content | `caseName(_)` |
 | Guarded branch | `caseName(value) if condition => result` |
 | Literal pattern | `200 => result`, `"stop" => result`, or `true => result` |
+| Ordered conditions | `match { condition => value; else => fallback }` |
+| `match` block value | `pattern => { ...; yield value }` |
 | Safe optional assignment | `optional?.field = value` |
 | Forced optional extraction | `optional!` |
 | Optional fallback | `optional ?? fallback` |
@@ -118,6 +120,7 @@ mutex {
 }
 
 return value
+yield value // only as the direct final statement of a value-match branch block
 print(value)
 assert(condition)
 assert(condition, "message")

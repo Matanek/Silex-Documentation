@@ -40,6 +40,33 @@ func describe(connection:Connection) str {
 The subject is evaluated once and is not consumed. Every variant appears
 exactly once, and every branch produces exactly the same type.
 
+A parenthesized expression remains a concise branch even when it spans several
+lines:
+
+```sx
+let predicted = match condition {
+    true => (x * 10.0 / 2.0 + 0.5)
+    else => 0.0
+}
+```
+
+## Select from ordered conditions
+
+Omit the subject to write an ordered condition chain. The compiler evaluates
+the conditions from top to bottom and selects the first one that produces
+`true`:
+
+```sx
+let category = match {
+    score >= 16 => "excellent"
+    score >= 10 => "admitted"
+    else => "insufficient"
+}
+```
+
+Every condition must produce a `bool`. This form always requires `else`, which
+guarantees a value or action when every condition fails.
+
 Write `_` to deliberately ignore an associated value. It still occupies its
 position but declares no variable; the value remains owned by the enum and
 follows its ordinary lifetime. `let _` and `var _` are invalid. Only an `else`
@@ -75,10 +102,57 @@ match connection {
 }
 ```
 
-Block branches and expression branches cannot be mixed. A branch may contain
-another `match`, including a `match` expression whose result becomes the value
-of the enclosing branch. Every level retains its own bindings and
-exhaustiveness rules.
+When a `match` is a statement, a short branch may call a function directly:
+
+```sx
+match condition {
+    true => accept()
+    else => reject()
+}
+```
+
+An expression branch in a statement `match` must be a call, cascade, `try`
+propagation, or another `match`. Blocks and these short branches may be mixed,
+and branches never fall through implicitly.
+
+## Compute a value inside a block
+
+End a branch block with `yield` when its result needs several statements:
+
+```sx
+let predicted = match condition {
+    true => {
+        var result = 0.0
+        result += x * 10.0
+        result /= 2.0
+        yield result + 0.5
+    }
+    else => 0.0
+}
+```
+
+In a `match` used as a value, every branch block must end directly with
+`yield expression`. A neighboring expression branch remains valid; all
+produced values must have exactly the same type. `return` always exits the
+enclosing function, while `yield` supplies the branch value to the nearest
+value-producing `match`.
+
+Nested matches are therefore unambiguous:
+
+```sx
+let value = match outer {
+    true => {
+        yield match inner {
+            true => { yield 1 }
+            else => 0
+        }
+    }
+    else => -1
+}
+```
+
+`yield 1` belongs to `match inner`; `yield match inner` then supplies its result
+to `match outer`.
 
 ## Select a scalar literal
 

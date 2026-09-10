@@ -34,6 +34,8 @@ comportement et ses contraintes.
 | Contenu ignoré dans `match` | `caseName(_)` |
 | Branche gardée | `caseName(value) if condition => result` |
 | Motif littéral | `200 => result`, `"stop" => result` ou `true => result` |
+| Conditions ordonnées | `match { condition => value; else => fallback }` |
+| Valeur de bloc `match` | `pattern => { ...; yield value }` |
 | Affectation optionnelle sûre | `optional?.field = value` |
 | Extraction optionnelle forcée | `optional!` |
 | Remplacement optionnel | `optional ?? fallback` |
@@ -119,6 +121,7 @@ mutex {
 }
 
 return value
+yield value // uniquement à la fin directe d'un bloc de branche d'un match valeur
 print(value)
 assert(condition)
 assert(condition, "message")

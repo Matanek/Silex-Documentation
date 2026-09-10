@@ -40,6 +40,32 @@ func describe(connection:Connection) str {
 Le sujet est évalué une fois et n'est pas consommé. Chaque variante apparaît
 exactement une fois et chaque branche produit exactement le même type.
 
+Une expression entre parenthèses reste une branche concise, même lorsqu'elle
+occupe plusieurs lignes :
+
+```sx
+let predicted = match condition {
+    true => (x * 10.0 / 2.0 + 0.5)
+    else => 0.0
+}
+```
+
+## Choisir selon des conditions ordonnées
+
+Omettez le sujet pour écrire une suite de conditions. Le compilateur les
+évalue de haut en bas et sélectionne la première qui produit `true` :
+
+```sx
+let category = match {
+    score >= 16 => "excellent"
+    score >= 10 => "admis"
+    else => "insuffisant"
+}
+```
+
+Chaque condition doit produire un `bool`. Cette forme exige toujours `else`,
+qui garantit une valeur ou une action lorsque toutes les conditions échouent.
+
 Écrivez `_` pour ignorer volontairement une valeur associée. Il occupe toujours
 sa position mais ne déclare aucune variable ; la valeur reste possédée par
 l'enum et suit sa durée de vie ordinaire. `let _` et `var _` sont invalides.
@@ -77,10 +103,60 @@ match connection {
 }
 ```
 
-Les branches en bloc et les branches expression ne peuvent pas être mélangées.
-Une branche peut contenir un autre `match`, y compris une expression `match`
-dont le résultat devient la valeur de la branche englobante. Chaque niveau
-conserve ses propres liaisons et règles d'exhaustivité.
+Lorsqu'un `match` est une instruction, une branche courte peut aussi appeler
+directement une fonction :
+
+```sx
+match condition {
+    true => accept()
+    else => reject()
+}
+```
+
+Une branche expression d'un `match` instruction doit être un appel, une
+cascade, une propagation avec `try` ou un autre `match`. Les blocs et ces
+branches courtes peuvent être mélangés et ne continuent jamais implicitement
+vers la branche suivante.
+
+## Calculer une valeur dans un bloc
+
+Terminez un bloc de branche par `yield` lorsque son résultat demande plusieurs
+instructions :
+
+```sx
+let predicted = match condition {
+    true => {
+        var result = 0.0
+        result += x * 10.0
+        result /= 2.0
+        yield result + 0.5
+    }
+    else => 0.0
+}
+```
+
+Dans un `match` utilisé comme valeur, chaque bloc de branche doit se terminer
+directement par `yield expression`. Une branche expression voisine reste
+valide ; toutes les valeurs produites doivent avoir exactement le même type.
+`return` termine toujours la fonction englobante, tandis que `yield` fournit
+la valeur de la branche au `match` producteur le plus proche.
+
+Les `match` peuvent donc être imbriqués sans ambiguïté :
+
+```sx
+let value = match outer {
+    true => {
+        yield match inner {
+            true => { yield 1 }
+            else => 0
+        }
+    }
+    else => -1
+}
+```
+
+Le `yield 1` appartient au `match inner`; le `yield match inner` fournit ensuite
+son résultat au `match outer`.
 
 ## Sélectionner un littéral scalaire
 
