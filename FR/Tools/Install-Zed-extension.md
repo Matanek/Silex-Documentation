@@ -43,6 +43,17 @@ Dans Zed :
 Ouvrez ensuite un fichier `.sx`. Zed doit sélectionner le langage Silex et
 démarrer automatiquement `silex lsp`.
 
+## Compléter les membres hérités
+
+Dans une méthode de classe, tapez `self.` pour retrouver ses membres et les
+membres accessibles de ses parents, y compris ceux d'un autre module. Les
+membres protégés restent disponibles depuis une classe dérivée.
+
+Dans le corps d'une classe dérivée, commencez à taper `over` pour compléter
+`override`. Après `override ` ou `override func `, choisissez une méthode
+héritée : la complétion insère sa signature et un corps à remplir. Les méthodes
+privées, statiques, ajoutées par une extension ou déjà redéfinies sont exclues.
+
 ## Mettre l'extension à jour
 
 Récupérez la nouvelle version du dépôt :

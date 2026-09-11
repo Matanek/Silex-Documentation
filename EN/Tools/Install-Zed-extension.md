@@ -41,6 +41,17 @@ In Zed:
 Then open an `.sx` file. Zed should select the Silex language and automatically
 start `silex lsp`.
 
+## Complete inherited members
+
+Inside a class method, type `self.` to find its members and accessible members
+of its parents, including those from another module. Protected members remain
+available from a derived class.
+
+Inside a derived class body, start typing `over` to complete `override`. After
+`override ` or `override func `, choose an inherited method: completion inserts
+its signature and a body to fill in. Private methods, static methods, extension
+methods, and methods already overridden are excluded.
+
 ## Update the extension
 
 Fetch the new repository version:
