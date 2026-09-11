@@ -12,6 +12,19 @@ GFX/Module/GPU/@Device.sx    → GFX.GPU
 The `@` prefix belongs only to the physical filename. It never becomes an
 import segment, namespace, or Silex declaration.
 
+## Choose a valid filename
+
+Each module name segment starts with an ASCII letter or `_`, followed by ASCII
+letters, digits or `_`. `Test_01.sx` is therefore valid. Dots separate
+segments: `Math.Geometry.Point.sx` provides the same module path as
+`Math/Geometry/Point.sx`. Directory names that form this path follow the same
+rule.
+
+A hyphen or space cannot belong to a module name: `Test-01.sx` is invalid.
+The LSP reports this path on the open document, even before its first save,
+and keeps suggestions from other valid modules available. Rename the file to
+fix the error; compilation remains strict and rejects invalid source paths.
+
 ## Split one module across files
 
 A directory may contain several `@Name.sx` files. Silex composes them before

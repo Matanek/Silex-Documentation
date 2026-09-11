@@ -12,6 +12,20 @@ GFX/Module/GPU/@Device.sx    → GFX.GPU
 Le préfixe `@` appartient seulement au nom physique du fichier. Il ne devient
 jamais un segment d'import, un espace de noms ou une déclaration Silex.
 
+## Choisir un nom de fichier valide
+
+Chaque segment du nom de module commence par une lettre ASCII ou `_`, puis
+contient des lettres ASCII, des chiffres ou `_`. `Test_01.sx` est donc valide.
+Les points séparent les segments : `Math.Geometry.Point.sx` fournit le même
+chemin de module que `Math/Geometry/Point.sx`. Les noms des dossiers qui
+composent ce chemin suivent la même règle.
+
+Un tiret ou un espace ne peut pas appartenir à un nom de module :
+`Test-01.sx` est invalide. Le LSP signale ce chemin sur le document ouvert,
+même avant son premier enregistrement, et conserve les suggestions des autres
+modules valides. Renommez le fichier pour corriger l'erreur ; la compilation
+reste stricte et rejette un chemin source invalide.
+
 ## Répartir un module entre plusieurs fichiers
 
 Un dossier peut contenir plusieurs fichiers `@Nom.sx`. Silex les compose avant
