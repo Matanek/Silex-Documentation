@@ -30,7 +30,7 @@ function.
 ## Bind a method to its instance
 
 An instance method can be extracted from its receiver. The resulting value
-keeps that receiver lexically bound, so `self` does not appear in the callback
+keeps that receiver bound, so `self` does not appear in the callback
 type.
 
 ```sx
@@ -39,13 +39,14 @@ let read_next:func() Token = parser.next_token
 let first = read_next()
 ```
 
-The receiver is evaluated once during extraction. A mutable method requires a
-stable mutable receiver, then writes to the same location on every call. The
+The receiver is evaluated once during extraction. A mutable structure method
+requires a stable mutable receiver, then writes to the same location on every
+call. The
 expected type selects an overload and may omit trailing parameters that have a
 default value.
 
-The bound method also keeps its receiver borrowed. A read method prevents its
-modification; a mutable method reserves it exclusively. Use an anonymous scope
+For a structure, the bound method keeps its receiver borrowed. A read method
+prevents its modification; a mutable method reserves it exclusively. Use an anonymous scope
 when the receiver must be reused afterward:
 
 ```sx
@@ -56,6 +57,36 @@ var counter = Counter(value:0)
 }
 print(counter.value)
 ```
+
+A method bound to an owned class retains its object identity. It can be
+returned or stored beyond the scope that created it. Reassigning the original
+variable does not change its receiver.
+
+```sx
+class Counter {
+    var value:int = 0
+    func add(amount:int) int { self.value += amount; return self.value }
+}
+
+func make_counter() func(int) int {
+    var counter = Counter()
+    return counter.add
+}
+
+func main() {
+    let add = make_counter()
+    print(add(2)) // 2
+    print(add(3)) // 5
+}
+```
+
+Ordinary callback copies share their receiver; `copy` detaches its object
+graph. The last reference releases the receiver, and the collector also handles
+cycles through callbacks. Overloads and virtual dispatch follow ordinary method
+call rules. A method extracted through `@Class` or `&Class` still carries that
+reference's lexical borrow.
+
+If the receiver reaches a `nocopy` class, the `copy` operation fails at runtime.
 
 ## Write an anonymous function
 
@@ -92,9 +123,9 @@ print(count) // 2
 A nested anonymous function may capture a binding from any lexical parent
 level; intermediate levels carry that context automatically.
 
-Captures and bound methods are lexical borrows. They do not copy the captured
-value or extend its lifetime. A function with captures, or a method bound to a
-local instance, can be passed to a synchronous call but cannot be returned
+Anonymous captures and methods bound to structures are lexical borrows. They
+do not copy the captured value or extend its lifetime. A function with captures, or a method bound to a
+local structure, can be passed to a synchronous call but cannot be returned
 outside the scope that owns its borrows.
 
 Function values are language values. They expose neither a machine address nor

@@ -31,7 +31,7 @@ attendu permet de choisir une fonction surchargée.
 ## Lier une méthode à son instance
 
 Une méthode d'instance peut être extraite de son récepteur. La valeur obtenue
-garde ce récepteur lié lexicalement : `self` n'apparaît donc pas dans le type
+garde ce récepteur lié : `self` n'apparaît donc pas dans le type
 du callback.
 
 ```sx
@@ -41,12 +41,13 @@ let first = read_next()
 ```
 
 Le récepteur est évalué une seule fois lors de l'extraction. Une méthode
-modifiable exige un récepteur stable et modifiable, puis écrit au même endroit
-à chaque appel. Le type attendu sélectionne une surcharge et peut omettre les
-derniers paramètres possédant une valeur par défaut.
+de structure modifiable exige un récepteur stable et modifiable, puis écrit
+au même endroit à chaque appel. Le type attendu sélectionne une surcharge et
+peut omettre les derniers paramètres possédant une valeur par défaut.
 
-La méthode liée garde aussi son récepteur emprunté. Une méthode en lecture en
-empêche la modification ; une méthode modifiable le réserve exclusivement.
+Pour une structure, la méthode liée garde son récepteur emprunté. Une méthode
+en lecture en empêche la modification ; une méthode modifiable le réserve
+exclusivement.
 Utilisez une portée anonyme lorsque le récepteur doit être réutilisé ensuite :
 
 ```sx
@@ -57,6 +58,37 @@ var counter = Counter(value:0)
 }
 print(counter.value)
 ```
+
+Une méthode liée à une classe possédée conserve l'identité de son objet. Elle
+peut être retournée ou stockée durablement, même après la fin de la portée qui
+l'a créée. Réaffecter la variable d'origine ne change pas son récepteur.
+
+```sx
+class Counter {
+    var value:int = 0
+    func add(amount:int) int { self.value += amount; return self.value }
+}
+
+func make_counter() func(int) int {
+    var counter = Counter()
+    return counter.add
+}
+
+func main() {
+    let add = make_counter()
+    print(add(2)) // 2
+    print(add(3)) // 5
+}
+```
+
+Les copies ordinaires du callback partagent le même récepteur ; `copy` détache
+son graphe d'objets. La dernière référence libère le récepteur, et le collecteur
+traite aussi les cycles passant par des callbacks. Les surcharges et la
+répartition virtuelle conservent les règles des appels de méthodes ordinaires.
+Une méthode extraite à travers `@Class` ou `&Class` conserve toutefois l'emprunt
+lexical de cette référence.
+
+Si le récepteur atteint une classe `nocopy`, l'opération `copy` échoue à l'exécution.
 
 ## Écrire une fonction anonyme
 
@@ -94,9 +126,10 @@ Une fonction anonyme imbriquée peut capturer une liaison de n'importe quel
 niveau lexical parent ; les niveaux intermédiaires transportent ce contexte
 automatiquement.
 
-Les captures et les méthodes liées sont des emprunts lexicaux. Elles ne copient
-pas la valeur capturée et ne prolongent pas sa durée de vie. Une fonction avec
-captures, ou une méthode liée à une instance locale, peut être passée à un
+Les captures anonymes et les méthodes liées à des structures sont des emprunts
+lexicaux. Elles ne copient pas la valeur capturée et ne prolongent pas sa durée
+de vie. Une fonction avec captures, ou une méthode liée à une structure locale,
+peut être passée à un
 appel synchrone mais ne peut pas être retournée hors de la portée qui possède
 ses emprunts.
 
