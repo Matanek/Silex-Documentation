@@ -78,6 +78,11 @@ and constraints.
 `func`, `.`, `?.`, or `..`. A method may therefore naturally be named `match`:
 `func match(...)` and `pattern.match(text)`.
 
+`move` is also contextual after `func`, `.`, `?.` and `..`: a method may be
+named `move`, as in `actor.move(displacement)`. In prefix position, `move value`
+retains its ownership-transfer meaning. Use an explicit receiver when calling
+a method with this name.
+
 Primitive type spellings are likewise contextual as method names. A type API
 can declare `static func float32()` and be called with `DType.float32()`
 without making `float32` available as an ordinary identifier.

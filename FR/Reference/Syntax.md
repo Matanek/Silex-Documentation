@@ -78,6 +78,11 @@ comportement et ses contraintes.
 après `func`, `.`, `?.` ou `..`. Une méthode peut donc s'appeler naturellement
 `match` : `func match(...)` et `pattern.match(text)`.
 
+`move` est également contextuel après `func`, `.`, `?.` et `..` : une méthode
+peut s'appeler `move`, comme dans `actor.move(displacement)`. En position de
+préfixe, `move value` conserve son sens de transfert de propriété. Utiliser un
+receveur explicite pour appeler une méthode portant ce nom.
+
 Les noms des types primitifs restent eux aussi contextuels comme noms de
 méthodes. Une API de type peut ainsi déclarer `static func float32()` et
 s'appeler avec `DType.float32()` sans rendre `float32` disponible comme
