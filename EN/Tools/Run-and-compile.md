@@ -71,9 +71,9 @@ silex compile Project/Main.sx --backend native -o Application
 ```
 
 Use `--backend llvm` to request LLVM explicitly. LLVM 21.1.8 is currently
-qualified only on the `macos-arm64` host. On the other distributed hosts, the
-native backend remains the default and an LLVM request fails without silently
-falling back.
+qualified only on the `macos-arm64` host running macOS 14 or later. On the
+other distributed hosts, the native backend remains the default and an LLVM
+request fails without silently falling back.
 
 Both backends receive the same Silex program and portable IR. The choice
 affects executable production, not language syntax or semantics. `silex

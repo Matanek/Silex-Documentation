@@ -109,10 +109,10 @@ Préparez ensuite les outils vérifiés de la chaîne de compilation :
 silex setup
 ```
 
-Cette étape installe notamment LLVM 21.1.8 sur macOS ARM64, où LLVM est le
-backend par défaut. Elle ne demande pas d'installation système de LLVM ou de
-Zig. Sur les autres hôtes, Silex conserve actuellement son backend natif par
-défaut.
+Cette étape installe notamment LLVM 21.1.8 sur macOS 14 ou ultérieur avec une
+machine ARM64, où LLVM est le backend par défaut. Elle ne demande pas
+d'installation système de LLVM ou de Zig. Sur les autres hôtes, Silex conserve
+actuellement son backend natif par défaut.
 
 Vous pouvez maintenant [écrire et exécuter votre premier programme](../Learn/First-program.md).
 
