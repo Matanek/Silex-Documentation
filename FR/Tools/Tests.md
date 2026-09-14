@@ -28,9 +28,17 @@ ok - doubler un entier
 
 La commande retourne un code différent de zéro lorsqu'un test échoue ou
 qu'une source ne peut pas être compilée. Un échec arrête le bloc concerné,
-mais les blocs suivants continuent de s'exécuter. Chaque scénario natif est
+mais les blocs suivants continuent de s'exécuter. Chaque scénario compilé est
 isolé dans son propre processus : un `panic` ou un arrêt par signal ne peut
 donc pas interrompre toute la campagne.
+
+`test` suit le backend par défaut de l'hôte. Sur macOS ARM64, ce backend est
+LLVM ; choisissez l'autre voie explicitement pour comparer ou diagnostiquer :
+
+```sh
+silex test Tests/Numbers.sx --backend native
+silex test Tests/Numbers.sx --backend llvm
+```
 
 ## Tester tout un dossier
 

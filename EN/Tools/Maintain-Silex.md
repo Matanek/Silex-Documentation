@@ -34,18 +34,22 @@ update.
 
 ## Install supporting tools
 
-Programs without a native boundary work after installing the Silex executable
-alone. Before compiling HLSL shaders or using a package that requires native
-linking, prepare the verified toolchain once:
+After installing or updating Silex, prepare the verified toolchain once:
 
 ```sh
 silex setup
 ```
 
 Silex installs host-appropriate tools under the user `.silex/toolchain`
-folder. Running it again does not download tools that are already present and
-valid. They remain compiler details, not dependencies to declare in the
-application.
+folder. On macOS ARM64, this includes LLVM 21.1.8, used by the default backend.
+The command also installs Shadercross for HLSL shaders and the private linker
+required by native boundaries. Running it again does not download tools that
+are already present and valid. They remain compiler details, not dependencies
+to declare in the application.
+
+The explicit native backend remains usable without LLVM. If you only want that
+path, use `--backend native`; building Silex and using this backend do not load
+the LLVM tools.
 
 ## Distinguish the two `.silex` folders
 

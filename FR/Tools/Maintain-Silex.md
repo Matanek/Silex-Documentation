@@ -35,18 +35,22 @@ explicite.
 
 ## Installer les outils complémentaires
 
-Les programmes sans frontière native fonctionnent après l'installation du
-seul exécutable Silex. Avant de compiler des shaders HLSL ou d'utiliser un
-package qui demande une liaison native, préparez une fois la chaîne vérifiée :
+Après l'installation ou une mise à jour, préparez une fois la chaîne vérifiée :
 
 ```sh
 silex setup
 ```
 
 Silex installe les outils adaptés à l'hôte sous le dossier utilisateur
-`.silex/toolchain`. Une nouvelle exécution ne télécharge pas les outils déjà
-présents et valides. Ils restent des détails du compilateur, pas des
-dépendances à déclarer dans l'application.
+`.silex/toolchain`. Sur macOS ARM64, cela comprend LLVM 21.1.8, employé par le
+backend par défaut. La commande installe aussi Shadercross pour les shaders
+HLSL et le linker privé nécessaire aux frontières natives. Une nouvelle
+exécution ne télécharge pas les outils déjà présents et valides. Ils restent
+des détails du compilateur, pas des dépendances à déclarer dans l'application.
+
+Le backend natif explicite reste utilisable sans LLVM. Si vous ne voulez
+employer que cette voie, utilisez `--backend native` ; la construction de Silex
+et ce backend ne chargent pas les outils LLVM.
 
 ## Distinguer les deux dossiers `.silex`
 

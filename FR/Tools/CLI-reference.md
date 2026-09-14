@@ -6,17 +6,20 @@ guides liés expliquent quand les employer et ce qu'elles produisent.
 ## Programmes et tests
 
 ```text
-silex run [source.sx|directory] [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
+silex run [source.sx|directory] [--backend <native|llvm>]
+    [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
 silex interpret <source.sx> [-n|--nocache] [--emit-ir]
-silex test <source.sx|directory> [-n|--nocache] [--emit-ir]
-silex compile <source.sx> [--target <target>]
+silex test <source.sx|directory> [--backend <native|llvm>]
+    [-n|--nocache] [--emit-ir]
+silex compile <source.sx> [--backend <native|llvm>] [--target <target>]
     [-d|--debug|-r|--release] [-n|--nocache]
     -o|--output <executable>
 ```
 
 | Option | Commandes | Effet |
 | --- | --- | --- |
-| `-d`, `--debug` | `run`, `compile` | désactive les optimisations Release pour le diagnostic natif |
+| `--backend` | `run`, `test`, `compile` | choisit explicitement `native` ou `llvm` |
+| `-d`, `--debug` | `run`, `compile` | désactive les optimisations Release pour diagnostiquer le backend choisi |
 | `-r`, `--release` | `run`, `compile` | sélectionne explicitement le mode par défaut |
 | `-n`, `--nocache` | `run`, `interpret`, `test`, `compile` | ignore le cache pour cette commande |
 | `--emit-ir` | `run`, `interpret`, `test` | écrit l'IR textuelle avant le résultat |
@@ -29,6 +32,12 @@ dossier, ou sans chemin pour le dossier courant, il choisit l'unique fichier
 premier niveau. Il ne parcourt pas les sous-dossiers. Si aucun fichier ou
 plusieurs fichiers conviennent, la commande échoue et demande un chemin de
 source explicite.
+
+Sans `--backend`, macOS ARM64 choisit LLVM ; les autres hôtes distribués
+choisissent le backend natif. LLVM est actuellement qualifié uniquement sur
+`macos-arm64`. Une sélection explicite qui n'est pas disponible échoue sans
+exécuter l'autre backend. `interpret` n'est pas un backend de compilation et
+refuse donc cette option.
 
 Consultez [Exécuter, interpréter ou compiler un programme](Run-and-compile.md)
 et [Écrire et lancer des tests](Tests.md).

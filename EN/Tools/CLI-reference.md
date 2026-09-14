@@ -6,17 +6,20 @@ guides explain when to use them and what they produce.
 ## Programs and tests
 
 ```text
-silex run [source.sx|directory] [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
+silex run [source.sx|directory] [--backend <native|llvm>]
+    [-d|--debug|-r|--release] [-n|--nocache] [--emit-ir]
 silex interpret <source.sx> [-n|--nocache] [--emit-ir]
-silex test <source.sx|directory> [-n|--nocache] [--emit-ir]
-silex compile <source.sx> [--target <target>]
+silex test <source.sx|directory> [--backend <native|llvm>]
+    [-n|--nocache] [--emit-ir]
+silex compile <source.sx> [--backend <native|llvm>] [--target <target>]
     [-d|--debug|-r|--release] [-n|--nocache]
     -o|--output <executable>
 ```
 
 | Option | Commands | Effect |
 | --- | --- | --- |
-| `-d`, `--debug` | `run`, `compile` | disables Release optimizations for native diagnostics |
+| `--backend` | `run`, `test`, `compile` | explicitly selects `native` or `llvm` |
+| `-d`, `--debug` | `run`, `compile` | disables Release optimizations to diagnose the selected backend |
 | `-r`, `--release` | `run`, `compile` | explicitly selects the default mode |
 | `-n`, `--nocache` | `run`, `interpret`, `test`, `compile` | ignores the cache for this command |
 | `--emit-ir` | `run`, `interpret`, `test` | prints textual IR before the result |
@@ -28,6 +31,12 @@ without a path for the current directory, it selects the only directly
 contained `.sx` file that declares a top-level `main` function. It does not
 search subdirectories. If no file or several files match, the command fails
 and asks for an explicit source path.
+
+Without `--backend`, macOS ARM64 selects LLVM; the other distributed hosts
+select the native backend. LLVM is currently qualified only on `macos-arm64`.
+An explicit selection that is unavailable fails without executing the other
+backend. `interpret` is not a compilation backend and therefore rejects this
+option.
 
 See [Run, interpret, or compile a program](Run-and-compile.md) and
 [Write and run tests](Tests.md).

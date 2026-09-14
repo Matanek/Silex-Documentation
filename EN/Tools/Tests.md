@@ -28,8 +28,16 @@ ok - double an integer
 
 The command returns a nonzero code when a test fails or a source cannot be
 compiled. A failure stops the affected block, but later blocks keep running.
-Every native scenario is isolated in its own process, so a `panic` or signal
+Every compiled scenario is isolated in its own process, so a `panic` or signal
 termination cannot interrupt the entire test run.
+
+`test` follows the host's default backend. On macOS ARM64, that backend is
+LLVM; select either path explicitly for comparison or diagnosis:
+
+```sh
+silex test Tests/Numbers.sx --backend native
+silex test Tests/Numbers.sx --backend llvm
+```
 
 ## Test an entire folder
 

@@ -51,8 +51,10 @@ The program prints:
 Hello, Silex!
 ```
 
-`silex run` builds a native executable, launches it, and forwards its exit code
-to the terminal. This first program needs no project configuration.
+`silex run` builds an executable, launches it, and forwards its exit code to the
+terminal. This first program needs no project configuration. The
+[compilation guide](../Tools/Run-and-compile.md#choose-the-compilation-backend)
+explains how to select LLVM or the direct Silex native backend.
 
 ## Understand the `.silex` directory
 

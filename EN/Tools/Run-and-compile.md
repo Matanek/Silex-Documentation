@@ -54,12 +54,37 @@ silex compile Project/Main.sx --output Application.exe
 .\Application.exe
 ```
 
+## Choose the compilation backend
+
+On macOS ARM64, `run`, `compile`, and `test` use LLVM by default. Prepare its
+verified tools once after installing or updating Silex:
+
+```sh
+silex setup
+```
+
+The direct Silex native backend remains explicitly available:
+
+```sh
+silex run Project/Main.sx --backend native
+silex compile Project/Main.sx --backend native -o Application
+```
+
+Use `--backend llvm` to request LLVM explicitly. LLVM 21.1.8 is currently
+qualified only on the `macos-arm64` host. On the other distributed hosts, the
+native backend remains the default and an LLVM request fails without silently
+falling back.
+
+Both backends receive the same Silex program and portable IR. The choice
+affects executable production, not language syntax or semantics. `silex
+interpret` remains a separate reference path and does not accept `--backend`.
+
 ## Compile in Release or Debug mode
 
 `run` and `compile` use Release mode by default. This mode applies compiler
 optimizations without changing the language's safety rules.
 
-Select Debug when you need to diagnose native code:
+Select Debug when you need to diagnose generated code:
 
 ```sh
 silex run Project/Main.sx --debug
@@ -69,7 +94,7 @@ silex compile Project/Main.sx --debug -o Application
 The short forms are `-d` for Debug and `-r` for Release. Both modes cannot be
 requested in the same command.
 
-When a native program is interrupted by a signal, Silex preserves the faulty
+When a compiled program is interrupted by a signal, Silex preserves the faulty
 executable and prints a Debug reproduction command along with the command for
 the debugger available on the host.
 

@@ -54,9 +54,10 @@ Le programme affiche :
 Bonjour, Silex !
 ```
 
-`silex run` construit un exécutable natif, le lance et transmet son code de
-sortie au terminal. Pour ce premier programme, aucune configuration de projet
-n'est nécessaire.
+`silex run` construit un exécutable, le lance et transmet son code de sortie au
+terminal. Pour ce premier programme, aucune configuration de projet n'est
+nécessaire. Le [guide de compilation](../Tools/Run-and-compile.md#choisir-le-backend-de-compilation)
+explique comment sélectionner LLVM ou le backend Silex natif.
 
 ## Comprendre le dossier `.silex`
 
