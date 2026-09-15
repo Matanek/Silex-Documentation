@@ -2,8 +2,8 @@
 
 Ce parcours est implémenté dans le candidat de publication de packages, mais
 n'est pas encore livré dans Silex ni déployé sur le registre public. Ses tests
-locaux utilisent une identité GitHub simulée. Le consentement GitHub réel et
-les permissions effectives de l'application dédiée restent à qualifier.
+locaux sont complétés par un parcours GitHub réel réussi, jusqu'à la révocation
+de l'accès. Le serveur demande un scope vide et refuse tout scope supplémentaire.
 Les commandes ci-dessous décrivent ce candidat, pas une fonctionnalité déjà
 disponible dans la distribution publique.
 
@@ -42,12 +42,19 @@ avec l'identifiant GitHub, le pseudo et la date d'expiration. Il ne reçoit ni
 ne conserve le jeton GitHub utilisé par le serveur pour vérifier l'identité.
 Ne partagez pas le fichier d'accès et ne le commitez pas.
 
-Sur le prototype POSIX, ce fichier est `~/.silex/auth/registry.json`. Le dossier
+Sur macOS et Linux, ce fichier est `~/.silex/auth/registry.json`. Le dossier
 doit être privé et le fichier lisible et modifiable uniquement par son
 propriétaire. Un dossier trop permissif ou un lien symbolique à la place du
-dossier ou du fichier est refusé. Le stockage est testé sur macOS ; Linux
-reste à qualifier. Windows est explicitement refusé tant qu'un stockage privé
-équivalent n'est pas implémenté et testé.
+dossier ou du fichier est refusé.
+
+Sur Windows, le candidat chiffre l'accès avec DPAPI, lié au compte Windows,
+dans `%USERPROFILE%\.silex\auth\registry.dpapi`. Il n'enregistre pas de copie
+en clair et refuse un fichier altéré ou impossible à déchiffrer. Cette protection
+ne couvre pas un compte utilisateur compromis.
+
+Le stockage est testé sur macOS ARM64. L'exécution native sur les autres cibles,
+notamment Linux et Windows, reste à qualifier ; une compilation réussie ne suffit
+pas à annoncer leur prise en charge.
 
 Si un accès reste valide, `silex login` annonce la connexion existante sans la
 remplacer. Pour utiliser un autre compte GitHub, déconnectez-vous d'abord.

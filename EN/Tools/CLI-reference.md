@@ -70,6 +70,13 @@ See [Install and select packages](Install-packages.md),
 [Develop with local packages](Develop-packages.md), and
 [Publish a package](Publish-package.md).
 
+## Registry login under qualification
+
+The direct-publishing candidate adds `silex login [--no-browser]` and
+`silex logout`. These commands have not yet shipped or been deployed; their
+scope and limitations are described in
+[Connect to the registry with GitHub](Registry-login.md).
+
 ## Compiler and editors
 
 ```text

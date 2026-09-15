@@ -17,6 +17,10 @@ package workflows, and editor integrations supported by the active toolchain.
 - [Develop with local packages](Develop-packages.md)
 - [Publish a package in the registry](Publish-package.md)
 
+Under qualification, outside the public distribution:
+
+- [Connect to the registry with GitHub](Registry-login.md)
+
 ## Configure an editor
 
 - [Install the Silex extension for Zed](Install-Zed-extension.md)
