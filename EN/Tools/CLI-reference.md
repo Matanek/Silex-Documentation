@@ -19,8 +19,8 @@ silex compile <source.sx> [--backend <native|llvm>] [--target <target>]
 | Option | Commands | Effect |
 | --- | --- | --- |
 | `--backend` | `run`, `test`, `compile` | explicitly selects `native` or `llvm` |
-| `-d`, `--debug` | `run`, `compile` | disables Release optimizations to diagnose the selected backend |
-| `-r`, `--release` | `run`, `compile` | explicitly selects the default mode |
+| `-d`, `--debug` | `run`, `compile` | selects Debug (`run` default) and disables Release optimizations |
+| `-r`, `--release` | `run`, `compile` | selects Release (`compile` default) |
 | `-n`, `--nocache` | `run`, `interpret`, `test`, `compile` | ignores the cache for this command |
 | `--emit-ir` | `run`, `interpret`, `test` | prints textual IR before the result |
 | `-o`, `--output` | `compile` | selects the required executable path |

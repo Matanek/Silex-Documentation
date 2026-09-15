@@ -84,13 +84,15 @@ pas `--backend`.
 
 ## Compiler en Release ou en Debug
 
-`run` et `compile` utilisent le mode Release par défaut. Ce mode applique les
-optimisations du compilateur sans modifier les règles de sécurité du langage.
+`run` utilise le mode Debug par défaut ; `compile` utilise Release. Le mode
+Release applique les optimisations du compilateur sans modifier les règles de
+sécurité du langage.
 
-Sélectionnez Debug lorsque vous devez diagnostiquer le code produit :
+Sélectionnez explicitement Release pour exécuter un programme optimisé, ou
+Debug pour diagnostiquer le code produit par `compile` :
 
 ```sh
-silex run Project/Main.sx --debug
+silex run Project/Main.sx --release
 silex compile Project/Main.sx --debug -o Application
 ```
 

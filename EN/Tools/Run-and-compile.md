@@ -81,13 +81,14 @@ interpret` remains a separate reference path and does not accept `--backend`.
 
 ## Compile in Release or Debug mode
 
-`run` and `compile` use Release mode by default. This mode applies compiler
-optimizations without changing the language's safety rules.
+`run` uses Debug mode by default; `compile` uses Release. Release mode applies
+compiler optimizations without changing the language's safety rules.
 
-Select Debug when you need to diagnose generated code:
+Explicitly select Release to run an optimized program, or Debug to diagnose
+code produced by `compile`:
 
 ```sh
-silex run Project/Main.sx --debug
+silex run Project/Main.sx --release
 silex compile Project/Main.sx --debug -o Application
 ```
 
