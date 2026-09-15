@@ -18,6 +18,10 @@ pris en charge par la chaîne d'outils active.
 - [Développer avec des packages locaux](Develop-packages.md)
 - [Publier un package dans le registre](Publish-package.md)
 
+En qualification, hors distribution publique :
+
+- [Se connecter au registre avec GitHub](Registry-login.md)
+
 ## Configurer un éditeur
 
 - [Installer l'extension Silex pour Zed](Install-Zed-extension.md)

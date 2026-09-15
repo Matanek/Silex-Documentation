@@ -71,6 +71,13 @@ Consultez [Installer et choisir des packages](Install-packages.md),
 [Développer avec des packages locaux](Develop-packages.md) et
 [Publier un package](Publish-package.md).
 
+## Connexion au registre en qualification
+
+Le candidat de publication directe ajoute `silex login [--no-browser]` et
+`silex logout`. Ces commandes ne sont pas encore livrées ni déployées ; leur
+périmètre et leurs limites figurent dans
+[Se connecter au registre avec GitHub](Registry-login.md).
+
 ## Compilateur et éditeurs
 
 ```text
