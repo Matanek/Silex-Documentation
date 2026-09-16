@@ -71,22 +71,6 @@ Consultez [Installer et choisir des packages](Install-packages.md),
 [Développer avec des packages locaux](Develop-packages.md) et
 [Publier un package](Publish-package.md).
 
-## Connexion au registre en qualification
-
-Le candidat de publication directe ajoute :
-
-```text
-silex login [--no-browser]
-silex logout
-silex publish <package-directory> [--dry-run]
-```
-
-Ces commandes ne sont pas encore livrées ni déployées. `--dry-run` prépare et
-décrit le même instantané local sans lire l'accès au registre ni utiliser le
-réseau. Leur périmètre et leurs limites figurent dans
-[Se connecter au registre avec GitHub](Registry-login.md) et
-[Publier le contenu local d'un package](Publish-package.md).
-
 ## Compilateur et éditeurs
 
 ```text

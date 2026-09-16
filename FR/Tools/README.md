@@ -16,12 +16,7 @@ pris en charge par la chaîne d'outils active.
 - [Définir un package avec `Package.json`](Package-manifest.md)
 - [Installer et choisir des packages](Install-packages.md)
 - [Développer avec des packages locaux](Develop-packages.md)
-
-En qualification, hors distribution publique :
-
-- [Se connecter au registre avec GitHub](Registry-login.md)
-- [Publier le contenu local d'un package](Publish-package.md)
-- [Installer depuis le registre v2](Registry-install.md)
+- [Publier un package dans le registre](Publish-package.md)
 
 ## Configurer un éditeur
 

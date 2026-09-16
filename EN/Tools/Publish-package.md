@@ -1,138 +1,93 @@
-# Publish the local contents of a package
+# Publish a package in the registry
 
-The direct-publishing candidate can freeze and publish the contents present in
-a local folder. The folder does not need to be a Git repository, and the files
-do not need to be committed or tagged.
+The registry associates a package's public name with its Git repository once.
+It receives neither sources nor versions: every published version remains a
+repository commit identified by a `vMAJOR.MINOR.PATCH` tag.
 
-This workflow is implemented and tested against the qualification server, but
-has not yet shipped in Silex or been deployed to the public registry. The older
-`silex register` workflow, based on GitHub and Git tags, remains unchanged
-during this qualification.
+## Prepare the package repository
 
-## Prepare the package
+Before the first publication, verify these points:
 
-The folder must contain an installable `Package.json` with a name, a version,
-and a `requires.silex` requirement. For example:
+- the folder name matches the `name` field in `Package.json`;
+- the manifest declares a version and its Silex compatibility;
+- the GitHub repository has a canonical `origin` remote;
+- all files intended for the version are committed and the repository is
+  clean.
+
+A minimal manifest includes this identity:
 
 ```json
 {
   "name": "MyPackage",
   "version": "1.0.0",
   "requires": {
-    "silex": ">=0.44.0"
+    "silex": ">=0.42.0"
   }
 }
 ```
 
-The `sources` field selects the portable source root; it defaults to `Module`.
-Silex adds the sources present under every `Platform` and `Target` variant, not
-only those for the publishing machine. It analyzes these sources to find the
-files read by `embed_text` and `embed_bytes`, including when their path comes
-from a `let` known at compile time.
+Available metadata, dependencies, permissions, boundaries, and artifacts are
+grouped in [Define a package with `Package.json`](Package-manifest.md).
 
-The snapshot contains:
+## Check the version without modifying anything
 
-- `Package.json`;
-- portable, platform, and target sources;
-- resources embedded by these sources;
-- root files present among `README.md`, `README`, `LICENSE`, `LICENSE.md`, and
-  `NOTICE`.
-
-The `.git` and `.silex` folders, unselected files, and declared artifacts are
-not included in the source archive. Preparation stops if a selected file is
-missing, changes while it is read, is behind a symbolic link, or has multiple
-hard links. A resource requested by a local source cannot leave the package
-folder.
-
-Every artifact declared for `macos-arm64`, `macos-x64`, `linux-arm64`,
-`linux-x64`, `windows-arm64`, or `windows-x64` must already exist at its local
-path and match the manifest's `sha256`. Silex freezes it as a separate object
-instead of downloading it during publication or copying it into the source
-archive. If an artifact is missing, first run
-`silex install <package-directory>` to prepare the package.
-
-Every published path must be in Unicode NFC form. Silex also rejects
-collisions after Unicode lowercase conversion, including between a source file
-and an artifact destination. Two native targets may use the same destination,
-however, because an installation selects only one of them.
-
-## Inspect the snapshot without signing in
-
-Start with:
+From the folder containing the package, run:
 
 ```sh
-silex publish MyPackage --dry-run
+silex check MyPackage
 ```
 
-The command compiles and analyzes the sources, copies their bytes once, builds
-the deterministic archive, and displays each included file with its path,
-size, and SHA-256. Every excluded file is displayed with its reason. Artifacts
-are reported with their target, name, destination, size, and digest. The
-command ends with the archive size and digest, followed by the publication
-digest.
+Silex validates the manifest and announces the expected tag:
 
-This simulation reads no registry access and makes no network request. A
-change made to the folder after the copy therefore does not alter the displayed
-snapshot. Running the command again after a change produces a new snapshot
-and, when the bytes differ, a new digest.
+```text
+silex: package MyPackage@1.0.0 is valid; its release tag is v1.0.0
+```
 
-The qualification server reapplies admission checks, limits, and digests
-before making the version visible. A local success therefore does not let you
-ignore a precise server rejection, particularly when its state has changed
-since the simulation.
+This check is optional, but lets you correct the package contract before
+creating a public tag.
 
-## Sign in, then publish
+## Register the package once
 
-Publication reuses the private access created by the
-[registry GitHub workflow](Registry-login.md). Sign in when needed:
+Then request registration of the name and repository:
 
 ```sh
-silex login
-silex publish MyPackage
+silex register MyPackage
 ```
 
-The CLI prepares the same kind of snapshot as `--dry-run`, then the registry
-checks the GitHub identity, rights to the name, manifest, and content limits.
-The GitHub token never enters this command: it sends only the registry's own
-temporary access.
+On first use, Silex requests GitHub authorization with a device code. The
+command prepares the proposal automatically, creates a registry fork when
+needed, and opens a pull request. Its result includes the pull request address
+so you can follow its validation.
 
-A successful publication displays the name, version, publication identifier,
-and its SHA-256. The registry then makes the version immutable and visible to
-public reads. Reusing the same version with different content is rejected;
-republishing the same content finds the existing result.
+Registration becomes immutable after merging: it contains only the package
+name and canonical repository URL. A new version never requires a new registry
+pull request.
 
-## Resume after an interruption
+## Publish the version with a Git tag
 
-The server retains the durable offset of every object. If a response is lost
-after a segment is written, simply run the same command again:
+First push the complete version commit to the canonical repository. Then create
+a tag exactly matching the manifest's `version` field:
 
 ```sh
-silex publish MyPackage
+git tag -a v1.0.0 -m "MyPackage 1.0.0"
+git push origin v1.0.0
 ```
 
-The CLI rebuilds the snapshot from the local folder. If its digest has remained
-identical, the registry finds the attempt, reports the objects and offsets
-already received, then resumes the transfer without blindly appending the
-segment. Running the command again after finalization reports that the version
-is already published.
+The registry discovers versions by reading `vMAJOR.MINOR.PATCH` tags. The
+`Package.json` in the tagged commit must retain the same name and version as
+the tag.
 
-If the local content changed between the two commands, its digest changes and
-it cannot resume the previous attempt. Restore the folder to the intended
-state or inspect the new snapshot with `--dry-run` before publishing.
+After the first registration is accepted, verify the public path with:
 
-## Know the candidate's limits
+```sh
+silex install MyPackage@1.0.0
+```
 
-Direct publication remains a qualification feature:
+To publish `1.1.0`, update the manifest, validate and commit the new version,
+then push only the `v1.1.0` tag. The initial registration remains unchanged.
 
-- the public registry does not yet serve this protocol;
-- this page announces no production version, name migration, or installation
-  from this new registry.
-
-For the registry that currently ships, continue to use `silex register`, a
-clean GitHub repository, and `vMAJOR.MINOR.PATCH` tags. Do not mix the
-authorizations: the older repository registration and the new registry
-identity access are separate.
+The [registry contract](https://github.com/Matanek/Silex-Registry/blob/main/CONTRIBUTING.md)
+details identity, transfer, and revocation rules.
 
 [Back to the tools](README.md) ·
-[Define the manifest](Package-manifest.md) ·
-[Connect to the registry with GitHub](Registry-login.md)
+[Develop with local packages](Develop-packages.md)

@@ -70,22 +70,6 @@ See [Install and select packages](Install-packages.md),
 [Develop with local packages](Develop-packages.md), and
 [Publish a package](Publish-package.md).
 
-## Registry login under qualification
-
-The direct-publishing candidate adds:
-
-```text
-silex login [--no-browser]
-silex logout
-silex publish <package-directory> [--dry-run]
-```
-
-These commands have not yet shipped or been deployed. `--dry-run` prepares and
-describes the same local snapshot without reading registry access or using the
-network. Their scope and limitations are described in
-[Connect to the registry with GitHub](Registry-login.md) and
-[Publish the local contents of a package](Publish-package.md).
-
 ## Compiler and editors
 
 ```text
