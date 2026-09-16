@@ -65,6 +65,17 @@ Le compilateur capture un instant logique cohérent du graphe. Une mutation
 Silex concurrente est ordonnée avant ou après cet instant ; la copie détachée
 ne peut pas mélanger deux états de la source.
 
+## Lire le champ d’une valeur temporaire
+
+Dans `make_label().text`, le champ lu reste valide après la libération de la
+valeur temporaire renvoyée par `make_label`. Les autres champs possédés de cette
+valeur sont libérés. Une référence de classe extraite conserve son identité
+partagée ; elle n’est pas clonée. Cette règle s’applique aussi aux tuples nommés
+et à la branche présente d’un accès optionnel.
+
+Construire un tuple à partir de valeurs existantes ou le décomposer en variables
+préserve les mêmes règles de copie et de transfert que les autres valeurs.
+
 ## Transférer la possession
 
 ```sx

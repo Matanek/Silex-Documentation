@@ -63,6 +63,16 @@ The compiler captures one consistent logical snapshot of the graph. A
 concurrent Silex mutation is ordered before or after that snapshot; the
 detached copy cannot mix two states of the source.
 
+## Read a field from a temporary value
+
+In `make_label().text`, the selected field remains valid after the temporary
+value returned by `make_label` is released. Its other owned fields are released.
+An extracted class reference keeps its shared identity; it is not cloned.
+This also applies to named tuples and the present branch of optional access.
+
+Constructing a tuple from existing values or destructuring it into bindings
+preserves the same copy and transfer rules as other values.
+
 ## Transfer ownership
 
 ```sx
