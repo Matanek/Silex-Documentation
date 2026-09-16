@@ -106,7 +106,11 @@ reassigned nor resized. `var` allows reassignment and list mutations such as
 Runtime static fields are initialized once, in declaration order. An
 initializer may read a runtime field declared earlier; reading its own field or
 a later field is rejected. Their owned storage remains alive throughout the
-program or isolated test session.
+program or isolated test session. On a normal return from `main` or the test
+entry, Silex releases owned static values after local values, in reverse field
+declaration order. This includes objects held in an optional static cache.
+Fields that share the same object each release their reference; the object is
+destroyed when its last reference is released.
 
 The values currently accepted on this runtime path are owned dynamic lists and
 value structures that contain them.

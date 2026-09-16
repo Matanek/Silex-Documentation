@@ -109,7 +109,11 @@ Les champs statiques d'exécution sont initialisés une seule fois, dans leur
 ordre de déclaration. Un initialiseur peut lire un champ d'exécution déclaré
 plus tôt ; lire son propre champ ou un champ ultérieur est refusé. Leur stockage
 possédé reste vivant pendant tout le programme ou toute la session de test
-isolée.
+isolée. Lors du retour normal de `main` ou de l'entrée du test, Silex libère
+les valeurs statiques possédées après les valeurs locales, dans l'ordre inverse
+de déclaration des champs. Cela comprend les objets conservés dans un cache
+statique optionnel. Des champs qui partagent le même objet libèrent chacun leur
+référence ; l'objet est détruit lorsque sa dernière référence est libérée.
 
 Les valeurs actuellement admises dans ce chemin d'exécution sont les listes
 dynamiques possédées et les structures valeurs qui les contiennent.
