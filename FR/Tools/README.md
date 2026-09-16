@@ -21,6 +21,7 @@ En qualification, hors distribution publique :
 
 - [Se connecter au registre avec GitHub](Registry-login.md)
 - [Publier le contenu local d'un package](Publish-package.md)
+- [Installer depuis le registre v2](Registry-install.md)
 
 ## Configurer un éditeur
 

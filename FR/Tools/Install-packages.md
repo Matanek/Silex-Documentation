@@ -18,6 +18,10 @@ Les dépendances déclarées par cette version sont résolues et installées
 automatiquement. L'installation ne modifie jamais le `Package.json` de votre
 application.
 
+Un [nouveau parcours d'installation anonyme](Registry-install.md) est en
+qualification avec le registre v2. Il ne remplace pas encore la distribution
+publique décrite sur cette page.
+
 ## Déclarer le package utilisé par un projet
 
 Une application qui possède un manifeste doit déclarer directement chaque
