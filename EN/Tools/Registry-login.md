@@ -52,9 +52,11 @@ account, in `%USERPROFILE%\.silex\auth\registry.dpapi`. It saves no plaintext
 copy and rejects a tampered file or one that cannot be decrypted. This
 protection does not cover a compromised user account.
 
-Storage has been tested on macOS ARM64. Native execution on the other targets,
-including Linux and Windows, still needs qualification; a successful build
-alone is not sufficient to announce support.
+The real GitHub workflow has been qualified on macOS ARM64. An offline native
+matrix additionally verifies storage, session handling, revocation, and the
+absence of OAuth traffic on macOS x64, Linux x64 and ARM64, and Windows x64
+and ARM64. This matrix does not replace real GitHub consent on every system;
+it qualifies the shared native behavior without using a personal account.
 
 If access remains valid, `silex login` announces the existing connection
 without replacing it. To use another GitHub account, disconnect first.
@@ -88,7 +90,9 @@ its state.
 
 This workflow is separate from the older `silex register`, which prepares a
 pull request and requests GitHub repository permissions. It does not reuse
-that authorization. Direct publication of local content remains a subsequent
-step of the candidate; `login` alone publishes no package.
+that authorization. The `silex publish` candidate does reuse the registry
+access described here; `login` alone publishes no package. See
+[Publish the local contents of a package](Publish-package.md) to inspect a
+snapshot without signing in, publish it, and resume a transfer.
 
 [Back to tools](README.md) · [Read the CLI reference](CLI-reference.md)

@@ -52,9 +52,11 @@ dans `%USERPROFILE%\.silex\auth\registry.dpapi`. Il n'enregistre pas de copie
 en clair et refuse un fichier altéré ou impossible à déchiffrer. Cette protection
 ne couvre pas un compte utilisateur compromis.
 
-Le stockage est testé sur macOS ARM64. L'exécution native sur les autres cibles,
-notamment Linux et Windows, reste à qualifier ; une compilation réussie ne suffit
-pas à annoncer leur prise en charge.
+Le parcours GitHub réel a été qualifié sur macOS ARM64. Une matrice native
+hors ligne vérifie en plus le stockage, la session, la révocation et l'absence
+d'accès OAuth sur macOS x64, Linux x64 et ARM64, et Windows x64 et ARM64. Cette
+matrice ne remplace pas un consentement GitHub réel sur chaque système ; elle
+qualifie le comportement natif commun sans utiliser de compte personnel.
 
 Si un accès reste valide, `silex login` annonce la connexion existante sans la
 remplacer. Pour utiliser un autre compte GitHub, déconnectez-vous d'abord.
@@ -89,7 +91,9 @@ est refusée plutôt que d'écraser son état.
 
 Ce parcours est distinct de l'ancien `silex register`, qui prépare une pull
 request et demande des droits GitHub de dépôt. Il ne réutilise pas cette
-autorisation. La publication directe du contenu local reste une étape suivante
-du candidat ; `login` seul ne publie aucun package.
+autorisation. Le candidat `silex publish` réutilise en revanche l'accès au
+registre décrit ici ; `login` seul ne publie aucun package. Consultez
+[Publier le contenu local d'un package](Publish-package.md) pour examiner un
+instantané sans connexion, le publier et reprendre un transfert.
 
 [Revenir aux outils](README.md) · [Consulter la référence de la CLI](CLI-reference.md)

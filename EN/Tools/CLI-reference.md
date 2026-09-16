@@ -72,10 +72,19 @@ See [Install and select packages](Install-packages.md),
 
 ## Registry login under qualification
 
-The direct-publishing candidate adds `silex login [--no-browser]` and
-`silex logout`. These commands have not yet shipped or been deployed; their
-scope and limitations are described in
-[Connect to the registry with GitHub](Registry-login.md).
+The direct-publishing candidate adds:
+
+```text
+silex login [--no-browser]
+silex logout
+silex publish <package-directory> [--dry-run]
+```
+
+These commands have not yet shipped or been deployed. `--dry-run` prepares and
+describes the same local snapshot without reading registry access or using the
+network. Their scope and limitations are described in
+[Connect to the registry with GitHub](Registry-login.md) and
+[Publish the local contents of a package](Publish-package.md).
 
 ## Compiler and editors
 

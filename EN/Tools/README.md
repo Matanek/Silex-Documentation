@@ -15,11 +15,11 @@ package workflows, and editor integrations supported by the active toolchain.
 - [Define a package with `Package.json`](Package-manifest.md)
 - [Install and select packages](Install-packages.md)
 - [Develop with local packages](Develop-packages.md)
-- [Publish a package in the registry](Publish-package.md)
 
 Under qualification, outside the public distribution:
 
 - [Connect to the registry with GitHub](Registry-login.md)
+- [Publish the local contents of a package](Publish-package.md)
 
 ## Configure an editor
 
