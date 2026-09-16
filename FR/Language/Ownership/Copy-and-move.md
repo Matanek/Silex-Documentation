@@ -93,5 +93,22 @@ La source consommée n'exécute plus `drop` ; la valeur transférée possède le
 nettoyage restant. Les champs, éléments indexés, `self` et expressions
 temporaires ne sont pas des sources acceptées pour un `move` explicite.
 
+## Lire une collection temporaire
+
+`make_values()[0]` conserve l’élément sélectionné avant de libérer le tableau
+ou la liste temporaire. Un élément qui référence une classe garde son identité
+partagée ; les autres éléments temporaires sont libérés. Les lectures
+`make_values().count()`, `make_values().is_empty()` et `make_label().count()`
+libèrent leur récepteur temporaire après avoir produit le résultat scalaire.
+Ces opérations ne libèrent pas une collection ou une chaîne conservée dans
+une variable : sa durée de vie reste celle de son propriétaire.
+
+## Appels de callback
+
+Un appel de callback suit les mêmes règles de possession qu’un appel direct.
+Pour un paramètre passé par valeur, un argument temporaire est transféré et
+un argument stocké garde son propriétaire. Un résultat possédé est transféré
+à son utilisation suivante.
+
 [Revenir à la possession](README.md) ·
 [Emprunter sans transférer](References.md)

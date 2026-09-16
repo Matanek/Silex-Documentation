@@ -90,5 +90,21 @@ The consumed source no longer runs `drop`; the transferred value owns the
 remaining cleanup. Fields, indexed elements, `self`, and temporary expressions
 are not accepted sources for an explicit `move`.
 
+## Reading a temporary collection
+
+`make_values()[0]` preserves the selected element before releasing the temporary
+array or list. A class reference keeps its shared identity; other temporary
+elements are released. Reads such as `make_values().count()`,
+`make_values().is_empty()` and `make_label().count()` release their temporary
+receiver after producing the scalar result. These operations do not release
+a collection or string stored in a variable: its owner still controls its
+lifetime.
+
+## Callback calls
+
+A callback call follows the same ownership rules as a direct call. For a
+parameter passed by value, a temporary argument is transferred and a stored
+argument keeps its owner. An owned result is transferred to its next use.
+
 [Back to ownership](README.md) ·
 [Borrow without transferring](References.md)
