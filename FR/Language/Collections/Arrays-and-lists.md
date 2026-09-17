@@ -50,6 +50,26 @@ let removed = items.take(0)
 items.clear()
 ```
 
+Une collection peut être atteinte à travers plusieurs champs stockés. La
+liaison de départ et chaque champ traversé doivent être modifiables :
+
+```sx
+class Scores { var values:int[] = [] }
+class Player { var scores:Scores = Scores() }
+
+func main() {
+    var player = Player()
+    player.scores.values.append(42)
+    assert(player.scores.values.count() == 1)
+    player.scores.values.clear()
+    assert(player.scores.values.is_empty())
+}
+```
+
+Le récepteur est choisi avant les arguments. Si un argument remplace l'objet
+qui possède la collection, l'opération se termine sur l'objet initial ; sa
+destruction attend la fin de cette opération.
+
 Les champs d'une structure stockée peuvent être modifiés directement à travers
 un indice. Silex reconstruit le chemin valeur dans la collection tout en
 préservant sa sémantique de valeur :

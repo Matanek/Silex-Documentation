@@ -49,6 +49,26 @@ let removed = items.take(0)
 items.clear()
 ```
 
+A collection can be reached through several stored fields. The starting
+binding and every traversed field must be mutable:
+
+```sx
+class Scores { var values:int[] = [] }
+class Player { var scores:Scores = Scores() }
+
+func main() {
+    var player = Player()
+    player.scores.values.append(42)
+    assert(player.scores.values.count() == 1)
+    player.scores.values.clear()
+    assert(player.scores.values.is_empty())
+}
+```
+
+The receiver is selected before the arguments. If an argument replaces the
+object that owns the collection, the operation finishes on the original
+object; its destruction waits until that operation is complete.
+
 Fields of a stored structure can be modified directly through an index. Silex
 rebuilds the value path inside the collection while preserving its value
 semantics:
