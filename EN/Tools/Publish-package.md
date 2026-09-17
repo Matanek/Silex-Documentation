@@ -1,93 +1,98 @@
 # Publish a package in the registry
 
-The registry associates a package's public name with its Git repository once.
-It receives neither sources nor versions: every published version remains a
-repository commit identified by a `vMAJOR.MINOR.PATCH` tag.
+`silex publish` sends a snapshot of a local directory to the Silex registry
+hosted on Cloudflare. The registry stores the sources and declared artifacts.
+Installing a published version needs neither the package's GitHub repository
+nor the author's machine. A package can be published without a Git repository.
 
-## Prepare the package repository
+## Prepare and preview the package
 
-Before the first publication, verify these points:
-
-- the folder name matches the `name` field in `Package.json`;
-- the manifest declares a version and its Silex compatibility;
-- the GitHub repository has a canonical `origin` remote;
-- all files intended for the version are committed and the repository is
-  clean.
-
-A minimal manifest includes this identity:
+Place `Package.json` in a directory named after the package. A minimal manifest
+for the compatible client is:
 
 ```json
 {
   "name": "MyPackage",
   "version": "1.0.0",
-  "requires": {
-    "silex": ">=0.42.0"
-  }
+  "requires": { "silex": ">=0.44.0" }
 }
 ```
 
-Available metadata, dependencies, permissions, boundaries, and artifacts are
-grouped in [Define a package with `Package.json`](Package-manifest.md).
-
-## Check the version without modifying anything
-
-From the folder containing the package, run:
+Put sources in `Module/`, or select another directory with `sources`. From the
+parent directory, preview the exact publication:
 
 ```sh
-silex check MyPackage
+silex publish MyPackage --dry-run
 ```
 
-Silex validates the manifest and announces the expected tag:
+The preview lists included source files, separately uploaded artifacts, and
+excluded files. It gives the SHA-256 digest of the complete snapshot. It does
+not authenticate, contact the registry, or publish anything. Check missing
+files and unexpected exclusions before uploading. See
+[Define a package with `Package.json`](Package-manifest.md) for manifest fields.
 
-```text
-silex: package MyPackage@1.0.0 is valid; its release tag is v1.0.0
+The optional `repository` field can point contributors to the development
+repository:
+
+```json
+{ "repository": "https://github.com/example/MyPackage" }
 ```
 
-This check is optional, but lets you correct the package contract before
-creating a public tag.
+This author-provided link is not the publication destination, does not
+determine the uploaded bytes, and grants no ownership of the package name.
+`silex publish` creates no Git commit, tag, or push.
 
-## Register the package once
+## Sign in as an author
 
-Then request registration of the name and repository:
+Run:
 
 ```sh
-silex register MyPackage
+silex login
 ```
 
-On first use, Silex requests GitHub authorization with a device code. The
-command prepares the proposal automatically, creates a registry fork when
-needed, and opens a pull request. Its result includes the pull request address
-so you can follow its validation.
+Silex shows a GitHub address and temporary code, then attempts to open a
+browser. Authorize the dedicated registry identity application. It requests
+your GitHub identity without read or write permission for repositories. With
+`silex login --no-browser`, open the displayed address yourself.
 
-Registration becomes immutable after merging: it contains only the package
-name and canonical repository URL. A new version never requires a new registry
-pull request.
+The registry attaches package names to your stable GitHub user ID; changing
+your handle does not transfer these rights. It stores that ID, a handle for
+attribution, name ownership, and a digest of the client access token. The
+client stores its token locally; on Windows, DPAPI protects it. Access expires
+within 24 hours. `silex logout` revokes it at the registry and removes the
+local copy when the service is reachable. Revoking the GitHub application
+alone does not guarantee immediate invalidation of an already issued Silex
+token; it expires within 24 hours. Sign in again when needed.
 
-## Publish the version with a Git tag
+If GitHub is unavailable, new logins may fail. Already issued Silex tokens
+remain usable until expiration or revocation, and published packages remain
+installable without signing in.
 
-First push the complete version commit to the canonical repository. Then create
-a tag exactly matching the manifest's `version` field:
+## Upload the version
+
+After reviewing the preview and signing in:
 
 ```sh
-git tag -a v1.0.0 -m "MyPackage 1.0.0"
-git push origin v1.0.0
+silex publish MyPackage
 ```
 
-The registry discovers versions by reading `vMAJOR.MINOR.PATCH` tags. The
-`Package.json` in the tagged commit must retain the same name and version as
-the tag.
+The first publication reserves the name for your identity. Later versions use
+the same command. The CLI reports success once all objects are stored and the
+version is visible. If a response is lost, retrying the same publication
+resumes or finds its state. A published version cannot be replaced with
+different bytes.
 
-After the first registration is accepted, verify the public path with:
+Check public retrieval from a separate local package store:
 
 ```sh
 silex install MyPackage@1.0.0
 ```
 
-To publish `1.1.0`, update the manifest, validate and commit the new version,
-then push only the `v1.1.0` tag. The initial registration remains unchanged.
-
-The [registry contract](https://github.com/Matanek/Silex-Registry/blob/main/CONTRIBUTING.md)
-details identity, transfer, and revocation rules.
+Installation is anonymous. To publish `1.1.0`, change `version` in the
+manifest, review the new preview, and run `silex publish` again. An older
+client expecting pull-request registration and Git tags uses the former
+protocol; it cannot read versions stored by this registry. Install a
+compatible Silex client before the switch.
 
 [Back to the tools](README.md) ·
 [Develop with local packages](Develop-packages.md)

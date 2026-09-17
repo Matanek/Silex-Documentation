@@ -6,7 +6,7 @@ identity and any native files it uses.
 
 | Intention | Fields |
 | --- | --- |
-| Identify and present the package | `name`, `version`, `description`, `authors`, `requires` |
+| Identify and present the package | `name`, `version`, `description`, `authors`, `repository`, `requires` |
 | Select sources | `sources` |
 | Build the package graph | `dependencies`, `devDependencies` |
 | Share a namespace | `extensions`, `catalogs` |
@@ -31,22 +31,22 @@ compatibility:
   },
   "authors": ["Matanek"],
   "requires": {
-    "silex": ">=0.42.0"
+    "silex": ">=0.44.0"
   }
 }
 ```
 
 `name` is the identity used by dependencies and imports. A local package folder
-has the same name. `version` uses `MAJOR.MINOR.PATCH` and must match the tag of
-a published release.
+has the same name. `version` uses `MAJOR.MINOR.PATCH`. Once published, its bytes
+cannot be replaced.
 
 `requires.silex` begins with an inclusive minimum. Prefer an open range such
-as `">=0.42.0"`: it allows the package to be used with later Silex releases
+as `">=0.44.0"`: it allows the package to be used with later Silex releases
 for as long as no incompatibility is known. In particular, it avoids blocking
 each new minor release as a precaution.
 
 An exclusive maximum is also supported, for example
-`">=0.42.0 <0.43.0"`. This bounded range is less common: reserve it for a
+`">=0.44.0 <0.45.0"`. This bounded range is less common: reserve it for a
 known incompatibility or a contract that must actually stop before that
 release. An installed package must declare its compatibility; a local package
 under development may still omit `requires.silex`.
@@ -71,6 +71,11 @@ tags are compared case-insensitively and cannot be repeated.
 `authors` is an optional array of unique, non-empty names. Their order is
 preserved. This field attributes the work; it grants no right over the
 registry, namespace, or sources.
+
+`repository` is an optional HTTPS GitHub URL for the package's development.
+It helps contributors find the source repository. The registry stores the files
+sent from the local directory; this URL neither supplies those files nor
+proves ownership of a package name.
 
 ## Select sources
 
@@ -208,9 +213,8 @@ documented in [Connect a package to a system API](../Language/Interop/README.md)
 
 ## Prepare verified artifacts
 
-`artifacts` describes large files distributed outside Git that `silex install`
-or `silex link` must prepare. An archive used by `boundary` can therefore be
-downloaded to the expected path:
+`artifacts` describes large files needed for each target. An archive used by
+`boundary` can be prepared at the expected path:
 
 ```json
 {
@@ -226,14 +230,17 @@ downloaded to the expected path:
 }
 ```
 
-`path` stays inside the package, `url` uses HTTPS, and `sha256` contains the 64
-hexadecimal digits of the expected digest. Silex keeps an existing matching
-file; otherwise it downloads to a temporary file, verifies the digest, and
-moves it into place. Compilation never downloads a file.
+`path` stays inside the package, and `sha256` contains the 64 hexadecimal
+digits of the expected digest. `url` is optional; when present, it uses HTTPS
+and lets a local package fetch a missing file during preparation. `silex
+publish` requires the declared file to be present and match its digest, then
+uploads it as a separate registry object. `silex install` of a published
+version reads that object from the registry without relying on the development
+URL. Compilation never downloads a file.
 
 `artifacts` therefore prepares a file, while `boundary` decides how that file
 participates in native linking. The fields are independent: an archive already
-tracked by Git needs no `artifacts` entry.
+included among the sources needs no `artifacts` entry.
 
 ## Validate the manifest
 

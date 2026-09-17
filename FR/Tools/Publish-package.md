@@ -1,95 +1,105 @@
 # Publier un package dans le registre
 
-Le registre associe une seule fois le nom public d'un package à son dépôt Git.
-Il ne reçoit ni ses sources ni ses versions : chaque version publiée reste un
-commit du dépôt identifié par un tag `vMAJOR.MINOR.PATCH`.
+`silex publish` envoie un instantané du dossier local au registre Silex hébergé
+sur Cloudflare. Le registre conserve les sources et les artefacts déclarés ; une
+installation ultérieure n'a besoin ni du dépôt GitHub du package ni de votre
+machine. Vous pouvez publier depuis un dossier sans dépôt Git.
 
-## Préparer le dépôt du package
+## Préparer et prévisualiser le package
 
-Avant la première publication, vérifiez ces points :
-
-- le nom du dossier correspond au champ `name` de `Package.json` ;
-- le manifeste déclare une version et sa compatibilité avec Silex ;
-- le dépôt GitHub possède un remote `origin` canonique ;
-- tous les fichiers destinés à la version sont commités et le dépôt est propre.
-
-Un manifeste minimal possède notamment cette identité :
+Placez `Package.json` dans un dossier portant le nom du package. Un manifeste
+minimal pour le client actuel ressemble à ceci :
 
 ```json
 {
   "name": "MonPackage",
   "version": "1.0.0",
   "requires": {
-    "silex": ">=0.42.0"
+    "silex": ">=0.44.0"
   }
 }
 ```
 
-Les métadonnées, dépendances, permissions, frontières et artefacts disponibles
-sont regroupés dans
-[Définir un package avec `Package.json`](Package-manifest.md).
-
-## Vérifier la version sans rien modifier
-
-Depuis le dossier qui contient le package, lancez :
+Ajoutez les sources dans `Module/`, ou choisissez un autre dossier avec
+`sources`. Pour voir exactement ce qui partirait, lancez depuis le dossier
+parent :
 
 ```sh
-silex check MonPackage
+silex publish MonPackage --dry-run
 ```
 
-Silex valide le manifeste et annonce le tag attendu :
+L'aperçu nomme les fichiers source inclus, les artefacts transmis séparément et
+les éléments exclus. Il donne le SHA-256 de l'instantané complet. Il ne demande
+pas de connexion, ne contacte pas le registre et ne publie rien. Corrigez tout
+fichier manquant ou toute exclusion inattendue avant l'envoi. Le détail des
+champs figure dans [Définir un package avec `Package.json`](Package-manifest.md).
 
-```text
-silex: package MonPackage@1.0.0 is valid; its release tag is v1.0.0
+Un `repository` facultatif peut indiquer aux contributeurs où participer au
+développement :
+
+```json
+{
+  "repository": "https://github.com/exemple/MonPackage"
+}
 ```
 
-Cette vérification est facultative, mais elle permet de corriger le contrat du
-package avant de créer un tag public.
+Cette adresse est un lien fourni par l'auteur. Elle n'est pas la destination de
+la publication, ne détermine pas les octets envoyés et n'accorde aucun droit
+sur le nom. Aucun commit, tag ou push n'est créé par `silex publish`.
 
-## Inscrire le package une seule fois
+## Se connecter comme auteur
 
-Demandez ensuite l'inscription du nom et du dépôt :
+Lancez une fois :
 
 ```sh
-silex register MonPackage
+silex login
 ```
 
-Lors de la première utilisation, Silex demande une autorisation GitHub par
-code d'appareil. La commande prépare automatiquement la proposition, crée si
-nécessaire un fork du registre et ouvre une pull request. Son résultat contient
-l'adresse de cette pull request afin que vous puissiez suivre sa validation.
+Silex affiche une adresse GitHub et un code temporaire, puis tente d'ouvrir le
+navigateur. Autorisez l'application d'identité dédiée au registre. Elle demande
+votre identité GitHub, sans permission de lecture ou d'écriture sur vos dépôts.
+Avec `silex login --no-browser`, ouvrez vous-même l'adresse indiquée dans le
+terminal.
 
-L'inscription devient immuable après sa fusion : elle contient seulement le
-nom du package et l'URL canonique de son dépôt. Une nouvelle version ne demande
-jamais une nouvelle pull request dans le registre.
+Le registre attache les noms à votre identifiant GitHub stable ; votre pseudo
+peut changer sans transférer ces droits. Il conserve cet identifiant, le pseudo
+utile à l'attribution, les droits sur les noms et une empreinte de l'accès du
+client. Le client conserve son accès localement ; sous Windows, ce secret est
+protégé par DPAPI. L'accès expire au plus tard après 24 heures. `silex logout`
+le révoque auprès du registre et supprime la copie locale lorsque le service
+est joignable. Révoquer seulement l'application sur GitHub ne garantit pas
+l'invalidation immédiate d'un accès Silex déjà émis ; il expire au plus tard
+après 24 heures. Reconnectez-vous si nécessaire.
 
-## Publier la version avec un tag Git
+Une panne de GitHub peut empêcher une nouvelle connexion. Les accès Silex déjà
+émis restent utilisables jusqu'à leur expiration ou leur révocation, et les
+packages déjà publiés restent installables sans connexion.
 
-Poussez d'abord le commit complet de la version vers le dépôt canonique. Créez
-ensuite un tag qui correspond exactement au champ `version` du manifeste :
+## Envoyer la version
+
+Une fois l'aperçu vérifié et la connexion établie :
 
 ```sh
-git tag -a v1.0.0 -m "MonPackage 1.0.0"
-git push origin v1.0.0
+silex publish MonPackage
 ```
 
-Le registre découvre les versions en lisant les tags `vMAJOR.MINOR.PATCH`. Le
-`Package.json` présent dans le commit tagué doit conserver le même nom et la
-même version que le tag.
+La première version réserve automatiquement le nom pour votre identité. Les
+versions suivantes empruntent le même chemin. Le CLI annonce la réussite quand
+tous les objets sont conservés et que la version est visible. Si la réponse se
+perd, relancer la même publication reprend ou retrouve son état ; une version
+déjà publiée ne peut pas être remplacée par d'autres octets.
 
-Une fois la première inscription acceptée, vous pouvez vérifier le parcours
-public avec :
+Vérifiez la lecture publique depuis un autre magasin local :
 
 ```sh
 silex install MonPackage@1.0.0
 ```
 
-Pour publier `1.1.0`, modifiez le manifeste, validez et commitez la nouvelle
-version, puis poussez seulement le tag `v1.1.0`. L'inscription initiale reste
-inchangée.
-
-Le [contrat du registre](https://github.com/Matanek/Silex-Registry/blob/main/CONTRIBUTING.md)
-détaille les règles d'identité, de transfert et de révocation.
+L'installation est anonyme. Pour publier `1.1.0`, changez `version` dans le
+manifeste, vérifiez le nouvel aperçu, puis relancez `silex publish`. Un ancien
+client qui attend l'inscription par pull request et les tags Git utilise
+l'ancien protocole ; il ne sait pas lire les versions conservées par ce
+registre. Installez le client Silex compatible avant la bascule.
 
 [Revenir aux outils](README.md) ·
 [Développer avec des packages locaux](Develop-packages.md)

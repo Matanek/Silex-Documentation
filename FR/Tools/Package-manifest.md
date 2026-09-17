@@ -6,7 +6,7 @@ publié, son identité et ses fichiers natifs éventuels.
 
 | Intention | Champs |
 | --- | --- |
-| Identifier et présenter le package | `name`, `version`, `description`, `authors`, `requires` |
+| Identifier et présenter le package | `name`, `version`, `description`, `authors`, `repository`, `requires` |
 | Choisir les sources | `sources` |
 | Construire le graphe de packages | `dependencies`, `devDependencies` |
 | Partager un espace de noms | `extensions`, `catalogs` |
@@ -31,23 +31,24 @@ compatibilité avec Silex :
   },
   "authors": ["Matanek"],
   "requires": {
-    "silex": ">=0.42.0"
+    "silex": ">=0.44.0"
   }
 }
 ```
 
 `name` est l'identité employée dans les dépendances et les imports. Le dossier
 d'un package local porte le même nom. `version` suit la forme
-`MAJOR.MINOR.PATCH` et doit correspondre au tag d'une version publiée.
+`MAJOR.MINOR.PATCH`. Une fois cette version publiée, ses octets ne peuvent
+pas être remplacés.
 
 `requires.silex` commence par une borne minimale inclusive. Privilégiez une
-plage ouverte telle que `">=0.42.0"` : elle autorise l'utilisation du package
+plage ouverte telle que `">=0.44.0"` : elle autorise l'utilisation du package
 avec les versions suivantes de Silex tant qu'aucune incompatibilité n'est
 connue. Elle évite notamment de bloquer chaque nouvelle version mineure par
 précaution.
 
 Une borne maximale exclusive existe, par exemple
-`">=0.42.0 <0.43.0"`. Cette plage bornée est moins courante : réservez-la à une
+`">=0.44.0 <0.45.0"`. Cette plage bornée est moins courante : réservez-la à une
 incompatibilité connue ou à un contrat qui doit réellement s'arrêter avant
 cette version. Un package installé doit déclarer sa compatibilité ; un package
 local en cours de développement peut encore omettre `requires.silex`.
@@ -73,6 +74,11 @@ peuvent pas être répétées.
 `authors` est un tableau facultatif de noms non vides et uniques. Leur ordre
 est conservé. Ce champ attribue le travail ; il n'accorde aucun droit sur le
 registre, l'espace de noms ou les sources.
+
+`repository` est une adresse GitHub HTTPS facultative vers le développement du
+package. Elle aide les contributeurs à trouver le dépôt. Le registre conserve
+les fichiers transmis depuis le dossier local ; cette adresse ne sert ni à les
+obtenir, ni à prouver la propriété d'un nom.
 
 ## Choisir les sources
 
@@ -215,9 +221,8 @@ Silex publique, pas les archives, frameworks, bibliothèques ou symboles
 
 ## Préparer des artefacts vérifiés
 
-`artifacts` décrit les gros fichiers distribués hors de Git que `silex install`
-ou `silex link` doit préparer. Une archive utilisée par `boundary` peut ainsi
-être téléchargée au chemin attendu :
+`artifacts` décrit les gros fichiers nécessaires par cible. Une archive
+utilisée par `boundary` peut ainsi être préparée au chemin attendu :
 
 ```json
 {
@@ -233,15 +238,19 @@ ou `silex link` doit préparer. Une archive utilisée par `boundary` peut ainsi
 }
 ```
 
-`path` reste à l'intérieur du package, `url` utilise HTTPS et `sha256` contient
-les 64 chiffres hexadécimaux de l'empreinte attendue. Silex conserve un fichier
-déjà conforme ; sinon il le télécharge dans un fichier temporaire, vérifie son
-empreinte puis le place à destination. Une compilation ne télécharge jamais de
-fichier.
+`path` reste à l'intérieur du package et `sha256` contient les 64 chiffres
+hexadécimaux de l'empreinte attendue. `url` est facultatif ; s'il est présent,
+il utilise HTTPS et permet à un package local de récupérer un fichier manquant
+pendant sa préparation. `silex publish` exige que le fichier déclaré soit
+présent et conforme à son empreinte, puis l'envoie comme objet distinct au
+registre. `silex install` d'une version publiée lit cet objet dans le registre,
+sans dépendre de l'URL de développement. Une compilation ne télécharge jamais
+de fichier.
 
 `artifacts` prépare donc un fichier, tandis que `boundary` décide comment ce
 fichier participe à la liaison native. Les deux champs sont indépendants : une
-archive déjà suivie par Git n'a pas besoin d'entrée dans `artifacts`.
+petite archive déjà incluse parmi les sources n'a pas besoin d'entrée dans
+`artifacts`.
 
 ## Valider le manifeste
 

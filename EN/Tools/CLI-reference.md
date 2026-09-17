@@ -47,7 +47,9 @@ See [Run, interpret, or compile a program](Run-and-compile.md) and
 silex install <package|package-directory> [--suite] [--dev]
     [--target <target>]
 silex check <package-directory>
-silex register <package-directory>
+silex login [--no-browser]
+silex logout
+silex publish <package-directory> [--dry-run]
 silex link <package-directory> [--workspace <directory>]
     [--target <target>]
 silex unlink <package-name> [--workspace <directory>]
@@ -61,10 +63,23 @@ silex packages resolve [source.sx|project-directory]
 | `--dev` | `install` | adds development dependencies of the requested package |
 | `--target` | `install`, `link` | selects the target used to prepare the package |
 | `--workspace` | `link`, `unlink` | limits the link to the given working folder |
+| `--no-browser` | `login` | displays the GitHub URL and code without opening a browser |
+| `--dry-run` | `publish` | validates and previews the snapshot without signing in or uploading |
 
 `packages` lists installed versions and user links. `packages resolve` prints
 the graph actually selected for the given path; without a path, it analyzes
 the current folder.
+
+`login` obtains author access valid for up to 24 hours; `logout` revokes it
+and removes the local copy when the registry is reachable. `publish` uploads
+the local directory's files to the Cloudflare registry. The first publication
+reserves its name for the signed-in GitHub identity. Installing a published
+version is anonymous. `check` validates a local package, while `publish
+--dry-run` previews what would actually be uploaded.
+
+`silex register <package-directory>` remains a command for the former registry
+based on Git registration and a pull request. It is not part of the Cloudflare
+publication workflow.
 
 See [Install and select packages](Install-packages.md),
 [Develop with local packages](Develop-packages.md), and

@@ -48,7 +48,9 @@ et [Écrire et lancer des tests](Tests.md).
 silex install <package|package-directory> [--suite] [--dev]
     [--target <target>]
 silex check <package-directory>
-silex register <package-directory>
+silex login [--no-browser]
+silex logout
+silex publish <package-directory> [--dry-run]
 silex link <package-directory> [--workspace <directory>]
     [--target <target>]
 silex unlink <package-name> [--workspace <directory>]
@@ -62,10 +64,24 @@ silex packages resolve [source.sx|project-directory]
 | `--dev` | `install` | ajoute les dépendances de développement du package demandé |
 | `--target` | `install`, `link` | sélectionne la cible utilisée pour préparer le package |
 | `--workspace` | `link`, `unlink` | limite le lien au dossier de travail indiqué |
+| `--no-browser` | `login` | affiche l'adresse et le code GitHub sans ouvrir le navigateur |
+| `--dry-run` | `publish` | valide et affiche l'instantané sans connexion ni envoi |
 
 `packages` inventorie les versions installées et les liens utilisateur.
 `packages resolve` affiche le graphe effectivement choisi pour le chemin
 indiqué ; sans chemin, il analyse le dossier courant.
+
+`login` obtient un accès d'auteur valable au plus 24 heures ; `logout` le
+révoque et efface sa copie locale si le registre est joignable. `publish`
+envoie les fichiers du dossier local au registre Cloudflare. La première
+publication réserve automatiquement le nom pour l'identité GitHub connectée.
+`install` d'une version publiée est anonyme. `check` valide localement un
+package, tandis que `publish --dry-run` montre le contenu effectivement
+préparé pour l'envoi.
+
+`silex register <package-directory>` demeure une commande de l'ancien
+registre fondé sur une inscription Git et une pull request. Elle ne fait pas
+partie du parcours de publication Cloudflare.
 
 Consultez [Installer et choisir des packages](Install-packages.md),
 [Développer avec des packages locaux](Develop-packages.md) et
