@@ -6,7 +6,9 @@ Installez un package public avec son nom enregistré :
 silex install STD
 ```
 
-Silex sélectionne la version publiée la plus récente qui reste compatible avec
+Le client compatible lit les sources et artefacts conservés par le registre
+Cloudflare, sans connexion GitHub ni accès au dépôt de l'auteur. Silex
+sélectionne la version publiée la plus récente qui reste compatible avec
 la version du compilateur. Pour imposer une version précise, ajoutez-la après
 `@` :
 

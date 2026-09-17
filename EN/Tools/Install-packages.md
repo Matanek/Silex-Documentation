@@ -6,6 +6,8 @@ Install a public package with its registered name:
 silex install STD
 ```
 
+The compatible client reads sources and artifacts stored by the Cloudflare
+registry without signing in to GitHub or accessing the author's repository.
 Silex selects the latest published version that remains compatible with the
 compiler version. To require a precise version, add it after `@`:
 
