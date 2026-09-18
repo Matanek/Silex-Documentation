@@ -71,8 +71,10 @@ silex packages resolve [source.sx|project-directory]
 `packages resolve` affiche le graphe effectivement choisi pour le chemin
 indiqué ; sans chemin, il analyse le dossier courant.
 
-`login` obtient un accès d'auteur valable au plus 24 heures ; `logout` le
-révoque et efface sa copie locale si le registre est joignable. `publish`
+`login` obtient un accès d'auteur conservé localement. Depuis Silex 0.46.0,
+il est valable 30 jours et renouvelé automatiquement lors de son utilisation,
+jusqu'à 90 jours après l'autorisation GitHub ; `logout` le révoque et efface
+sa copie locale si le registre est joignable. `publish`
 envoie les fichiers du dossier local au registre Cloudflare. La première
 publication réserve automatiquement le nom pour l'identité GitHub connectée.
 `install` d'une version publiée est anonyme. `check` valide localement un

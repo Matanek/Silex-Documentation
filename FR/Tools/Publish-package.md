@@ -67,11 +67,17 @@ Le registre attache les noms à votre identifiant GitHub stable ; votre pseudo
 peut changer sans transférer ces droits. Il conserve cet identifiant, le pseudo
 utile à l'attribution, les droits sur les noms et une empreinte de l'accès du
 client. Le client conserve son accès localement ; sous Windows, ce secret est
-protégé par DPAPI. L'accès expire au plus tard après 24 heures. `silex logout`
-le révoque auprès du registre et supprime la copie locale lorsque le service
-est joignable. Révoquer seulement l'application sur GitHub ne garantit pas
-l'invalidation immédiate d'un accès Silex déjà émis ; il expire au plus tard
-après 24 heures. Reconnectez-vous si nécessaire.
+protégé par DPAPI. Depuis Silex 0.46.0, la première connexion prolonge
+l'accès à 30 jours. Une publication ou `silex login` le renouvelle
+automatiquement lorsqu'il reste au plus sept jours, sans nouveau passage
+sur GitHub, jusqu'à 90 jours après l'autorisation initiale. Après une
+inactivité de 30 jours ou à cette limite de 90 jours, reconnectez-vous
+sur GitHub. Silex 0.45.0 garde sa durée initiale de 24 heures.
+`silex logout` révoque l'accès auprès du registre et supprime la copie
+locale lorsque le service est joignable. Révoquer seulement l'application
+sur GitHub ne garantit pas l'invalidation immédiate d'un accès Silex déjà
+émis : sa limite absolue reste de 90 jours. L'installation publique ne
+demande aucune connexion.
 
 Une panne de GitHub peut empêcher une nouvelle connexion. Les accès Silex déjà
 émis restent utilisables jusqu'à leur expiration ou leur révocation, et les

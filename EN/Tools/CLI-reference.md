@@ -70,8 +70,10 @@ silex packages resolve [source.sx|project-directory]
 the graph actually selected for the given path; without a path, it analyzes
 the current folder.
 
-`login` obtains author access valid for up to 24 hours; `logout` revokes it
-and removes the local copy when the registry is reachable. `publish` uploads
+`login` obtains author access kept locally. Starting with Silex 0.46.0,
+it lasts 30 days and is renewed automatically when used, for up to 90 days
+after GitHub authorization; `logout` revokes it and removes the local copy
+when the registry is reachable. `publish` uploads
 the local directory's files to the Cloudflare registry. The first publication
 reserves its name for the signed-in GitHub identity. Installing a published
 version is anonymous. `check` validates a local package, while `publish

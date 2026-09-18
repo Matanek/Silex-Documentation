@@ -60,11 +60,16 @@ your GitHub identity without read or write permission for repositories. With
 The registry attaches package names to your stable GitHub user ID; changing
 your handle does not transfer these rights. It stores that ID, a handle for
 attribution, name ownership, and a digest of the client access token. The
-client stores its token locally; on Windows, DPAPI protects it. Access expires
-within 24 hours. `silex logout` revokes it at the registry and removes the
-local copy when the service is reachable. Revoking the GitHub application
-alone does not guarantee immediate invalidation of an already issued Silex
-token; it expires within 24 hours. Sign in again when needed.
+client stores its token locally; on Windows, DPAPI protects it. Starting with
+Silex 0.46.0, the initial sign-in extends access to 30 days. Publishing or
+running `silex login` renews it automatically when seven days or less
+remain, without another GitHub authorization, for up to 90 days after the
+initial authorization. After 30 days of inactivity or at that 90-day limit,
+sign in through GitHub again. Silex 0.45.0 retains its initial 24-hour access.
+`silex logout` revokes access at the registry and removes the local copy
+when the service is reachable. Revoking the GitHub application alone does
+not guarantee immediate invalidation of an already issued Silex token:
+its absolute limit is 90 days. Public installation needs no sign-in.
 
 If GitHub is unavailable, new logins may fail. Already issued Silex tokens
 remain usable until expiration or revocation, and published packages remain
