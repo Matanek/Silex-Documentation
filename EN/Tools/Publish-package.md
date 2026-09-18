@@ -1,10 +1,9 @@
 # Publish a package in the registry
 
-Once the Cloudflare registry is active on `registry.silex-lang.org`,
-`silex publish` sends a snapshot of a local directory to that service. Before
-the cutover, `--dry-run` can prepare publication without network access, but
-the current public registry does not accept `/v2` publications. The new
-registry stores the sources and declared artifacts.
+As of Silex 0.45.0, `silex publish` sends a snapshot of a local directory to
+the Cloudflare registry at `registry.silex-lang.org`. `--dry-run` previews the
+publication without connecting to the service. The registry stores the sources
+and declared artifacts.
 Installing a published version needs neither the package's GitHub repository
 nor the author's machine. A package can be published without a Git repository.
 
@@ -94,8 +93,8 @@ silex install MyPackage@1.0.0
 Installation is anonymous. To publish `1.1.0`, change `version` in the
 manifest, review the new preview, and run `silex publish` again. An older
 client expecting pull-request registration and Git tags uses the former
-protocol; it cannot read versions stored by this registry. Install a
-compatible Silex client before the switch.
+protocol; it cannot read versions stored by this registry. Install Silex
+0.45.0 or a newer version.
 
 [Back to the tools](README.md) ·
 [Develop with local packages](Develop-packages.md)

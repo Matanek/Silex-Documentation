@@ -1,10 +1,9 @@
 # Publier un package dans le registre
 
-Après l'activation du registre Cloudflare sur `registry.silex-lang.org`,
-`silex publish` envoie un instantané du dossier local à ce service. Avant cette
-bascule, `--dry-run` permet de préparer la publication sans réseau, mais
-l'ancien registre public ne reçoit pas les publications `/v2`. Le nouveau
-registre conserve les sources et les artefacts déclarés ; une
+Depuis Silex 0.45.0, `silex publish` envoie un instantané du dossier local au
+registre Cloudflare sur `registry.silex-lang.org`. `--dry-run` permet de préparer
+la publication sans connexion. Le registre conserve les sources et les
+artefacts déclarés ; une
 installation ultérieure n'a besoin ni du dépôt GitHub du package ni de votre
 machine. Vous pouvez publier depuis un dossier sans dépôt Git.
 
@@ -102,7 +101,7 @@ L'installation est anonyme. Pour publier `1.1.0`, changez `version` dans le
 manifeste, vérifiez le nouvel aperçu, puis relancez `silex publish`. Un ancien
 client qui attend l'inscription par pull request et les tags Git utilise
 l'ancien protocole ; il ne sait pas lire les versions conservées par ce
-registre. Installez le client Silex compatible avant la bascule.
+registre. Installez Silex 0.45.0 ou une version plus récente.
 
 [Revenir aux outils](README.md) ·
 [Développer avec des packages locaux](Develop-packages.md)
