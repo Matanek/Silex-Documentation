@@ -1,7 +1,10 @@
 # Publier un package dans le registre
 
-`silex publish` envoie un instantané du dossier local au registre Silex hébergé
-sur Cloudflare. Le registre conserve les sources et les artefacts déclarés ; une
+Après l'activation du registre Cloudflare sur `registry.silex-lang.org`,
+`silex publish` envoie un instantané du dossier local à ce service. Avant cette
+bascule, `--dry-run` permet de préparer la publication sans réseau, mais
+l'ancien registre public ne reçoit pas les publications `/v2`. Le nouveau
+registre conserve les sources et les artefacts déclarés ; une
 installation ultérieure n'a besoin ni du dépôt GitHub du package ni de votre
 machine. Vous pouvez publier depuis un dossier sans dépôt Git.
 

@@ -6,6 +6,11 @@ Install a public package with its registered name:
 silex install STD
 ```
 
+While the public domain serves the old `/v1` index, this client continues to
+use it for ordinary installs. After the cutover it recognizes the Cloudflare
+registry's `/v2` capability and reads versions stored in D1/R2. A failed
+capability check does not silently fall back to the old index.
+
 The compatible client reads sources and artifacts stored by the Cloudflare
 registry without signing in to GitHub or accessing the author's repository.
 Silex selects the latest published version that remains compatible with the

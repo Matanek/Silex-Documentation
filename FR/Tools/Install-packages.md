@@ -6,6 +6,12 @@ Installez un package public avec son nom enregistré :
 silex install STD
 ```
 
+Tant que le domaine public sert l'ancien index `/v1`, ce client continue à
+l'utiliser pour les installations ordinaires. Il reconnaît la capacité `/v2`
+du registre Cloudflare après la bascule et y lit alors les versions conservées
+dans D1/R2. Une panne de cette vérification n'entraîne pas de retour silencieux
+vers l'ancien index.
+
 Le client compatible lit les sources et artefacts conservés par le registre
 Cloudflare, sans connexion GitHub ni accès au dépôt de l'auteur. Silex
 sélectionne la version publiée la plus récente qui reste compatible avec

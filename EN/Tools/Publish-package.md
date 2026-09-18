@@ -1,7 +1,10 @@
 # Publish a package in the registry
 
-`silex publish` sends a snapshot of a local directory to the Silex registry
-hosted on Cloudflare. The registry stores the sources and declared artifacts.
+Once the Cloudflare registry is active on `registry.silex-lang.org`,
+`silex publish` sends a snapshot of a local directory to that service. Before
+the cutover, `--dry-run` can prepare publication without network access, but
+the current public registry does not accept `/v2` publications. The new
+registry stores the sources and declared artifacts.
 Installing a published version needs neither the package's GitHub repository
 nor the author's machine. A package can be published without a Git repository.
 
