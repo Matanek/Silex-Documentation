@@ -6,6 +6,12 @@ Install a public package with its registered name:
 silex install STD
 ```
 
+With the public domain now served by Cloudflare, Silex 0.45.0 recognizes the
+registry's `/v2` capability and reads versions stored in D1/R2. A failed
+capability check does not silently fall back to the old `/v1` index.
+
+The compatible client reads sources and artifacts stored by the Cloudflare
+registry without signing in to GitHub or accessing the author's repository.
 Silex selects the latest published version that remains compatible with the
 compiler version. To require a precise version, add it after `@`:
 

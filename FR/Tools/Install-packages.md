@@ -6,7 +6,14 @@ Installez un package public avec son nom enregistré :
 silex install STD
 ```
 
-Silex sélectionne la version publiée la plus récente qui reste compatible avec
+Depuis la bascule du domaine public, Silex 0.45.0 reconnaît la capacité `/v2`
+du registre Cloudflare et lit les versions conservées dans D1/R2. Une panne de
+cette vérification n'entraîne pas de retour silencieux vers l'ancien index
+`/v1`.
+
+Le client compatible lit les sources et artefacts conservés par le registre
+Cloudflare, sans connexion GitHub ni accès au dépôt de l'auteur. Silex
+sélectionne la version publiée la plus récente qui reste compatible avec
 la version du compilateur. Pour imposer une version précise, ajoutez-la après
 `@` :
 
