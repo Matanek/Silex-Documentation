@@ -32,11 +32,11 @@ contained `.sx` file that declares a top-level `main` function. It does not
 search subdirectories. If no file or several files match, the command fails
 and asks for an explicit source path.
 
-Without `--backend`, macOS ARM64 selects LLVM; the other distributed hosts
-select the native backend. LLVM is currently qualified only on `macos-arm64`.
-An explicit selection that is unavailable fails without executing the other
-backend. `interpret` is not a compilation backend and therefore rejects this
-option.
+Without `--backend`, every supported host selects the native backend. LLVM is
+currently qualified only on `macos-arm64` and must be requested explicitly
+with `--backend llvm`. An explicit selection that is unavailable fails without
+executing the other backend. `interpret` is not a compilation backend and
+therefore rejects this option.
 
 See [Run, interpret, or compile a program](Run-and-compile.md) and
 [Write and run tests](Tests.md).

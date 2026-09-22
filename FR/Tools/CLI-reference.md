@@ -33,11 +33,11 @@ premier niveau. Il ne parcourt pas les sous-dossiers. Si aucun fichier ou
 plusieurs fichiers conviennent, la commande échoue et demande un chemin de
 source explicite.
 
-Sans `--backend`, macOS ARM64 choisit LLVM ; les autres hôtes distribués
-choisissent le backend natif. LLVM est actuellement qualifié uniquement sur
-`macos-arm64`. Une sélection explicite qui n'est pas disponible échoue sans
-exécuter l'autre backend. `interpret` n'est pas un backend de compilation et
-refuse donc cette option.
+Sans `--backend`, tous les hôtes pris en charge choisissent le backend natif.
+LLVM est actuellement qualifié uniquement sur `macos-arm64` et se demande
+explicitement avec `--backend llvm`. Une sélection explicite qui n'est pas
+disponible échoue sans exécuter l'autre backend. `interpret` n'est pas un
+backend de compilation et refuse donc cette option.
 
 Consultez [Exécuter, interpréter ou compiler un programme](Run-and-compile.md)
 et [Écrire et lancer des tests](Tests.md).

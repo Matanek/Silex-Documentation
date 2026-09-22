@@ -56,14 +56,16 @@ silex compile Project/Main.sx --output Application.exe
 
 ## Choose the compilation backend
 
-On macOS ARM64, `run`, `compile`, and `test` use LLVM by default. Prepare its
-verified tools once after installing or updating Silex:
+`run`, `compile`, and `test` use the native backend by default on every
+supported host. This choice does not require LLVM.
+
+Prepare the verified supporting tools once after installing or updating Silex:
 
 ```sh
 silex setup
 ```
 
-The direct Silex native backend remains explicitly available:
+You can make the native choice explicit:
 
 ```sh
 silex run Project/Main.sx --backend native
@@ -72,8 +74,7 @@ silex compile Project/Main.sx --backend native -o Application
 
 Use `--backend llvm` to request LLVM explicitly. LLVM 21.1.8 is currently
 qualified only on the `macos-arm64` host running macOS 14 or later. On the
-other distributed hosts, the native backend remains the default and an LLVM
-request fails without silently falling back.
+other distributed hosts, an LLVM request fails without silently falling back.
 
 Both backends receive the same Silex program and portable IR. The choice
 affects executable production, not language syntax or semantics. `silex

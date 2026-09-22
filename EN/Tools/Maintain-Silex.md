@@ -41,14 +41,14 @@ silex setup
 ```
 
 Silex installs host-appropriate tools under the user `.silex/toolchain`
-folder. On macOS ARM64, this includes LLVM 21.1.8, used by the default backend.
+folder. On macOS ARM64, this includes LLVM 21.1.8 for the explicit LLVM backend.
 The command also installs Shadercross for HLSL shaders and the private linker
 required by native boundaries. Running it again does not download tools that
 are already present and valid. They remain compiler details, not dependencies
 to declare in the application.
 
-The explicit native backend remains usable without LLVM. If you only want that
-path, use `--backend native`; building Silex and using this backend do not load
+The default native backend remains usable without LLVM. `--backend native`
+makes this choice explicit; building Silex and using this backend do not load
 the LLVM tools.
 
 ## Distinguish the two `.silex` folders

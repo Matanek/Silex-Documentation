@@ -107,9 +107,9 @@ Then prepare the verified compilation tools:
 silex setup
 ```
 
-This step installs LLVM 21.1.8 on macOS 14 or later on ARM64, where LLVM is the
-default backend. It does not require a system installation of LLVM or Zig. On
-the other hosts, Silex currently retains its native backend by default.
+This step installs LLVM 21.1.8 on macOS 14 or later on ARM64 so the explicit
+LLVM backend is available. It does not require a system installation of LLVM
+or Zig. Silex uses the native backend by default on every supported host.
 
 You can now [write and run your first program](../Learn/First-program.md).
 
