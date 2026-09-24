@@ -13,6 +13,9 @@ French pages.
 ## Versions
 
 - `main`: next Silex version · prochaine version de Silex.
+- `release/0.47`: Silex 0.47.x.
+- `release/0.46`: Silex 0.46.x.
+- `release/0.45`: Silex 0.45.x.
 - `release/0.44`: Silex 0.44.x.
 - `release/0.43`: Silex 0.43.x.
 - `release/0.42`: Silex 0.42.x.

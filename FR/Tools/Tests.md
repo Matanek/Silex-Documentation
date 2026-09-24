@@ -32,8 +32,8 @@ mais les blocs suivants continuent de s'exécuter. Chaque scénario compilé est
 isolé dans son propre processus : un `panic` ou un arrêt par signal ne peut
 donc pas interrompre toute la campagne.
 
-`test` suit le backend par défaut de l'hôte. Sur macOS ARM64, ce backend est
-LLVM ; choisissez l'autre voie explicitement pour comparer ou diagnostiquer :
+`test` utilise le backend natif par défaut sur tous les hôtes. LLVM reste
+disponible explicitement sur macOS ARM64 pour comparer ou diagnostiquer :
 
 ```sh
 silex test Tests/Numbers.sx --backend native

@@ -31,8 +31,8 @@ compiled. A failure stops the affected block, but later blocks keep running.
 Every compiled scenario is isolated in its own process, so a `panic` or signal
 termination cannot interrupt the entire test run.
 
-`test` follows the host's default backend. On macOS ARM64, that backend is
-LLVM; select either path explicitly for comparison or diagnosis:
+`test` uses the native backend by default on every host. LLVM remains
+explicitly available on macOS ARM64 for comparison or diagnosis:
 
 ```sh
 silex test Tests/Numbers.sx --backend native
